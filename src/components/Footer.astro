@@ -1,0 +1,27 @@
+---
+import { weddingContent } from "../content/wedding";
+
+const { couple, event, footer } = weddingContent;
+---
+
+<footer class="site-footer">
+  <div class="site-footer__monogram" aria-hidden="true">{couple.initials}</div>
+  <p class="site-footer__names">
+    {couple.partnerOne} &amp; {couple.partnerTwo}
+  </p>
+  <p class:list={{ "is-placeholder": event.date.pending }}>
+    {event.date.value}
+  </p>
+  <span class="site-footer__line" aria-hidden="true"></span>
+  <p
+    class:list={[
+      "site-footer__closing",
+      { "is-placeholder": footer.closingPending },
+    ]}
+  >
+    {footer.closing}
+  </p>
+  <a href="#inicio" class="site-footer__back"
+    >Volver arriba <span aria-hidden="true">↑</span></a
+  >
+</footer>

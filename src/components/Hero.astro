@@ -1,0 +1,69 @@
+---
+import { Image } from "astro:assets";
+import { weddingContent } from "../content/wedding";
+import { featuredPhotos } from "../content/photos";
+
+const { couple, hero, event } = weddingContent;
+---
+
+<section class="hero" id="inicio" aria-labelledby="hero-title">
+  <div class="hero__ornament hero__ornament--one" aria-hidden="true"></div>
+  <div class="hero__ornament hero__ornament--two" aria-hidden="true"></div>
+
+  <div class="hero__content">
+    <p class="eyebrow">{hero.eyebrow}</p>
+    <h1 id="hero-title">
+      <span>{couple.partnerOne}</span>
+      <span class="hero__ampersand" aria-hidden="true">&amp;</span>
+      <span>{couple.partnerTwo}</span>
+    </h1>
+
+    <p
+      class:list={["hero__message", { "is-placeholder": hero.messagePending }]}
+    >
+      {hero.message}
+    </p>
+
+    <div class="hero__meta" aria-label="Fecha y lugar de la boda">
+      <span class:list={{ "is-placeholder": event.date.pending }}
+        >{event.date.value}</span
+      >
+      <span class="hero__meta-separator" aria-hidden="true"></span>
+      <span class:list={{ "is-placeholder": event.venue.pending }}
+        >{event.venue.value}</span
+      >
+    </div>
+
+    <a class="button button--primary" href="#detalles">
+      {hero.callToAction}
+      <span aria-hidden="true">↓</span>
+    </a>
+  </div>
+
+  <figure class="hero__photo">
+    <div class="hero__photo-frame">
+      <Image
+        src={featuredPhotos.hero.src}
+        alt={featuredPhotos.hero.alt}
+        width={1280}
+        widths={[480, 720, 960, 1280]}
+        sizes="(min-width: 900px) 44vw, 92vw"
+        format="webp"
+        quality={88}
+        loading="eager"
+        fetchpriority="high"
+        style={`object-position: ${featuredPhotos.hero.position}`}
+      />
+    </div>
+    <figcaption>Una vida, una historia, un sí.</figcaption>
+  </figure>
+
+  <a
+    class="hero__scroll"
+    href="#detalles"
+    aria-label="Ir a los detalles de la boda"
+  >
+    <span aria-hidden="true">Descubre</span>
+    <span class="hero__scroll-line" aria-hidden="true"></span>
+  </a>
+</section>

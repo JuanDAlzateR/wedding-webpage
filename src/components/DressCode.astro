@@ -1,0 +1,40 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+import { weddingContent } from "../content/wedding";
+
+const { dressCode } = weddingContent;
+---
+
+<section
+  class="section section--dress"
+  id="vestuario"
+  aria-labelledby="dress-title"
+>
+  <div class="section__inner dress-layout">
+    <div class="dress-layout__heading">
+      <SectionHeading
+        id="dress-title"
+        eyebrow="Para celebrar"
+        title="Código de vestuario"
+      />
+      <p class="dress-layout__aside" aria-hidden="true">
+        Con estilo<br />y comodidad
+      </p>
+    </div>
+
+    <div class="dress-card">
+      <span class="dress-card__label">La guía</span>
+      <h3 class:list={{ "is-placeholder": dressCode.pending }}>
+        {dressCode.title}
+      </h3>
+      <p class:list={{ "is-placeholder": dressCode.pending }}>
+        {dressCode.description}
+      </p>
+      {
+        dressCode.pending && (
+          <span class="pending-label">Contenido pendiente</span>
+        )
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,35 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+import { weddingContent } from "../content/wedding";
+
+const { additionalInfo } = weddingContent;
+const visibleItems = additionalInfo.items.filter((item) => item.visible);
+---
+
+{
+  visibleItems.length > 0 && (
+    <section
+      class="section section--additional"
+      id="informacion"
+      aria-labelledby="additional-title"
+    >
+      <div class="section__inner">
+        <SectionHeading
+          id="additional-title"
+          eyebrow="Para tener en cuenta"
+          title="Información adicional"
+          align="center"
+        />
+        <p class="section-intro">{additionalInfo.intro}</p>
+        <div class="additional-grid">
+          {visibleItems.map((item) => (
+            <article class="additional-card">
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}

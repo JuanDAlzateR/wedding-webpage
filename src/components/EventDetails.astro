@@ -1,0 +1,82 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+import { weddingContent } from "../content/wedding";
+
+const { event } = weddingContent;
+---
+
+<section
+  class="section section--details"
+  id="detalles"
+  aria-labelledby="details-title"
+>
+  <div class="section__inner">
+    <SectionHeading
+      id="details-title"
+      eyebrow="La celebración"
+      title="Los detalles"
+      align="center"
+    />
+    <p class="section-intro">
+      Guarda este espacio: aquí encontrarás la información esencial para
+      acompañarnos.
+    </p>
+
+    <div class="details-grid">
+      <article class="detail-card">
+        <span class="detail-card__number" aria-hidden="true">01</span>
+        <p class="detail-card__label">Cuándo</p>
+        <h3 class:list={{ "is-placeholder": event.date.pending }}>
+          {event.date.value}
+        </h3>
+        <p class:list={{ "is-placeholder": event.time.pending }}>
+          {event.time.value}
+        </p>
+        {
+          (event.date.pending || event.time.pending) && (
+            <span class="pending-label">Información pendiente</span>
+          )
+        }
+      </article>
+
+      <article class="detail-card detail-card--accent">
+        <span class="detail-card__number" aria-hidden="true">02</span>
+        <p class="detail-card__label">Dónde</p>
+        <h3 class:list={{ "is-placeholder": event.venue.pending }}>
+          {event.venue.value}
+        </h3>
+        <p class:list={{ "is-placeholder": event.address.pending }}>
+          {event.address.value}
+        </p>
+        {
+          event.mapUrl ? (
+            <a
+              class="text-link"
+              href={event.mapUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Abrir ubicación en el mapa <span aria-hidden="true">↗</span>
+            </a>
+          ) : (
+            <span class="pending-label">Mapa pendiente</span>
+          )
+        }
+      </article>
+
+      <article class="detail-card">
+        <span class="detail-card__number" aria-hidden="true">03</span>
+        <p class="detail-card__label">Antes de llegar</p>
+        <h3>Indicaciones</h3>
+        <p class:list={{ "is-placeholder": event.arrivalNotes.pending }}>
+          {event.arrivalNotes.value}
+        </p>
+        {
+          event.arrivalNotes.pending && (
+            <span class="pending-label">Información pendiente</span>
+          )
+        }
+      </article>
+    </div>
+  </div>
+</section>

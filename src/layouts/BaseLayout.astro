@@ -1,0 +1,72 @@
+---
+import { getImage } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  socialImage: ImageMetadata;
+}
+
+const { title, description, socialImage } = Astro.props;
+const canonicalUrl = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site)
+  : undefined;
+const socialPreview = await getImage({
+  src: socialImage,
+  width: 1200,
+  height: 630,
+  format: "jpg",
+  quality: 84,
+  fit: "cover",
+});
+const socialPreviewUrl = Astro.site
+  ? new URL(socialPreview.src, Astro.site)
+  : undefined;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#f6f0e7" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+    {
+      socialPreviewUrl && (
+        <>
+          <meta property="og:image" content={socialPreviewUrl} />
+          <meta
+            property="og:image:alt"
+            content="La pareja sonriendo al aire libre."
+          />
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+        </>
+      )
+    }
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {
+      socialPreviewUrl && (
+        <meta name="twitter:image" content={socialPreviewUrl} />
+      )
+    }
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,26 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+import { weddingContent } from "../content/wedding";
+
+const { engagement } = weddingContent;
+---
+
+<section
+  class="section section--engagement"
+  id="compromiso"
+  aria-labelledby="engagement-title"
+>
+  <div class="engagement-ornament" aria-hidden="true">&amp;</div>
+  <div class="section__inner engagement-layout">
+    <SectionHeading
+      id="engagement-title"
+      eyebrow="El siguiente capítulo"
+      title={engagement.title}
+      light
+    />
+    <div class="engagement-card">
+      <span class="pending-label pending-label--light">Historia pendiente</span>
+      <p>{engagement.placeholder}</p>
+    </div>
+  </div>
+</section>

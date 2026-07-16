@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+# El sitemap se genera automáticamente al definir SITE_URL durante el build.

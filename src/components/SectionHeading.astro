@@ -1,0 +1,23 @@
+---
+interface Props {
+  id?: string;
+  eyebrow: string;
+  title: string;
+  align?: "left" | "center";
+  light?: boolean;
+}
+
+const { id, eyebrow, title, align = "left", light = false } = Astro.props;
+---
+
+<header
+  class:list={[
+    "section-heading",
+    `section-heading--${align}`,
+    { "section-heading--light": light },
+  ]}
+>
+  <p class="eyebrow">{eyebrow}</p>
+  <h2 id={id}>{title}</h2>
+  <span class="section-heading__line" aria-hidden="true"></span>
+</header>
