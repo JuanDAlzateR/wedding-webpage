@@ -31,4 +31,4 @@ La información todavía no confirmada aparece como pendiente. No reemplaces eso
 
 ## Estado actual
 
-El diseño y todas las secciones solicitadas están implementados. Antes de publicar deben actualizarse los nombres, fecha, hora, lugar, dirección, mapa, dress code, historias, información adicional, metadatos y favicon. Consulta `docs/CONTENT_EDITING.md` para la lista completa.
+El diseño y todas las secciones solicitadas están implementados. Los nombres, la fecha, la hora, el lugar, la dirección, la referencia de ubicación, el mapa y los metadatos de la ceremonia ya contienen la información confirmada. Antes de publicar todavía deben completarse el código de vestuario, las historias, la información adicional, la URL final y el favicon. Consulta `docs/CONTENT_EDITING.md` para la lista completa.

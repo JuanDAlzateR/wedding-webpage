@@ -6,16 +6,22 @@ No es necesario modificar los componentes visuales para cambiar los datos de la 
 
 Abre `src/content/wedding.ts`. Este archivo contiene nombres, fecha, hora, lugar, dirección, mapa, mensajes, dress code, historias, información adicional y visibilidad de secciones.
 
-Los campos con esta forma están pendientes:
+Los campos todavía no confirmados conservan esta forma:
 
 ```ts
-date: { value: "Fecha pendiente", pending: true }
+dressCode: {
+  title: "Código de vestuario pendiente",
+  pending: true
+}
 ```
 
-Reemplázalos así:
+Cuando recibas la información real, reemplázala y cambia `pending` a `false`:
 
 ```ts
-date: { value: "Sábado, 20 de junio de 2027", pending: false }
+dressCode: {
+  title: "Código de vestuario confirmado",
+  pending: false
+}
 ```
 
 Para ocultar o mostrar una sección, cambia su valor en `sections` entre `false` y `true`.
@@ -56,15 +62,10 @@ Los navegadores no manejan HEIC de forma consistente. Convierte estos archivos a
 
 ## Información pendiente antes de publicar
 
-- Nombres e iniciales reales.
-- Fecha, hora, lugar, dirección y enlace del mapa.
-- Mensaje de bienvenida.
 - Código de vestuario.
 - Historia de la pareja.
 - Historia del compromiso; debe seguir pendiente hasta recibir el relato real.
-- Indicaciones de llegada.
 - Transporte, regalos, política de niños y contacto, si aplican.
-- Título y descripción para buscadores y WhatsApp.
 - URL final en `SITE_URL`.
 - Favicon final.
 

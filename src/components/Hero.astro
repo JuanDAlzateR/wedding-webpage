@@ -25,8 +25,10 @@ const { couple, hero, event } = weddingContent;
     </p>
 
     <div class="hero__meta" aria-label="Fecha y lugar de la boda">
-      <span class:list={{ "is-placeholder": event.date.pending }}
-        >{event.date.value}</span
+      <time
+        datetime={event.dateIso}
+        class:list={{ "is-placeholder": event.date.pending }}
+        >{event.date.value}</time
       >
       <span class="hero__meta-separator" aria-hidden="true"></span>
       <span class:list={{ "is-placeholder": event.venue.pending }}
