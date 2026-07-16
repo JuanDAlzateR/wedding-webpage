@@ -19,34 +19,49 @@ export type AdditionalInfoItem = {
  */
 export const weddingContent = {
   couple: {
-    partnerOne: "Nombre 1",
-    partnerTwo: "Nombre 2",
-    initials: "N + N",
+    partnerOne: "Juan David",
+    partnerTwo: "Melisa",
+    initials: "J + M",
   },
   seo: {
-    title: "Nuestra boda | Nombre 1 & Nombre 2",
+    title: "Boda de Juan David y Melisa | 12 de octubre de 2026",
     description:
-      "Sitio de nuestra boda. Muy pronto compartiremos todos los detalles para nuestros invitados.",
+      "Juan David y Melisa se casan el 12 de octubre de 2026. Consulta los detalles de la ceremonia en la Parroquia El Portal de Jesús, en Envigado.",
   },
   hero: {
     eyebrow: "Nos casamos",
     message:
-      "Muy pronto compartiremos aquí todos los detalles para celebrar este día con las personas que queremos.",
-    messagePending: true,
+      "Con mucha alegría, queremos invitarte a celebrar este día tan especial con nosotros.",
+    messagePending: false,
     callToAction: "Conocer los detalles",
   },
   event: {
-    date: { value: "Fecha pendiente", pending: true } satisfies EditableText,
-    time: { value: "Hora pendiente", pending: true } satisfies EditableText,
-    venue: { value: "Lugar pendiente", pending: true } satisfies EditableText,
-    address: {
-      value: "Dirección pendiente",
-      pending: true,
+    date: {
+      value: "12 de octubre de 2026",
+      pending: false,
     } satisfies EditableText,
-    mapUrl: "",
+    dateIso: "2026-10-12",
+    time: { value: "10:00 a. m.", pending: false } satisfies EditableText,
+    dateTimeIso: "2026-10-12T10:00:00-05:00",
+    timeZone: "America/Bogota",
+    venue: {
+      value: "Parroquia El Portal de Jesús",
+      pending: false,
+    } satisfies EditableText,
+    address: {
+      value: "Calle 33B Sur #46A-11, Envigado, Antioquia",
+      pending: false,
+    } satisfies EditableText,
+    locationReference: "A dos cuadras de Viva Envigado",
+    ceremonyDescription:
+      "Nuestra ceremonia se celebrará en la Parroquia El Portal de Jesús, ubicada en la Calle 33B Sur #46A-11, Envigado, Antioquia, a dos cuadras de Viva Envigado.",
+    mapUrl:
+      "https://www.google.com/maps/search/?api=1&query=Parroquia%20El%20Portal%20de%20Jes%C3%BAs%2C%20Calle%2033B%20Sur%20%2346A-11%2C%20Envigado%2C%20Antioquia",
+    mapLabel: "Ver ubicación de la Parroquia El Portal de Jesús en Google Maps",
     arrivalNotes: {
-      value: "Las indicaciones de llegada se publicarán próximamente.",
-      pending: true,
+      value:
+        "La ceremonia comienza puntualmente a las 10:00 a. m. Te invitamos a llegar con anticipación para que puedas acompañarnos desde el inicio de la misa.",
+      pending: false,
     } satisfies EditableText,
   },
   dressCode: {

@@ -18,8 +18,7 @@ const { event } = weddingContent;
       align="center"
     />
     <p class="section-intro">
-      Guarda este espacio: aquí encontrarás la información esencial para
-      acompañarnos.
+      {event.ceremonyDescription}
     </p>
 
     <div class="details-grid">
@@ -27,10 +26,10 @@ const { event } = weddingContent;
         <span class="detail-card__number" aria-hidden="true">01</span>
         <p class="detail-card__label">Cuándo</p>
         <h3 class:list={{ "is-placeholder": event.date.pending }}>
-          {event.date.value}
+          <time datetime={event.dateIso}>{event.date.value}</time>
         </h3>
         <p class:list={{ "is-placeholder": event.time.pending }}>
-          {event.time.value}
+          <time datetime={event.dateTimeIso}>{event.time.value}</time>
         </p>
         {
           (event.date.pending || event.time.pending) && (
@@ -48,6 +47,7 @@ const { event } = weddingContent;
         <p class:list={{ "is-placeholder": event.address.pending }}>
           {event.address.value}
         </p>
+        <p class="detail-card__reference">{event.locationReference}</p>
         {
           event.mapUrl ? (
             <a
@@ -55,8 +55,9 @@ const { event } = weddingContent;
               href={event.mapUrl}
               target="_blank"
               rel="noreferrer"
+              aria-label={event.mapLabel}
             >
-              Abrir ubicación en el mapa <span aria-hidden="true">↗</span>
+              Ver ubicación en Google Maps <span aria-hidden="true">↗</span>
             </a>
           ) : (
             <span class="pending-label">Mapa pendiente</span>

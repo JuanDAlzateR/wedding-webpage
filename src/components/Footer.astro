@@ -9,9 +9,12 @@ const { couple, event, footer } = weddingContent;
   <p class="site-footer__names">
     {couple.partnerOne} &amp; {couple.partnerTwo}
   </p>
-  <p class:list={{ "is-placeholder": event.date.pending }}>
+  <time
+    datetime={event.dateIso}
+    class:list={{ "is-placeholder": event.date.pending }}
+  >
     {event.date.value}
-  </p>
+  </time>
   <span class="site-footer__line" aria-hidden="true"></span>
   <p
     class:list={[

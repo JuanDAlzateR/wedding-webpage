@@ -506,6 +506,20 @@ p {
   margin-bottom: 0;
 }
 
+.detail-card h3,
+.detail-card p,
+.detail-card a {
+  overflow-wrap: anywhere;
+}
+
+.detail-card__reference {
+  margin-top: 0.45rem;
+  color: var(--color-gold);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
 .text-link {
   width: fit-content;
   margin-top: 1.2rem;
