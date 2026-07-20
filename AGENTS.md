@@ -15,6 +15,7 @@ Este repositorio contiene un sitio web estático de boda, móvil primero y únic
 ## Directorios importantes
 
 - `src/content/wedding.ts`: única fuente de información editable de la boda
+- `src/content/invitations.ts`: tipos, rutas, metadatos y visibilidad por variante
 - `src/content/photos.ts`: manifiesto, orden, alt text y punto focal de imágenes
 - `photos/`: originales de fotografías
 - `src/components/`: secciones visuales
@@ -24,6 +25,8 @@ Este repositorio contiene un sitio web estático de boda, móvil primero y únic
 ## Contenido
 
 - No inventar nombres, fechas, lugares, historias, políticas, contactos ni enlaces.
+- La invitación `mass_only` no puede incluir texto, metadatos, navegación, assets de texto ni referencias a la celebración posterior.
+- La ruta no obvia de `mass_and_celebration` no debe copiarse en menús, pies, sitemaps o documentación general.
 - Mantener placeholders centralizados y claramente marcados.
 - La historia del compromiso debe permanecer pendiente hasta recibir el texto real.
 - Las secciones opcionales sin información confirmada deben permanecer ocultas.
@@ -59,7 +62,7 @@ pnpm build
 pnpm validate
 ```
 
-`pnpm test` ejecuta la comprobación estructural de Astro; no existe actualmente una suite de pruebas unitarias porque el sitio no contiene lógica de negocio.
+`pnpm test` ejecuta la comprobación estructural, el build y la verificación enfocada de las dos invitaciones.
 
 ## Validación obligatoria
 
@@ -69,8 +72,9 @@ Después de un cambio relevante:
 2. Ejecutar `pnpm lint`.
 3. Ejecutar `pnpm check`.
 4. Ejecutar `pnpm build`.
-5. Revisar móvil y escritorio cuando cambie la interfaz.
-6. Verificar imágenes, enlaces, placeholders, foco y reduced motion.
+5. Ejecutar `pnpm verify:invitations`.
+6. Revisar ambas variantes en móvil y escritorio cuando cambie la interfaz.
+7. Verificar imágenes, enlaces, placeholders, foco y reduced motion.
 
 No afirmar que un comando pasó si no se ejecutó exitosamente.
 

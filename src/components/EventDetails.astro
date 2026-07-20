@@ -1,38 +1,78 @@
 ---
 import SectionHeading from "./SectionHeading.astro";
-import { weddingContent } from "../content/wedding";
+import type { EventDetailsContent } from "../content/wedding";
 
-const { event } = weddingContent;
+interface Props {
+  id: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  event: EventDetailsContent;
+}
+
+const { id, eyebrow, title, description, event } = Astro.props;
+const titleId = `${id}-title`;
 ---
 
-<section
-  class="section section--details"
-  id="detalles"
-  aria-labelledby="details-title"
->
+<section class="section section--details" id={id} aria-labelledby={titleId}>
   <div class="section__inner">
     <SectionHeading
-      id="details-title"
-      eyebrow="La celebración"
-      title="Los detalles"
+      id={titleId}
+      eyebrow={eyebrow}
+      title={title}
       align="center"
     />
     <p class="section-intro">
-      {event.ceremonyDescription}
+      {description}
     </p>
 
-    <div class="details-grid">
+    <div
+      class:list={[
+        "details-grid",
+        { "details-grid--two": !event.arrivalNotes },
+      ]}
+    >
       <article class="detail-card">
         <span class="detail-card__number" aria-hidden="true">01</span>
         <p class="detail-card__label">Cuándo</p>
         <h3 class:list={{ "is-placeholder": event.date.pending }}>
           <time datetime={event.dateIso}>{event.date.value}</time>
         </h3>
-        <p class:list={{ "is-placeholder": event.time.pending }}>
-          <time datetime={event.dateTimeIso}>{event.time.value}</time>
+        <p
+          class:list={[
+            "detail-card__time",
+            {
+              "is-placeholder": event.time.pending || event.endTime?.pending,
+            },
+          ]}
+        >
+          {
+            event.endTime ? (
+              <>
+                <span class="detail-card__time-segment">
+                  de{" "}
+                  <time datetime={event.dateTimeIso || undefined}>
+                    {event.time.value}
+                  </time>
+                </span>{" "}
+                <span class="detail-card__time-segment">
+                  a{" "}
+                  <time datetime={event.endDateTimeIso || undefined}>
+                    {event.endTime.value}
+                  </time>
+                </span>
+              </>
+            ) : (
+              <time datetime={event.dateTimeIso || undefined}>
+                {event.time.value}
+              </time>
+            )
+          }
         </p>
         {
-          (event.date.pending || event.time.pending) && (
+          (event.date.pending ||
+            event.time.pending ||
+            event.endTime?.pending) && (
             <span class="pending-label">Información pendiente</span>
           )
         }
@@ -47,7 +87,11 @@ const { event } = weddingContent;
         <p class:list={{ "is-placeholder": event.address.pending }}>
           {event.address.value}
         </p>
-        <p class="detail-card__reference">{event.locationReference}</p>
+        {
+          event.locationReference && (
+            <p class="detail-card__reference">{event.locationReference}</p>
+          )
+        }
         {
           event.mapUrl ? (
             <a
@@ -60,24 +104,28 @@ const { event } = weddingContent;
               Ver ubicación en Google Maps <span aria-hidden="true">↗</span>
             </a>
           ) : (
-            <span class="pending-label">Mapa pendiente</span>
+            <span class="pending-label">Ubicación pendiente</span>
           )
         }
       </article>
 
-      <article class="detail-card">
-        <span class="detail-card__number" aria-hidden="true">03</span>
-        <p class="detail-card__label">Antes de llegar</p>
-        <h3>Indicaciones</h3>
-        <p class:list={{ "is-placeholder": event.arrivalNotes.pending }}>
-          {event.arrivalNotes.value}
-        </p>
-        {
-          event.arrivalNotes.pending && (
-            <span class="pending-label">Información pendiente</span>
-          )
-        }
-      </article>
+      {
+        event.arrivalNotes && (
+          <article class="detail-card">
+            <span class="detail-card__number" aria-hidden="true">
+              03
+            </span>
+            <p class="detail-card__label">Antes de llegar</p>
+            <h3>Indicaciones</h3>
+            <p class:list={{ "is-placeholder": event.arrivalNotes.pending }}>
+              {event.arrivalNotes.value}
+            </p>
+            {event.arrivalNotes.pending && (
+              <span class="pending-label">Información pendiente</span>
+            )}
+          </article>
+        )
+      }
     </div>
   </div>
 </section>

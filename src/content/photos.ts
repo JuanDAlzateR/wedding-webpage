@@ -87,9 +87,9 @@ export const galleryPhotos: WeddingPhoto[] = [
     position: "center 38%",
   },
   {
-    id: "celebration-picnic",
+    id: "home-picnic",
     src: galleryPicnic,
-    alt: "La pareja durante una celebración en casa.",
+    alt: "La pareja compartiendo una tarde en casa.",
     layout: "landscape",
     position: "center 42%",
   },
@@ -103,7 +103,7 @@ export const galleryPhotos: WeddingPhoto[] = [
   {
     id: "winter-moment",
     src: galleryWinter,
-    alt: "La pareja riendo durante una celebración navideña.",
+    alt: "La pareja riendo frente a un árbol iluminado.",
     layout: "portrait",
     position: "center",
   },
