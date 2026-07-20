@@ -16,11 +16,11 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro check",
-    "validate": "pnpm format:check && pnpm lint && pnpm check && pnpm build"
+    "test": "pnpm check && pnpm build && pnpm verify:invitations",
+    "verify:invitations": "node scripts/verify-invitations.mjs",
+    "validate": "pnpm format:check && pnpm lint && pnpm check && pnpm build && pnpm verify:invitations"
   },
   "dependencies": {
-    "@astrojs/sitemap": "3.7.3",
     "@fontsource-variable/cormorant-garamond": "5.2.6",
     "@fontsource-variable/manrope": "5.2.8",
     "astro": "7.0.9",

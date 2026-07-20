@@ -1,7 +1,7 @@
 ---
 import { weddingContent } from "../content/wedding";
 
-const { couple, event, footer } = weddingContent;
+const { couple, ceremony, footer } = weddingContent;
 ---
 
 <footer class="site-footer">
@@ -10,10 +10,10 @@ const { couple, event, footer } = weddingContent;
     {couple.partnerOne} &amp; {couple.partnerTwo}
   </p>
   <time
-    datetime={event.dateIso}
-    class:list={{ "is-placeholder": event.date.pending }}
+    datetime={ceremony.dateIso}
+    class:list={{ "is-placeholder": ceremony.date.pending }}
   >
-    {event.date.value}
+    {ceremony.date.value}
   </time>
   <span class="site-footer__line" aria-hidden="true"></span>
   <p

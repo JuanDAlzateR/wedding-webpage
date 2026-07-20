@@ -1,4 +1,3 @@
-import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
 
 const site = process.env.SITE_URL;
@@ -9,7 +8,6 @@ export default defineConfig({
   site,
   base,
   trailingSlash: "always",
-  integrations: site ? [sitemap()] : [],
   build: {
     assets: "assets",
   },

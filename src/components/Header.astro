@@ -1,7 +1,14 @@
 ---
+import type { InvitationNavigationItem } from "../content/invitations";
 import { weddingContent } from "../content/wedding";
 
 const { initials, partnerOne, partnerTwo } = weddingContent.couple;
+
+interface Props {
+  navigation: readonly InvitationNavigationItem[];
+}
+
+const { navigation } = Astro.props;
 ---
 
 <header class="site-header">
@@ -14,8 +21,6 @@ const { initials, partnerOne, partnerTwo } = weddingContent.couple;
   </a>
 
   <nav class="site-header__nav" aria-label="Navegación principal">
-    <a href="#detalles">Detalles</a>
-    <a href="#historia">Historia</a>
-    <a href="#fotos">Fotos</a>
+    {navigation.map((item) => <a href={item.href}>{item.label}</a>)}
   </nav>
 </header>
