@@ -1,6 +1,6 @@
 # Despliegue
 
-El sitio genera archivos estáticos en `dist/`. No necesita servidor, base de datos ni credenciales en el navegador.
+El sitio genera archivos estáticos en `dist/`. No necesita servidor, base de datos ni credenciales en el navegador. Las dos variantes se generan como directorios con `index.html`, por lo que el acceso directo y la recarga funcionan en Cloudflare Pages.
 
 ## Cloudflare Pages — recomendado
 
@@ -11,7 +11,7 @@ El sitio genera archivos estáticos en `dist/`. No necesita servidor, base de da
    - Comando de build: `pnpm build`
    - Directorio de salida: `dist`
    - Node.js: 24
-4. Agrega `SITE_URL` con la URL real, sin barra final, para habilitar canonical, sitemap y la imagen social absoluta.
+4. Agrega `SITE_URL` con la URL real, sin barra final, para habilitar canonical y la imagen social absoluta.
 5. No configures `BASE_PATH` para un dominio normal o una dirección `pages.dev`.
 
 ## GitHub Pages
@@ -36,3 +36,9 @@ pnpm preview
 ```
 
 Comprueba la URL final compartiéndola en WhatsApp. La imagen social solo se publica como URL absoluta cuando `SITE_URL` está configurada.
+
+## Privacidad de las invitaciones
+
+Ambas variantes declaran `noindex, nofollow`, `robots.txt` bloquea el rastreo completo y no se genera sitemap. La variante completa no está enlazada desde páginas públicas. Estas medidas reducen descubrimientos accidentales, pero una URL estática no es autenticación ni confidencialidad.
+
+La raíz `/` renderiza la variante de eucaristía. Las rutas reales se definen únicamente en `src/content/invitations.ts`; evita copiar la ruta completa en documentación o listados destinados a invitados.

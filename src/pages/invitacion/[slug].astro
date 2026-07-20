@@ -1,0 +1,23 @@
+---
+import InvitationPage from "../../components/InvitationPage.astro";
+import {
+  getInvitationSlug,
+  invitationVariants,
+  type InvitationType,
+} from "../../content/invitations";
+
+export function getStaticPaths() {
+  return Object.values(invitationVariants).map((variant) => ({
+    params: { slug: getInvitationSlug(variant) },
+    props: { type: variant.type },
+  }));
+}
+
+interface Props {
+  type: InvitationType;
+}
+
+const { type } = Astro.props;
+---
+
+<InvitationPage type={type} />

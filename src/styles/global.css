@@ -31,6 +31,7 @@ html {
 
 body {
   margin: 0;
+  overflow-x: hidden;
   background: var(--color-ivory);
   color: var(--color-ink);
   font-family: var(--font-body);
@@ -920,8 +921,13 @@ p {
 }
 
 @media (max-width: 520px) {
-  .site-header__nav a:nth-child(2) {
-    display: none;
+  .site-header__nav {
+    justify-content: flex-end;
+    gap: 0.65rem;
+  }
+
+  .site-header__nav a {
+    font-size: 0.6rem;
   }
 
   .hero h1 {

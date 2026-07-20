@@ -2,9 +2,28 @@
 
 No es necesario modificar los componentes visuales para cambiar los datos de la boda.
 
+## Tipos de invitación
+
+`src/content/invitations.ts` define los identificadores `mass_only` y `mass_and_celebration`, sus rutas, metadatos, texto de introducción, navegación y secciones visibles.
+
+La variante de eucaristía nunca renderiza la celebración posterior, el código de vestuario ni la información adicional. No añadas un selector ni enlaces entre variantes.
+
+Para cambiar la ruta no obvia de la invitación completa:
+
+1. Edita únicamente `invitationRoutes.massAndCelebration`.
+2. Mantén el formato `/invitacion/slug-no-obvio/`.
+3. Ejecuta `pnpm validate`.
+4. Actualiza los enlaces que se compartan de forma privada fuera del repositorio.
+
+No copies el slug en menús, pies de página o documentación general. Ocultarlo reduce descubrimientos accidentales, pero no constituye control de acceso.
+
 ## Información de la boda
 
-Abre `src/content/wedding.ts`. Este archivo contiene nombres, fecha, hora, lugar, dirección, mapa, mensajes, dress code, historias, información adicional y visibilidad de secciones.
+Abre `src/content/wedding.ts`. Este archivo contiene nombres, datos compartidos de la eucaristía, datos exclusivos de la celebración posterior, dress code, historias, información adicional y visibilidad de secciones.
+
+- `ceremony`: fecha, hora, lugar, dirección, mapa e indicaciones compartidos por ambas invitaciones.
+- `celebration`: hora, lugar, dirección, mapa e indicaciones que solo puede renderizar la invitación completa.
+- `sections`: disponibilidad global de cada sección. La configuración de cada variante puede ocultarla adicionalmente.
 
 Los campos todavía no confirmados conservan esta forma:
 
@@ -24,7 +43,7 @@ dressCode: {
 }
 ```
 
-Para ocultar o mostrar una sección, cambia su valor en `sections` entre `false` y `true`.
+Para ocultar o mostrar una sección, cambia su valor en `sections` entre `false` y `true`. Una sección aparece solo cuando está habilitada tanto en `wedding.ts` como en la variante correspondiente de `invitations.ts`.
 
 ## Fotografías
 
@@ -62,6 +81,7 @@ Los navegadores no manejan HEIC de forma consistente. Convierte estos archivos a
 
 ## Información pendiente antes de publicar
 
+- Lugar, hora, dirección, mapa e indicaciones de la celebración posterior.
 - Código de vestuario.
 - Historia de la pareja.
 - Historia del compromiso; debe seguir pendiente hasta recibir el relato real.
@@ -69,4 +89,6 @@ Los navegadores no manejan HEIC de forma consistente. Convierte estos archivos a
 - URL final en `SITE_URL`.
 - Favicon final.
 
-Después de editar, ejecuta `pnpm validate` y revisa el sitio en teléfono y escritorio.
+Después de editar, ejecuta `pnpm validate` y revisa ambas rutas en teléfono y escritorio.
+
+La verificación automática comprueba el HTML generado, los metadatos, las anclas y los assets de texto cargados por la invitación de eucaristía. Si agregas información exclusiva, inclúyela también en `scripts/verify-invitations.mjs` para que una filtración provoque un fallo.

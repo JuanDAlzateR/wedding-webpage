@@ -10,6 +10,21 @@ export type AdditionalInfoItem = {
   visible: boolean;
 };
 
+export type EventDetailsContent = {
+  date: EditableText;
+  dateIso: string;
+  time: EditableText;
+  dateTimeIso: string;
+  timeZone?: string;
+  venue: EditableText;
+  address: EditableText;
+  locationReference: string;
+  description: string;
+  mapUrl: string;
+  mapLabel: string;
+  arrivalNotes: EditableText;
+};
+
 /**
  * ÚNICO ARCHIVO PARA EDITAR LA INFORMACIÓN DE LA BODA.
  *
@@ -23,19 +38,11 @@ export const weddingContent = {
     partnerTwo: "Melisa",
     initials: "J + M",
   },
-  seo: {
-    title: "Boda de Juan David y Melisa | 12 de octubre de 2026",
-    description:
-      "Juan David y Melisa se casan el 12 de octubre de 2026. Consulta los detalles de la ceremonia en la Parroquia El Portal de Jesús, en Envigado.",
-  },
   hero: {
     eyebrow: "Nos casamos",
-    message:
-      "Con mucha alegría, queremos invitarte a celebrar este día tan especial con nosotros.",
-    messagePending: false,
     callToAction: "Conocer los detalles",
   },
-  event: {
+  ceremony: {
     date: {
       value: "12 de octubre de 2026",
       pending: false,
@@ -53,7 +60,7 @@ export const weddingContent = {
       pending: false,
     } satisfies EditableText,
     locationReference: "A dos cuadras de Viva Envigado",
-    ceremonyDescription:
+    description:
       "Nuestra ceremonia se celebrará en la Parroquia El Portal de Jesús, ubicada en la Calle 33B Sur #46A-11, Envigado, Antioquia, a dos cuadras de Viva Envigado.",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Parroquia%20El%20Portal%20de%20Jes%C3%BAs%2C%20Calle%2033B%20Sur%20%2346A-11%2C%20Envigado%2C%20Antioquia",
@@ -63,7 +70,25 @@ export const weddingContent = {
         "La ceremonia comienza puntualmente a las 10:00 a. m. Te invitamos a llegar con anticipación para que puedas acompañarnos desde el inicio de la misa.",
       pending: false,
     } satisfies EditableText,
-  },
+  } satisfies EventDetailsContent,
+  celebration: {
+    time: { value: "Hora pendiente", pending: true } satisfies EditableText,
+    dateTimeIso: "",
+    venue: { value: "Lugar pendiente", pending: true } satisfies EditableText,
+    address: {
+      value: "Dirección pendiente",
+      pending: true,
+    } satisfies EditableText,
+    locationReference: "",
+    description:
+      "Los datos de la celebración posterior se publicarán cuando estén confirmados.",
+    mapUrl: "",
+    mapLabel: "",
+    arrivalNotes: {
+      value: "Indicaciones pendientes.",
+      pending: true,
+    } satisfies EditableText,
+  } satisfies Omit<EventDetailsContent, "date" | "dateIso">,
   dressCode: {
     title: "Código de vestuario pendiente",
     description: "Publicaremos la guía de vestuario cuando esté confirmada.",
@@ -115,7 +140,8 @@ export const weddingContent = {
     closingPending: true,
   },
   sections: {
-    details: true,
+    ceremony: true,
+    celebration: true,
     dressCode: true,
     story: true,
     engagement: true,

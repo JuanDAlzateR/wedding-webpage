@@ -1,9 +1,15 @@
 ---
 import { Image } from "astro:assets";
-import { weddingContent } from "../content/wedding";
 import { featuredPhotos } from "../content/photos";
+import { weddingContent } from "../content/wedding";
 
-const { couple, hero, event } = weddingContent;
+interface Props {
+  message: string;
+  detailsAnchor: `#${string}`;
+}
+
+const { message, detailsAnchor } = Astro.props;
+const { couple, hero, ceremony } = weddingContent;
 ---
 
 <section class="hero" id="inicio" aria-labelledby="hero-title">
@@ -18,25 +24,21 @@ const { couple, hero, event } = weddingContent;
       <span>{couple.partnerTwo}</span>
     </h1>
 
-    <p
-      class:list={["hero__message", { "is-placeholder": hero.messagePending }]}
-    >
-      {hero.message}
-    </p>
+    <p class="hero__message">{message}</p>
 
     <div class="hero__meta" aria-label="Fecha y lugar de la boda">
       <time
-        datetime={event.dateIso}
-        class:list={{ "is-placeholder": event.date.pending }}
-        >{event.date.value}</time
+        datetime={ceremony.dateIso}
+        class:list={{ "is-placeholder": ceremony.date.pending }}
+        >{ceremony.date.value}</time
       >
       <span class="hero__meta-separator" aria-hidden="true"></span>
-      <span class:list={{ "is-placeholder": event.venue.pending }}
-        >{event.venue.value}</span
+      <span class:list={{ "is-placeholder": ceremony.venue.pending }}
+        >{ceremony.venue.value}</span
       >
     </div>
 
-    <a class="button button--primary" href="#detalles">
+    <a class="button button--primary" href={detailsAnchor}>
       {hero.callToAction}
       <span aria-hidden="true">↓</span>
     </a>
@@ -62,8 +64,8 @@ const { couple, hero, event } = weddingContent;
 
   <a
     class="hero__scroll"
-    href="#detalles"
-    aria-label="Ir a los detalles de la boda"
+    href={detailsAnchor}
+    aria-label="Ir a los detalles de la eucaristía"
   >
     <span aria-hidden="true">Descubre</span>
     <span class="hero__scroll-line" aria-hidden="true"></span>

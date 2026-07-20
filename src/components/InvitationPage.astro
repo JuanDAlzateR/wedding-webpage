@@ -1,0 +1,81 @@
+---
+import AdditionalInfo from "./AdditionalInfo.astro";
+import DressCode from "./DressCode.astro";
+import Engagement from "./Engagement.astro";
+import EventDetails from "./EventDetails.astro";
+import Footer from "./Footer.astro";
+import Gallery from "./Gallery.astro";
+import Header from "./Header.astro";
+import Hero from "./Hero.astro";
+import Story from "./Story.astro";
+import { featuredPhotos } from "../content/photos";
+import {
+  getInvitationVariant,
+  type InvitationType,
+} from "../content/invitations";
+import { weddingContent } from "../content/wedding";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+interface Props {
+  type: InvitationType;
+}
+
+const { type } = Astro.props;
+const variant = getInvitationVariant(type);
+const { ceremony, celebration, sections: contentSections } = weddingContent;
+const sections = {
+  ceremony: variant.sections.ceremony && contentSections.ceremony,
+  celebration: variant.sections.celebration && contentSections.celebration,
+  dressCode: variant.sections.dressCode && contentSections.dressCode,
+  story: variant.sections.story && contentSections.story,
+  engagement: variant.sections.engagement && contentSections.engagement,
+  gallery: variant.sections.gallery && contentSections.gallery,
+  additionalInfo:
+    variant.sections.additionalInfo && contentSections.additionalInfo,
+};
+---
+
+<BaseLayout
+  title={variant.pageTitle}
+  description={variant.pageDescription}
+  robots={variant.robots}
+  socialImage={featuredPhotos.social}
+  socialImageAlt="La pareja sonriendo al aire libre."
+>
+  <Header navigation={variant.navigation} />
+  <main id="contenido">
+    <Hero message={variant.heroMessage} detailsAnchor="#eucaristia" />
+    {
+      sections.ceremony && (
+        <EventDetails
+          id="eucaristia"
+          eyebrow="Nuestro matrimonio"
+          title="La eucaristía"
+          description={ceremony.description}
+          event={ceremony}
+        />
+      )
+    }
+    {
+      sections.celebration && (
+        <EventDetails
+          id="encuentro"
+          eyebrow="Después de la eucaristía"
+          title="Celebración posterior"
+          description={celebration.description}
+          event={{
+            ...celebration,
+            date: ceremony.date,
+            dateIso: ceremony.dateIso,
+          }}
+        />
+      )
+    }
+    {sections.dressCode && <DressCode />}
+    {sections.story && <Story />}
+    {sections.engagement && <Engagement />}
+    {sections.gallery && <Gallery />}
+    {sections.additionalInfo && <AdditionalInfo />}
+  </main>
+  <Footer />
+</BaseLayout>
