@@ -22,7 +22,7 @@ No copies el slug en menús, pies de página o documentación general. Ocultarlo
 Abre `src/content/wedding.ts`. Este archivo contiene nombres, datos compartidos de la eucaristía, datos exclusivos de la celebración posterior, dress code, historias, información adicional y visibilidad de secciones.
 
 - `ceremony`: fecha, hora, lugar, dirección, mapa e indicaciones compartidos por ambas invitaciones.
-- `celebration`: hora, lugar, dirección, mapa e indicaciones que solo puede renderizar la invitación completa.
+- `celebration`: horario, lugar, dirección, referencia y mapa que solo puede renderizar la invitación completa.
 - `sections`: disponibilidad global de cada sección. La configuración de cada variante puede ocultarla adicionalmente.
 
 Los campos todavía no confirmados conservan esta forma:
@@ -81,7 +81,6 @@ Los navegadores no manejan HEIC de forma consistente. Convierte estos archivos a
 
 ## Información pendiente antes de publicar
 
-- Lugar, hora, dirección, mapa e indicaciones de la celebración posterior.
 - Código de vestuario.
 - Historia de la pareja.
 - Historia del compromiso; debe seguir pendiente hasta recibir el relato real.

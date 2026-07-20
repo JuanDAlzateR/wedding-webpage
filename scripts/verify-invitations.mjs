@@ -70,12 +70,16 @@ for (const text of sharedCeremonyText) {
 
 const completeOnlyText = [
   "Celebración posterior",
-  "Los datos de la celebración posterior",
-  "Hora pendiente",
-  "Lugar pendiente",
-  "Dirección pendiente",
-  "Indicaciones pendientes",
-  "Ubicación pendiente",
+  "Después de la eucaristía, celebraremos juntos",
+  "12:30 p. m.",
+  "6:00 p. m.",
+  "2026-10-12T12:30:00-05:00",
+  "2026-10-12T18:00:00-05:00",
+  "Noviciado Hermanas Oblatas de San Francisco de Sales",
+  "Carrera 32 #71 Sur-240, Poblado del Sur, Sabaneta, Antioquia",
+  "Cerca de la Parroquia San Felipe Apóstol",
+  "Ver ubicación de la celebración en Google Maps",
+  "Noviciado%20Hermanas%20Oblatas%20de%20San%20Francisco%20de%20Sales",
   "Código de vestuario",
   'href="#encuentro"',
 ];
@@ -92,6 +96,22 @@ for (const text of completeOnlyText) {
   assert.ok(
     completeHtml.includes(text),
     `La invitación completa no contiene: ${text}`,
+  );
+}
+
+const removedCelebrationPlaceholders = [
+  "Hora pendiente",
+  "Lugar pendiente",
+  "Dirección pendiente",
+  "Indicaciones pendientes",
+  "Ubicación pendiente",
+  "Los datos de la celebración posterior se publicarán",
+];
+
+for (const text of removedCelebrationPlaceholders) {
+  assert.ok(
+    !completeHtml.includes(text),
+    `La invitación completa conserva un placeholder reemplazado: ${text}`,
   );
 }
 

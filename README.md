@@ -39,6 +39,6 @@ La información todavía no confirmada aparece como pendiente. No reemplaces eso
 
 ## Estado actual
 
-Los nombres, la fecha, la hora, el lugar, la dirección, la referencia de ubicación y el mapa de la eucaristía contienen la información confirmada. Todavía faltan el lugar, la hora, la dirección, el mapa y las indicaciones de la celebración posterior; la invitación completa los muestra como pendientes para no inventar información. También están pendientes el código de vestuario, las historias, la información adicional, la URL final y el favicon. Consulta `docs/CONTENT_EDITING.md` para la lista completa.
+Los nombres, la fecha, los horarios, los lugares, las direcciones, las referencias de ubicación y los mapas de la eucaristía y de la celebración posterior contienen la información confirmada. Todavía están pendientes el código de vestuario, las historias, la información adicional, la URL final y el favicon. Consulta `docs/CONTENT_EDITING.md` para la lista completa.
 
 Ambas variantes usan `noindex, nofollow` y `robots.txt` bloquea el rastreo. La ruta no obvia reduce el descubrimiento accidental, pero no autentica a los invitados ni protege el contenido frente a quien conozca o adivine la URL.

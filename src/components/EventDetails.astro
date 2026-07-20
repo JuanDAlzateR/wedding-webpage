@@ -26,20 +26,53 @@ const titleId = `${id}-title`;
       {description}
     </p>
 
-    <div class="details-grid">
+    <div
+      class:list={[
+        "details-grid",
+        { "details-grid--two": !event.arrivalNotes },
+      ]}
+    >
       <article class="detail-card">
         <span class="detail-card__number" aria-hidden="true">01</span>
         <p class="detail-card__label">Cuándo</p>
         <h3 class:list={{ "is-placeholder": event.date.pending }}>
           <time datetime={event.dateIso}>{event.date.value}</time>
         </h3>
-        <p class:list={{ "is-placeholder": event.time.pending }}>
-          <time datetime={event.dateTimeIso || undefined}
-            >{event.time.value}</time
-          >
+        <p
+          class:list={[
+            "detail-card__time",
+            {
+              "is-placeholder": event.time.pending || event.endTime?.pending,
+            },
+          ]}
+        >
+          {
+            event.endTime ? (
+              <>
+                <span class="detail-card__time-segment">
+                  de{" "}
+                  <time datetime={event.dateTimeIso || undefined}>
+                    {event.time.value}
+                  </time>
+                </span>{" "}
+                <span class="detail-card__time-segment">
+                  a{" "}
+                  <time datetime={event.endDateTimeIso || undefined}>
+                    {event.endTime.value}
+                  </time>
+                </span>
+              </>
+            ) : (
+              <time datetime={event.dateTimeIso || undefined}>
+                {event.time.value}
+              </time>
+            )
+          }
         </p>
         {
-          (event.date.pending || event.time.pending) && (
+          (event.date.pending ||
+            event.time.pending ||
+            event.endTime?.pending) && (
             <span class="pending-label">Información pendiente</span>
           )
         }
@@ -76,19 +109,23 @@ const titleId = `${id}-title`;
         }
       </article>
 
-      <article class="detail-card">
-        <span class="detail-card__number" aria-hidden="true">03</span>
-        <p class="detail-card__label">Antes de llegar</p>
-        <h3>Indicaciones</h3>
-        <p class:list={{ "is-placeholder": event.arrivalNotes.pending }}>
-          {event.arrivalNotes.value}
-        </p>
-        {
-          event.arrivalNotes.pending && (
-            <span class="pending-label">Información pendiente</span>
-          )
-        }
-      </article>
+      {
+        event.arrivalNotes && (
+          <article class="detail-card">
+            <span class="detail-card__number" aria-hidden="true">
+              03
+            </span>
+            <p class="detail-card__label">Antes de llegar</p>
+            <h3>Indicaciones</h3>
+            <p class:list={{ "is-placeholder": event.arrivalNotes.pending }}>
+              {event.arrivalNotes.value}
+            </p>
+            {event.arrivalNotes.pending && (
+              <span class="pending-label">Información pendiente</span>
+            )}
+          </article>
+        )
+      }
     </div>
   </div>
 </section>

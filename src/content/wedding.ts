@@ -15,6 +15,8 @@ export type EventDetailsContent = {
   dateIso: string;
   time: EditableText;
   dateTimeIso: string;
+  endTime?: EditableText;
+  endDateTimeIso?: string;
   timeZone?: string;
   venue: EditableText;
   address: EditableText;
@@ -22,7 +24,7 @@ export type EventDetailsContent = {
   description: string;
   mapUrl: string;
   mapLabel: string;
-  arrivalNotes: EditableText;
+  arrivalNotes?: EditableText;
 };
 
 /**
@@ -72,22 +74,24 @@ export const weddingContent = {
     } satisfies EditableText,
   } satisfies EventDetailsContent,
   celebration: {
-    time: { value: "Hora pendiente", pending: true } satisfies EditableText,
-    dateTimeIso: "",
-    venue: { value: "Lugar pendiente", pending: true } satisfies EditableText,
+    time: { value: "12:30 p. m.", pending: false } satisfies EditableText,
+    dateTimeIso: "2026-10-12T12:30:00-05:00",
+    endTime: { value: "6:00 p. m.", pending: false } satisfies EditableText,
+    endDateTimeIso: "2026-10-12T18:00:00-05:00",
+    venue: {
+      value: "Noviciado Hermanas Oblatas de San Francisco de Sales",
+      pending: false,
+    } satisfies EditableText,
     address: {
-      value: "Dirección pendiente",
-      pending: true,
+      value: "Carrera 32 #71 Sur-240, Poblado del Sur, Sabaneta, Antioquia",
+      pending: false,
     } satisfies EditableText,
-    locationReference: "",
+    locationReference: "Cerca de la Parroquia San Felipe Apóstol",
     description:
-      "Los datos de la celebración posterior se publicarán cuando estén confirmados.",
-    mapUrl: "",
-    mapLabel: "",
-    arrivalNotes: {
-      value: "Indicaciones pendientes.",
-      pending: true,
-    } satisfies EditableText,
+      "Después de la eucaristía, celebraremos juntos en el Noviciado Hermanas Oblatas de San Francisco de Sales.",
+    mapUrl:
+      "https://www.google.com/maps/search/?api=1&query=Noviciado%20Hermanas%20Oblatas%20de%20San%20Francisco%20de%20Sales%2C%20Carrera%2032%20%2371%20Sur-240%2C%20Poblado%20del%20Sur%2C%20Sabaneta%2C%20Antioquia",
+    mapLabel: "Ver ubicación de la celebración en Google Maps",
   } satisfies Omit<EventDetailsContent, "date" | "dateIso">,
   dressCode: {
     title: "Código de vestuario pendiente",
