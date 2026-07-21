@@ -63,13 +63,13 @@ export const weddingContent = {
     } satisfies EditableText,
     locationReference: "A dos cuadras de Viva Envigado",
     description:
-      "Nuestra ceremonia se celebrará en la Parroquia El Portal de Jesús, ubicada en la Calle 33B Sur #46A-11, Envigado, Antioquia, a dos cuadras de Viva Envigado.",
+      "Nuestra liturgia se celebrará en la Parroquia El Portal de Jesús, ubicada en la Calle 33B Sur #46A-11, Envigado, Antioquia, a dos cuadras de Viva Envigado.",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Parroquia%20El%20Portal%20de%20Jes%C3%BAs%2C%20Calle%2033B%20Sur%20%2346A-11%2C%20Envigado%2C%20Antioquia",
     mapLabel: "Ver ubicación de la Parroquia El Portal de Jesús en Google Maps",
     arrivalNotes: {
       value:
-        "La ceremonia comienza puntualmente a las 10:00 a. m. Te invitamos a llegar con anticipación para que puedas acompañarnos desde el inicio de la misa.",
+        "La liturgia comienza puntualmente a las 10:00 a. m. Te invitamos a llegar con anticipación para que puedas acompañarnos desde el inicio de la Misa.",
       pending: false,
     } satisfies EditableText,
   } satisfies EventDetailsContent,
@@ -88,7 +88,7 @@ export const weddingContent = {
     } satisfies EditableText,
     locationReference: "Cerca de la Parroquia San Felipe Apóstol",
     description:
-      "Después de la eucaristía, celebraremos juntos en el Noviciado Hermanas Oblatas de San Francisco de Sales.",
+      "Después de la Eucaristía, celebraremos juntos en el Noviciado Hermanas Oblatas de San Francisco de Sales.",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Noviciado%20Hermanas%20Oblatas%20de%20San%20Francisco%20de%20Sales%2C%20Carrera%2032%20%2371%20Sur-240%2C%20Poblado%20del%20Sur%2C%20Sabaneta%2C%20Antioquia",
     mapLabel: "Ver ubicación de la celebración en Google Maps",

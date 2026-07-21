@@ -16,7 +16,7 @@ assert.ok(
 );
 assert.ok(
   existsSync(join(massDirectory, "index.html")),
-  "No se generó la ruta pública de la eucaristía.",
+  "No se generó la ruta pública de la Eucaristía.",
 );
 
 const generatedInvitationDirectories = readdirSync(invitationsDirectory, {
@@ -59,7 +59,7 @@ const sharedCeremonyText = [
 for (const text of sharedCeremonyText) {
   assert.ok(
     massHtml.includes(text),
-    `La invitación de eucaristía no contiene: ${text}`,
+    `La invitación de Eucaristía no contiene: ${text}`,
   );
   assert.ok(rootHtml.includes(text), `La raíz no contiene: ${text}`);
   assert.ok(
@@ -70,7 +70,7 @@ for (const text of sharedCeremonyText) {
 
 const completeOnlyText = [
   "Celebración posterior",
-  "Después de la eucaristía, celebraremos juntos",
+  "Después de la Eucaristía, celebraremos juntos",
   "12:30 p. m.",
   "6:00 p. m.",
   "2026-10-12T12:30:00-05:00",
@@ -87,7 +87,7 @@ const completeOnlyText = [
 for (const text of completeOnlyText) {
   assert.ok(
     !massHtml.includes(text),
-    `La invitación de eucaristía expone contenido exclusivo: ${text}`,
+    `La invitación de Eucaristía expone contenido exclusivo: ${text}`,
   );
   assert.ok(
     !rootHtml.includes(text),
@@ -117,13 +117,13 @@ for (const text of removedCelebrationPlaceholders) {
 
 assert.ok(
   !massHtml.includes(completeSlug),
-  "La invitación de eucaristía expone la ruta completa.",
+  "La invitación de Eucaristía expone la ruta completa.",
 );
 assert.ok(!rootHtml.includes(completeSlug), "La raíz expone la ruta completa.");
 assert.match(
   massHtml,
   /<meta name="robots" content="noindex, nofollow">/,
-  "Falta noindex, nofollow en la invitación de eucaristía.",
+  "Falta noindex, nofollow en la invitación de Eucaristía.",
 );
 assert.match(
   completeHtml,
@@ -140,7 +140,7 @@ const massHead = massHtml.match(/<head>([\s\S]*?)<\/head>/)?.[1] ?? "";
 for (const text of completeOnlyText) {
   assert.ok(
     !massHead.includes(text),
-    `Los metadatos de eucaristía exponen contenido exclusivo: ${text}`,
+    `Los metadatos de Eucaristía exponen contenido exclusivo: ${text}`,
   );
 }
 
@@ -160,7 +160,7 @@ function assertHashLinksResolve(html, routeLabel) {
   }
 }
 
-assertHashLinksResolve(massHtml, "la invitación de eucaristía");
+assertHashLinksResolve(massHtml, "la invitación de Eucaristía");
 assertHashLinksResolve(rootHtml, "la raíz");
 assertHashLinksResolve(completeHtml, "la invitación completa");
 
@@ -186,7 +186,7 @@ for (const assetPath of referencedTextAssets) {
   for (const text of completeOnlyText) {
     assert.ok(
       !asset.includes(text),
-      `Un asset cargado por la invitación de eucaristía expone: ${text}`,
+      `Un asset cargado por la invitación de Eucaristía expone: ${text}`,
     );
   }
 }

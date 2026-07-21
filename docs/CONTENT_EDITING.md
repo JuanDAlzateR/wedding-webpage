@@ -6,7 +6,7 @@ No es necesario modificar los componentes visuales para cambiar los datos de la 
 
 `src/content/invitations.ts` define los identificadores `mass_only` y `mass_and_celebration`, sus rutas, metadatos, texto de introducción, navegación y secciones visibles.
 
-La variante de eucaristía nunca renderiza la celebración posterior, el código de vestuario ni la información adicional. No añadas un selector ni enlaces entre variantes.
+La variante de Eucaristía nunca renderiza la celebración posterior, el código de vestuario ni la información adicional. No añadas un selector ni enlaces entre variantes.
 
 Para cambiar la ruta no obvia de la invitación completa:
 
@@ -19,11 +19,19 @@ No copies el slug en menús, pies de página o documentación general. Ocultarlo
 
 ## Información de la boda
 
-Abre `src/content/wedding.ts`. Este archivo contiene nombres, datos compartidos de la eucaristía, datos exclusivos de la celebración posterior, dress code, historias, información adicional y visibilidad de secciones.
+Abre `src/content/wedding.ts`. Este archivo contiene nombres, datos compartidos de la Eucaristía, datos exclusivos de la celebración posterior, dress code, historias, información adicional y visibilidad de secciones.
 
 - `ceremony`: fecha, hora, lugar, dirección, mapa e indicaciones compartidos por ambas invitaciones.
 - `celebration`: horario, lugar, dirección, referencia y mapa que solo puede renderizar la invitación completa.
 - `sections`: disponibilidad global de cada sección. La configuración de cada variante puede ocultarla adicionalmente.
+
+## Convención editorial
+
+En todo texto visible para invitados, metadatos y etiquetas de accesibilidad:
+
+- Escribe siempre `Eucaristía` y `Misa` con inicial mayúscula, incluso en medio de una oración.
+- Usa `liturgia` en lugar de `ceremonia` cuando se haga referencia al acto religioso de la boda.
+- Conserva identificadores internos como `ceremony`, `mass_only` y la ruta `/invitacion/misa/`; esta convención no requiere renombrar código ni rutas.
 
 Los campos todavía no confirmados conservan esta forma:
 
@@ -90,4 +98,4 @@ Los navegadores no manejan HEIC de forma consistente. Convierte estos archivos a
 
 Después de editar, ejecuta `pnpm validate` y revisa ambas rutas en teléfono y escritorio.
 
-La verificación automática comprueba el HTML generado, los metadatos, las anclas y los assets de texto cargados por la invitación de eucaristía. Si agregas información exclusiva, inclúyela también en `scripts/verify-invitations.mjs` para que una filtración provoque un fallo.
+La verificación automática comprueba el HTML generado, los metadatos, las anclas y los assets de texto cargados por la invitación de Eucaristía. Si agregas información exclusiva, inclúyela también en `scripts/verify-invitations.mjs` para que una filtración provoque un fallo.
