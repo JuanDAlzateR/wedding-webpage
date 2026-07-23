@@ -9,6 +9,7 @@ const distDirectory = join(projectRoot, "dist");
 const invitationsDirectory = join(distDirectory, "invitacion");
 const massDirectory = join(invitationsDirectory, "misa");
 const rootHtmlPath = join(distDirectory, "index.html");
+const engagementHtmlPath = join(distDirectory, "compromiso", "index.html");
 
 assert.ok(
   existsSync(distDirectory),
@@ -17,6 +18,10 @@ assert.ok(
 assert.ok(
   existsSync(join(massDirectory, "index.html")),
   "No se generó la ruta pública de la Eucaristía.",
+);
+assert.ok(
+  existsSync(engagementHtmlPath),
+  "No se generó la experiencia de compromiso.",
 );
 
 const generatedInvitationDirectories = readdirSync(invitationsDirectory, {
@@ -46,6 +51,7 @@ const completeHtml = readFileSync(
   join(invitationsDirectory, completeSlug, "index.html"),
   "utf8",
 );
+const engagementHtml = readFileSync(engagementHtmlPath, "utf8");
 
 const sharedCeremonyText = [
   "Juan David",
@@ -68,6 +74,29 @@ for (const text of sharedCeremonyText) {
   );
 }
 
+const sharedInvitationText = [
+  "Un detalle para nosotros",
+  "Su presencia y compañía son nuestro mejor regalo",
+  "lluvia de sobres",
+  "Descubrir nuestra historia",
+  'href="/compromiso/"',
+];
+
+for (const text of sharedInvitationText) {
+  assert.ok(
+    massHtml.includes(text),
+    `La invitación de Eucaristía no contiene el contenido compartido: ${text}`,
+  );
+  assert.ok(
+    rootHtml.includes(text),
+    `La raíz no contiene el contenido compartido: ${text}`,
+  );
+  assert.ok(
+    completeHtml.includes(text),
+    `La invitación completa no contiene el contenido compartido: ${text}`,
+  );
+}
+
 const completeOnlyText = [
   "Celebración posterior",
   "Después de la Eucaristía, celebraremos juntos",
@@ -80,7 +109,6 @@ const completeOnlyText = [
   "Cerca de la Parroquia San Felipe Apóstol",
   "Ver ubicación de la celebración en Google Maps",
   "Noviciado%20Hermanas%20Oblatas%20de%20San%20Francisco%20de%20Sales",
-  "Código de vestuario",
   'href="#encuentro"',
 ];
 
@@ -96,6 +124,55 @@ for (const text of completeOnlyText) {
   assert.ok(
     completeHtml.includes(text),
     `La invitación completa no contiene: ${text}`,
+  );
+  assert.ok(
+    !engagementHtml.includes(text),
+    `La experiencia de compromiso expone contenido exclusivo: ${text}`,
+  );
+}
+
+const engagementText = [
+  "Cómo nos comprometimos",
+  "Nuestro compromiso nació de una aventura preparada con mucho cariño",
+  "aplicación en el celular para leer códigos QR",
+  "la propuesta de matrimonio que abrió una nueva etapa",
+  "Nuestra aventura en imágenes",
+];
+
+for (const text of engagementText) {
+  assert.ok(
+    engagementHtml.includes(text),
+    `La experiencia de compromiso no contiene: ${text}`,
+  );
+}
+
+const engagementPhotoMarkers = [
+  "IMG_20260405_120048",
+  "IMG_20260405_135257",
+  "IMG_20260405_135515",
+  "IMG_20260405_214807",
+  "IMG_20260412_114243",
+  "IMG_20260412_151959",
+  "IMG_20260412_213547",
+  "IMG_20260419_134249",
+  "SNOW_20260422_134757_793",
+  "IMG_20260419_183821",
+  "IMG_20260419_184112",
+  "IMG_20260419_195944",
+];
+
+for (const marker of engagementPhotoMarkers) {
+  assert.ok(
+    engagementHtml.includes(marker),
+    `La experiencia de compromiso no contiene la foto: ${marker}`,
+  );
+  assert.ok(
+    !massHtml.includes(marker) && !rootHtml.includes(marker),
+    `La invitación de Eucaristía carga una foto de compromiso: ${marker}`,
+  );
+  assert.ok(
+    !completeHtml.includes(marker),
+    `La invitación completa carga una foto de compromiso: ${marker}`,
   );
 }
 
@@ -120,6 +197,10 @@ assert.ok(
   "La invitación de Eucaristía expone la ruta completa.",
 );
 assert.ok(!rootHtml.includes(completeSlug), "La raíz expone la ruta completa.");
+assert.ok(
+  !engagementHtml.includes(completeSlug),
+  "La experiencia de compromiso expone la ruta completa.",
+);
 assert.match(
   massHtml,
   /<meta name="robots" content="noindex, nofollow">/,
@@ -135,12 +216,26 @@ assert.match(
   /<meta name="robots" content="noindex, nofollow">/,
   "Falta noindex, nofollow en la raíz.",
 );
+assert.match(
+  engagementHtml,
+  /<meta name="robots" content="noindex, nofollow">/,
+  "Falta noindex, nofollow en la experiencia de compromiso.",
+);
 
 const massHead = massHtml.match(/<head>([\s\S]*?)<\/head>/)?.[1] ?? "";
 for (const text of completeOnlyText) {
   assert.ok(
     !massHead.includes(text),
     `Los metadatos de Eucaristía exponen contenido exclusivo: ${text}`,
+  );
+}
+
+const engagementHead =
+  engagementHtml.match(/<head>([\s\S]*?)<\/head>/)?.[1] ?? "";
+for (const text of completeOnlyText) {
+  assert.ok(
+    !engagementHead.includes(text),
+    `Los metadatos de compromiso exponen contenido exclusivo: ${text}`,
   );
 }
 
@@ -163,6 +258,32 @@ function assertHashLinksResolve(html, routeLabel) {
 assertHashLinksResolve(massHtml, "la invitación de Eucaristía");
 assertHashLinksResolve(rootHtml, "la raíz");
 assertHashLinksResolve(completeHtml, "la invitación completa");
+assertHashLinksResolve(engagementHtml, "la experiencia de compromiso");
+
+for (const [html, routeLabel] of [
+  [massHtml, "la invitación de Eucaristía"],
+  [rootHtml, "la raíz"],
+  [completeHtml, "la invitación completa"],
+  [engagementHtml, "la experiencia de compromiso"],
+]) {
+  assert.doesNotMatch(
+    html,
+    /\[Texto pendiente:/,
+    `Se publicó una nota editorial en ${routeLabel}.`,
+  );
+
+  for (const placeholder of [
+    "Historia pendiente",
+    "La historia de la pareja se agregará aquí cuando el texto esté listo.",
+    "Código de vestuario pendiente",
+    "Publicaremos la guía de vestuario cuando esté confirmada.",
+  ]) {
+    assert.ok(
+      !html.includes(placeholder),
+      `Se publicó un placeholder editorial en ${routeLabel}: ${placeholder}`,
+    );
+  }
+}
 
 assert.ok(
   !existsSync(join(distDirectory, "sitemap-index.xml")) &&
@@ -192,5 +313,5 @@ for (const assetPath of referencedTextAssets) {
 }
 
 log(
-  "Verificación de invitaciones superada: dos rutas, contenido aislado, metadatos privados y anclas válidas.",
+  "Verificación superada: invitaciones aisladas, contenido compartido, compromiso privado, fotos y anclas válidas.",
 );

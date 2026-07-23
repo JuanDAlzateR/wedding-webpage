@@ -10,6 +10,12 @@ export type AdditionalInfoItem = {
   visible: boolean;
 };
 
+export type VisibleParagraph = {
+  id: string;
+  text: string;
+  visible: boolean;
+};
+
 export type EventDetailsContent = {
   date: EditableText;
   dateIso: string;
@@ -105,9 +111,50 @@ export const weddingContent = {
     pending: true,
   },
   engagement: {
+    eyebrow: "Nuestra aventura",
     title: "Cómo nos comprometimos",
-    placeholder:
-      "Esta historia todavía está en construcción. La compartiremos cuando esté lista, sin inventar ningún detalle.",
+    summary:
+      "Una historia de juegos, códigos QR y pistas que nos condujeron al comienzo de una nueva etapa.",
+    callToAction: "Descubrir nuestra historia",
+    pageTitle: "Cómo nos comprometimos | Juan David y Melisa",
+    pageDescription:
+      "La historia de una aventura entre juegos, códigos QR y pistas que condujo a la propuesta de matrimonio de Juan David y Melisa.",
+    storyEyebrow: "Pista a pista",
+    storyTitle: "Una aventura con un destino especial",
+    galleryEyebrow: "Recuerdos del recorrido",
+    galleryTitle: "Nuestra aventura en imágenes",
+    paragraphs: [
+      {
+        id: "adventure",
+        text: "Nuestro compromiso nació de una aventura preparada con mucho cariño. Todo comenzó con una actividad que combinaba una carrera de observación, juegos de mesa y una aplicación en el celular para leer códigos QR.",
+        visible: true,
+      },
+      {
+        id: "clues",
+        text: "Cada código revelaba una nueva pista y nos guiaba hacia el siguiente paso. Entre preguntas, retos y momentos compartidos, fuimos avanzando poco a poco hasta llegar al destino final.",
+        visible: true,
+      },
+      {
+        id: "proposal",
+        text: "Allí nos esperaba el momento más importante de la aventura: la propuesta de matrimonio que abrió una nueva etapa en nuestra historia.",
+        visible: true,
+      },
+      {
+        id: "new-chapter",
+        text: "Fue una experiencia especial, divertida y llena de significado. Cada pista nos acercó no solo al final del recorrido, sino también al comienzo del camino que hoy nos lleva hacia nuestro matrimonio.",
+        visible: true,
+      },
+    ] satisfies VisibleParagraph[],
+    editorialNotes: [
+      "[Texto pendiente: agregar cómo comenzó la actividad.]",
+      "[Texto pendiente: describir una pista o momento especial del recorrido.]",
+      "[Texto pendiente: agregar cómo ocurrió la propuesta y cómo vivimos ese momento.]",
+    ],
+  },
+  gifts: {
+    eyebrow: "Con cariño",
+    title: "Un detalle para nosotros",
+    body: "Su presencia y compañía son nuestro mejor regalo. Si desean tener un detalle con nosotros, recibiremos con mucho cariño lluvia de sobres.",
   },
   additionalInfo: {
     intro:
@@ -146,10 +193,11 @@ export const weddingContent = {
   sections: {
     ceremony: true,
     celebration: true,
-    dressCode: true,
-    story: true,
+    dressCode: false,
+    story: false,
     engagement: true,
     gallery: true,
+    gifts: true,
     additionalInfo: false,
   },
 } as const;

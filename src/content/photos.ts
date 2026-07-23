@@ -12,6 +12,18 @@ import galleryWinter from "../../photos/IMG_20251225_000451.jpg";
 import heroImage from "../../photos/IMG_5961.JPG";
 import socialImage from "../../photos/IMG_20240804_155455.jpg";
 import storyImage from "../../photos/IMG_20241010_141503.jpg";
+import engagementActivity from "../../photos/engagement/IMG_20260405_120048.jpg";
+import engagementQr from "../../photos/engagement/IMG_20260405_135257.jpg";
+import engagementClueCards from "../../photos/engagement/IMG_20260405_135515.jpg";
+import engagementSeatedSelfie from "../../photos/engagement/IMG_20260405_214807.jpg";
+import engagementDecoratedBox from "../../photos/engagement/IMG_20260412_114243.jpg";
+import engagementOpeningBox from "../../photos/engagement/IMG_20260412_151959.jpg";
+import engagementNightBuilding from "../../photos/engagement/IMG_20260412_213547.jpg";
+import engagementGardenEmbrace from "../../photos/engagement/IMG_20260419_134249.jpg";
+import engagementProposal from "../../photos/engagement/SNOW_20260422_134757_793.jpg";
+import engagementRingsOnHand from "../../photos/engagement/IMG_20260419_183821.jpg";
+import engagementRingFlower from "../../photos/engagement/IMG_20260419_184112.jpg";
+import engagementWarmSelfie from "../../photos/engagement/IMG_20260419_195944.jpg";
 
 export type PhotoLayout = "portrait" | "landscape" | "feature";
 
@@ -37,6 +49,102 @@ export const featuredPhotos = {
   },
   social: socialImage,
 } as const;
+
+export const engagementFeaturedPhoto = {
+  src: engagementProposal,
+  alt: "Una persona se arrodilla frente a su pareja y sostiene una caja.",
+} as const;
+
+/**
+ * Orden editorial provisional de la experiencia de compromiso.
+ * Debe confirmarse con la pareja antes de considerarlo cronológico.
+ */
+export const engagementPhotos: WeddingPhoto[] = [
+  {
+    id: "printed-activity",
+    src: engagementActivity,
+    alt: "Una persona completa una actividad impresa sobre una mesa.",
+    layout: "portrait",
+    position: "center",
+  },
+  {
+    id: "qr-clue",
+    src: engagementQr,
+    alt: "Una persona sostiene un celular y una tarjeta con código QR.",
+    layout: "portrait",
+    position: "center",
+  },
+  {
+    id: "clue-cards",
+    src: engagementClueCards,
+    alt: "La pareja posa con varias tarjetas de pistas.",
+    layout: "feature",
+    position: "center",
+  },
+  {
+    id: "seated-selfie",
+    src: engagementSeatedSelfie,
+    alt: "La pareja se toma una fotografía sentada.",
+    layout: "landscape",
+    position: "center",
+  },
+  {
+    id: "decorated-box",
+    src: engagementDecoratedBox,
+    alt: "La pareja sostiene una caja decorada.",
+    layout: "landscape",
+    position: "center",
+  },
+  {
+    id: "opening-box",
+    src: engagementOpeningBox,
+    alt: "Una persona abre una caja decorada sobre una mesa.",
+    layout: "portrait",
+    position: "center",
+  },
+  {
+    id: "night-building",
+    src: engagementNightBuilding,
+    alt: "La pareja sonríe frente a una edificación iluminada.",
+    layout: "landscape",
+    position: "center",
+  },
+  {
+    id: "garden-embrace",
+    src: engagementGardenEmbrace,
+    alt: "La pareja se abraza sentada entre vegetación.",
+    layout: "feature",
+    position: "center",
+  },
+  {
+    id: "proposal",
+    src: engagementProposal,
+    alt: "Una persona se arrodilla frente a su pareja y sostiene una caja.",
+    layout: "feature",
+    position: "center",
+  },
+  {
+    id: "rings-on-hand",
+    src: engagementRingsOnHand,
+    alt: "Una mano muestra dos anillos.",
+    layout: "portrait",
+    position: "center",
+  },
+  {
+    id: "ring-flower",
+    src: engagementRingFlower,
+    alt: "Un anillo descansa sobre una flor decorativa roja.",
+    layout: "portrait",
+    position: "center",
+  },
+  {
+    id: "warm-selfie",
+    src: engagementWarmSelfie,
+    alt: "La pareja sonríe con ropa abrigada.",
+    layout: "portrait",
+    position: "center",
+  },
+];
 
 /**
  * El orden de este arreglo es el orden visual de la galería.

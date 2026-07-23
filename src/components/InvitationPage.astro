@@ -5,6 +5,7 @@ import Engagement from "./Engagement.astro";
 import EventDetails from "./EventDetails.astro";
 import Footer from "./Footer.astro";
 import Gallery from "./Gallery.astro";
+import GiftInfo from "./GiftInfo.astro";
 import Header from "./Header.astro";
 import Hero from "./Hero.astro";
 import Story from "./Story.astro";
@@ -30,6 +31,7 @@ const sections = {
   story: variant.sections.story && contentSections.story,
   engagement: variant.sections.engagement && contentSections.engagement,
   gallery: variant.sections.gallery && contentSections.gallery,
+  gifts: variant.sections.gifts && contentSections.gifts,
   additionalInfo:
     variant.sections.additionalInfo && contentSections.additionalInfo,
 };
@@ -75,6 +77,7 @@ const sections = {
     {sections.story && <Story />}
     {sections.engagement && <Engagement />}
     {sections.gallery && <Gallery />}
+    {sections.gifts && <GiftInfo />}
     {sections.additionalInfo && <AdditionalInfo />}
   </main>
   <Footer />

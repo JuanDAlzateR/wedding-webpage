@@ -7,6 +7,7 @@ export type InvitationSection =
   | "story"
   | "engagement"
   | "gallery"
+  | "gifts"
   | "additionalInfo";
 
 export type InvitationNavigationItem = {
@@ -47,6 +48,7 @@ export const invitationVariants = {
       story: true,
       engagement: true,
       gallery: true,
+      gifts: true,
       additionalInfo: false,
     },
     navigation: [
@@ -71,6 +73,7 @@ export const invitationVariants = {
       story: true,
       engagement: true,
       gallery: true,
+      gifts: true,
       additionalInfo: false,
     },
     navigation: [
