@@ -1,7 +1,11 @@
 ---
 import { Image } from "astro:assets";
 import SectionHeading from "../components/SectionHeading.astro";
-import { engagementFeaturedPhoto, engagementPhotos } from "../content/photos";
+import {
+  engagementStoryEntries,
+  type ResolvedEngagementStoryEntry,
+} from "../content/engagement";
+import { engagementFeaturedPhoto } from "../content/photos";
 import { weddingContent } from "../content/wedding";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
@@ -9,6 +13,13 @@ const { couple, engagement } = weddingContent;
 const visibleParagraphs = engagement.paragraphs.filter(
   (paragraph) => paragraph.visible,
 );
+const visibleStoryEntries = engagementStoryEntries.filter(
+  (entry) => entry.visible,
+);
+const hasVisibleStoryText = (entry: ResolvedEngagementStoryEntry) =>
+  Boolean(
+    entry.title || entry.date || entry.caption || !entry.description.pending,
+  );
 const basePath = import.meta.env.BASE_URL;
 const homePath = basePath;
 ---
@@ -91,38 +102,60 @@ const homePath = basePath;
           title={engagement.galleryTitle}
           align="center"
         />
-        <div class="engagement-gallery-grid">
+        <ol class="engagement-gallery-grid">
           {
-            engagementPhotos.map((photo) => (
-              <figure
+            visibleStoryEntries.map((entry) => (
+              <li
                 class:list={[
                   "engagement-gallery-card",
-                  `engagement-gallery-card--${photo.layout}`,
+                  `engagement-gallery-card--${entry.photo.layout}`,
                 ]}
+                data-story-id={entry.id}
               >
-                <Image
-                  src={photo.src}
-                  alt={photo.alt}
-                  width={photo.layout === "feature" ? 1400 : 900}
-                  widths={
-                    photo.layout === "feature"
-                      ? [480, 760, 1040, 1400]
-                      : [360, 600, 900]
-                  }
-                  sizes={
-                    photo.layout === "feature"
-                      ? "92vw"
-                      : "(min-width: 800px) 46vw, 92vw"
-                  }
-                  format="webp"
-                  quality={84}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </figure>
+                <figure class="engagement-gallery-card__figure">
+                  <Image
+                    src={entry.photo.src}
+                    alt={entry.photo.alt}
+                    width={entry.photo.layout === "feature" ? 1400 : 900}
+                    widths={
+                      entry.photo.layout === "feature"
+                        ? [480, 760, 1040, 1400]
+                        : [360, 600, 900]
+                    }
+                    sizes={
+                      entry.photo.layout === "feature"
+                        ? "92vw"
+                        : "(min-width: 800px) 46vw, 92vw"
+                    }
+                    format="webp"
+                    quality={84}
+                    loading="lazy"
+                    decoding="async"
+                    style={`object-position: ${entry.photo.position}`}
+                  />
+                  {hasVisibleStoryText(entry) && (
+                    <figcaption class="engagement-gallery-card__copy">
+                      {entry.date && (
+                        <p class="engagement-gallery-card__date">
+                          {entry.date}
+                        </p>
+                      )}
+                      {entry.title && <h3>{entry.title}</h3>}
+                      {!entry.description.pending && (
+                        <p>{entry.description.value}</p>
+                      )}
+                      {entry.caption && (
+                        <p class="engagement-gallery-card__caption">
+                          {entry.caption}
+                        </p>
+                      )}
+                    </figcaption>
+                  )}
+                </figure>
+              </li>
             ))
           }
-        </div>
+        </ol>
       </div>
     </section>
   </main>

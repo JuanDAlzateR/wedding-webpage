@@ -1,3 +1,5 @@
+import type { EngagementPhotoId } from "./photos";
+
 export type EditableText = {
   value: string;
   pending: boolean;
@@ -13,6 +15,16 @@ export type AdditionalInfoItem = {
 export type VisibleParagraph = {
   id: string;
   text: string;
+  visible: boolean;
+};
+
+export type EngagementStoryEntry = {
+  id: string;
+  photoId: EngagementPhotoId;
+  description: EditableText;
+  title?: string;
+  date?: string;
+  caption?: string;
   visible: boolean;
 };
 
@@ -123,6 +135,128 @@ export const weddingContent = {
     storyTitle: "Una aventura con un destino especial",
     galleryEyebrow: "Recuerdos del recorrido",
     galleryTitle: "Nuestra aventura en imágenes",
+    /**
+     * Orden narrativo provisional: el orden del arreglo es el orden visible.
+     * La pareja debe confirmar la secuencia antes de considerarla cronológica.
+     *
+     * `visible` oculta o muestra la entrada completa.
+     * `description.pending` conserva el borrador sin publicarlo.
+     */
+    storyEntries: [
+      {
+        id: "printed-activity",
+        photoId: "printed-activity",
+        description: {
+          value:
+            "[Texto pendiente: describir este momento de la actividad impresa.]",
+          pending: true,
+        },
+        visible: true,
+      },
+      {
+        id: "qr-clue",
+        photoId: "qr-clue",
+        description: {
+          value:
+            "[Texto pendiente: describir el momento relacionado con el código QR.]",
+          pending: true,
+        },
+        visible: true,
+      },
+      {
+        id: "clue-cards",
+        photoId: "clue-cards",
+        description: {
+          value:
+            "[Texto pendiente: describir el momento de las tarjetas de pistas.]",
+          pending: true,
+        },
+        visible: true,
+      },
+      {
+        id: "seated-selfie",
+        photoId: "seated-selfie",
+        description: {
+          value: "[Texto pendiente: describir este momento compartido.]",
+          pending: true,
+        },
+        visible: true,
+      },
+      {
+        id: "decorated-box",
+        photoId: "decorated-box",
+        description: {
+          value: "[Texto pendiente: describir el momento de la caja decorada.]",
+          pending: true,
+        },
+        visible: true,
+      },
+      {
+        id: "opening-box",
+        photoId: "opening-box",
+        description: {
+          value:
+            "[Texto pendiente: describir la apertura de la caja decorada.]",
+          pending: true,
+        },
+        visible: true,
+      },
+      {
+        id: "night-building",
+        photoId: "night-building",
+        description: {
+          value: "[Texto pendiente: describir este momento del recorrido.]",
+          pending: true,
+        },
+        visible: true,
+      },
+      {
+        id: "garden-embrace",
+        photoId: "garden-embrace",
+        description: {
+          value: "[Texto pendiente: describir este momento entre vegetación.]",
+          pending: true,
+        },
+        visible: true,
+      },
+      {
+        id: "proposal",
+        photoId: "proposal",
+        description: {
+          value: "[Texto pendiente: describir cómo ocurrió la propuesta.]",
+          pending: true,
+        },
+        visible: true,
+      },
+      {
+        id: "rings-on-hand",
+        photoId: "rings-on-hand",
+        description: {
+          value: "[Texto pendiente: describir este recuerdo de los anillos.]",
+          pending: true,
+        },
+        visible: true,
+      },
+      {
+        id: "ring-flower",
+        photoId: "ring-flower",
+        description: {
+          value: "[Texto pendiente: describir este detalle de los anillos.]",
+          pending: true,
+        },
+        visible: true,
+      },
+      {
+        id: "warm-selfie",
+        photoId: "warm-selfie",
+        description: {
+          value:
+            "[Texto pendiente: describir este momento al final del recorrido.]",
+          pending: true,
+        },
+        visible: true,
+      },
+    ] satisfies EngagementStoryEntry[],
     paragraphs: [
       {
         id: "adventure",

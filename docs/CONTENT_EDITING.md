@@ -63,12 +63,50 @@ Para ocultarla temporalmente, cambia `weddingContent.sections.gifts` a `false`. 
 
 ## Historia del compromiso
 
-La introducción se muestra en ambas invitaciones y enlaza a `/compromiso/`. El relato completo se mantiene en `weddingContent.engagement.paragraphs`.
+La introducción se muestra en ambas invitaciones y enlaza a `/compromiso/`. El relato general se mantiene en `weddingContent.engagement.paragraphs`. La secuencia que relaciona cada fotografía con su texto está en `weddingContent.engagement.storyEntries`.
 
 - Edita `text` para cambiar un párrafo.
 - Cambia `visible` a `false` para conservar un borrador sin publicarlo.
 - Agrega nuevos párrafos con un `id` único, `text` y `visible`.
 - `editorialNotes` contiene recordatorios internos y nunca debe renderizarse en el sitio.
+
+### Secuencia de fotos y texto
+
+Cada elemento de `storyEntries` representa un momento de la historia. `photoId` lo relaciona con una fotografía del mismo identificador en `engagementPhotos`, dentro de `src/content/photos.ts`. La página resuelve y valida esa relación durante el build; no es necesario editar `src/pages/compromiso.astro`.
+
+Ejemplo con el esquema real:
+
+```ts
+{
+  id: "printed-activity",
+  photoId: "printed-activity",
+  description: {
+    value: "[Texto pendiente: describir este momento de la actividad impresa.]",
+    pending: true,
+  },
+  visible: true,
+}
+```
+
+Campos obligatorios:
+
+- `id`: identificador único y estable de la entrada.
+- `photoId`: identificador de una foto existente en `engagementPhotos`.
+- `description.value`: texto editable o placeholder interno mientras está pendiente.
+- `description.pending`: `true` impide que el borrador se publique; `false` muestra el texto.
+- `visible`: `false` oculta la entrada completa, incluida la fotografía.
+
+Campos opcionales:
+
+- `title`: encabezado visible del momento.
+- `date`: fecha o etiqueta cronológica visible, solo cuando esté confirmada.
+- `caption`: nota breve visible bajo la descripción.
+
+El orden del arreglo `storyEntries` es la única fuente del orden narrativo. Para reordenar, mueve el elemento completo; no cambies `id` ni `photoId`. La secuencia actual es provisional y debe ser confirmada por la pareja.
+
+Para editar el texto de una foto, cambia `description.value` y marca `description.pending: false` cuando esté listo. Mientras `pending` sea `true`, la foto puede seguir visible, pero el placeholder no se muestra a los invitados. Usa `visible: false` cuando también quieras ocultar temporalmente la imagen.
+
+Para quitar un momento del recorrido, elimina su elemento completo de `storyEntries`. La foto puede conservarse en `engagementPhotos` si podría reutilizarse.
 
 La página de compromiso es contenido compartido: no debe incluir el slug, horarios, lugares, mapas ni otros datos exclusivos de la invitación completa.
 
@@ -92,16 +130,19 @@ Los originales se conservan en `photos/`. La página genera automáticamente cop
 
 ### Fotografías del compromiso
 
-Los originales están en `photos/engagement/` y su manifiesto independiente es `engagementPhotos` dentro de `src/content/photos.ts`. No agregues estas imágenes a `galleryPhotos`.
+Los originales están en `photos/engagement/` y su manifiesto independiente es `engagementPhotos` dentro de `src/content/photos.ts`. No agregues estas imágenes a `galleryPhotos`. Los imports estáticos permiten que Astro valide la existencia de los archivos y genere versiones responsivas.
 
 Para añadir una foto:
 
 1. Copia el JPG, PNG, WebP o AVIF en `photos/engagement/`.
 2. Impórtalo en `src/content/photos.ts`.
 3. Agrega un elemento a `engagementPhotos` con `id`, `src`, `alt`, `layout` y `position`.
-4. Ejecuta `pnpm validate` y comprueba `/compromiso/` en móvil y escritorio.
+4. Agrega su entrada asociada a `weddingContent.engagement.storyEntries` usando el mismo `id` como `photoId`.
+5. Ejecuta `pnpm validate` y comprueba `/compromiso/` en móvil y escritorio.
 
-El orden del arreglo es el orden visual. Para reordenar, mueve el elemento completo sin renombrar ni mover el original. El orden actual es narrativo y provisional: una imagen exportada por SNOW tiene un nombre/EXIF que no coincide con la fecha visible, por lo que la pareja debe confirmar la secuencia antes de considerarla cronológica.
+Para cambiar una foto sin alterar su texto ni su posición narrativa, cambia únicamente el import asignado a `src` en el elemento correspondiente de `engagementPhotos`. Después revisa `alt`, `layout` y `position`.
+
+El orden de `engagementPhotos` no controla la historia. El orden visible se mantiene únicamente en `storyEntries`. La secuencia actual es narrativa y provisional: una imagen exportada por SNOW tiene un nombre/EXIF que no coincide con la fecha visible, por lo que la pareja debe confirmarla antes de considerarla cronológica.
 
 ### Eliminar o reordenar
 
@@ -116,7 +157,8 @@ Los navegadores no manejan HEIC de forma consistente. Convierte estos archivos a
 ## Textos alternativos y captions
 
 - `alt` debe describir objetivamente lo visible y no inventar nombres, lugares o acontecimientos.
-- `caption` es opcional y aparece visualmente sobre la fotografía.
+- Para una foto informativa, menciona los elementos relevantes que una persona no puede percibir sin verla; evita repetir literalmente `description`.
+- `caption` es opcional y acompaña visualmente a la fotografía.
 - Una imagen meramente decorativa debe usar `alt: ""`, pero las fotos de la galería deben conservar una descripción útil.
 
 ## Información pendiente antes de publicar

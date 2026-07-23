@@ -30,7 +30,9 @@ pnpm preview
 - Información de la boda: `src/content/wedding.ts`
 - Tipos de invitación, rutas, metadatos y secciones: `src/content/invitations.ts`
 - Fotografías y orden de galería: `src/content/photos.ts`
-- Historia y fotografías del compromiso: `/compromiso/`
+- Texto, orden y visibilidad del compromiso: `src/content/wedding.ts`
+- Fotografías del compromiso: `src/content/photos.ts`
+- Página generada del compromiso: `/compromiso/`
 - Archivos originales: `photos/`
 - Colores y estilos: `src/styles/global.css`
 - Guía completa: `docs/CONTENT_EDITING.md`

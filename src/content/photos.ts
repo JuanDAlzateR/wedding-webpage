@@ -56,10 +56,10 @@ export const engagementFeaturedPhoto = {
 } as const;
 
 /**
- * Orden editorial provisional de la experiencia de compromiso.
- * Debe confirmarse con la pareja antes de considerarlo cronológico.
+ * Biblioteca de fotografías del compromiso.
+ * El orden narrativo se define en `weddingContent.engagement.storyEntries`.
  */
-export const engagementPhotos: WeddingPhoto[] = [
+export const engagementPhotos = [
   {
     id: "printed-activity",
     src: engagementActivity,
@@ -133,7 +133,7 @@ export const engagementPhotos: WeddingPhoto[] = [
   {
     id: "ring-flower",
     src: engagementRingFlower,
-    alt: "Un anillo descansa sobre una flor decorativa roja.",
+    alt: "Dos anillos descansan sobre una flor decorativa roja.",
     layout: "portrait",
     position: "center",
   },
@@ -144,7 +144,19 @@ export const engagementPhotos: WeddingPhoto[] = [
     layout: "portrait",
     position: "center",
   },
-];
+] as const satisfies readonly WeddingPhoto[];
+
+export type EngagementPhotoId = (typeof engagementPhotos)[number]["id"];
+
+export function getEngagementPhoto(id: EngagementPhotoId): WeddingPhoto {
+  const photo = engagementPhotos.find((candidate) => candidate.id === id);
+
+  if (!photo) {
+    throw new Error(`No existe la fotografía de compromiso "${id}".`);
+  }
+
+  return photo;
+}
 
 /**
  * El orden de este arreglo es el orden visual de la galería.
