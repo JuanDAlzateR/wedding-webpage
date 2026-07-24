@@ -1,0 +1,166 @@
+---
+import { Image } from "astro:assets";
+import SectionHeading from "../components/SectionHeading.astro";
+import { engagementStoryChapters } from "../content/engagement";
+import { engagementFeaturedPhoto } from "../content/photos";
+import { weddingContent } from "../content/wedding";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const { couple, engagement } = weddingContent;
+const visibleStoryChapters = engagementStoryChapters
+  .map((chapter) => ({
+    ...chapter,
+    entries: chapter.entries.filter((entry) => entry.visible),
+  }))
+  .filter((chapter) => chapter.entries.length > 0);
+const basePath = import.meta.env.BASE_URL;
+const homePath = basePath;
+---
+
+<BaseLayout
+  title={engagement.pageTitle}
+  description={engagement.pageDescription}
+  robots="noindex, nofollow"
+  socialImage={engagementFeaturedPhoto.src}
+  socialImageAlt={engagementFeaturedPhoto.alt}
+>
+  <header class="engagement-page-header">
+    <a
+      class="engagement-page-header__brand"
+      href={homePath}
+      aria-label={`Volver a la invitación de ${couple.partnerOne} y ${couple.partnerTwo}`}
+    >
+      {couple.initials}
+    </a>
+    <a class="engagement-page-header__back" href={homePath} data-return-link>
+      Volver a la invitación <span aria-hidden="true">←</span>
+    </a>
+  </header>
+
+  <main class="engagement-page" id="contenido">
+    <section
+      class="engagement-page-hero"
+      id="inicio"
+      aria-labelledby="engagement-page-title"
+    >
+      <div class="engagement-page-hero__copy">
+        <p class="eyebrow">{engagement.eyebrow}</p>
+        <h1 id="engagement-page-title">{engagement.title}</h1>
+        <p>{engagement.summary}</p>
+        <a class="button button--accent" href="#historia-compromiso">
+          Leer nuestra historia <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+      <figure class="engagement-page-hero__photo">
+        <Image
+          src={engagementFeaturedPhoto.src}
+          alt={engagementFeaturedPhoto.alt}
+          width={1280}
+          widths={[480, 720, 960, 1280]}
+          sizes="(min-width: 960px) 50vw, 92vw"
+          format="webp"
+          quality={88}
+          loading="eager"
+          fetchpriority="high"
+        />
+      </figure>
+    </section>
+
+    <section
+      class="section engagement-page-story"
+      id="historia-compromiso"
+      aria-labelledby="engagement-story-title"
+    >
+      <div class="section__inner">
+        <SectionHeading
+          id="engagement-story-title"
+          eyebrow={engagement.storyEyebrow}
+          title={engagement.storyTitle}
+          align="center"
+        />
+        <div class="engagement-story-chapters">
+          {
+            visibleStoryChapters.map((chapter, chapterIndex) => (
+              <section
+                class="engagement-story-chapter"
+                aria-labelledby={`engagement-chapter-${chapter.id}`}
+                data-chapter={chapter.id}
+              >
+                <header class="engagement-story-chapter__header">
+                  <p class="engagement-story-chapter__number">
+                    Capítulo {chapterIndex + 1}
+                  </p>
+                  <h3 id={`engagement-chapter-${chapter.id}`}>
+                    {chapter.title}
+                  </h3>
+                  <p class="engagement-story-chapter__date">
+                    {chapter.dateLabel}
+                  </p>
+                </header>
+
+                <ol class="engagement-story-moments">
+                  {chapter.entries.map((entry) => (
+                    <li
+                      class:list={[
+                        "engagement-story-moment",
+                        `engagement-story-moment--${entry.photo.layout}`,
+                      ]}
+                      data-story-id={entry.id}
+                    >
+                      <figure class="engagement-story-moment__photo">
+                        <Image
+                          src={entry.photo.src}
+                          alt={entry.photo.alt}
+                          width={entry.photo.layout === "feature" ? 1280 : 960}
+                          widths={[420, 720, 960, 1280]}
+                          sizes="(min-width: 900px) 50vw, 92vw"
+                          format="webp"
+                          quality={84}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </figure>
+                      <div class="engagement-story-moment__copy">
+                        {entry.title && <h4>{entry.title}</h4>}
+                        <p>{entry.description.value}</p>
+                        {entry.caption && (
+                          <p class="engagement-story-moment__caption">
+                            {entry.caption}
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="engagement-page-footer">
+    <p>{couple.partnerOne} &amp; {couple.partnerTwo}</p>
+    <a href={homePath} data-return-link>Volver a la invitación</a>
+  </footer>
+
+  <script is:inline define:vars={{ basePath }}>
+    const returnLinks = document.querySelectorAll("[data-return-link]");
+    const referrer = document.referrer ? new URL(document.referrer) : null;
+    const invitationPrefix = `${basePath}invitacion/`;
+    const canReturn =
+      referrer?.origin === window.location.origin &&
+      (referrer.pathname === basePath ||
+        referrer.pathname.startsWith(invitationPrefix));
+
+    if (canReturn) {
+      returnLinks.forEach((link) => {
+        link.addEventListener("click", (event) => {
+          event.preventDefault();
+          window.history.back();
+        });
+      });
+    }
+  </script>
+</BaseLayout>

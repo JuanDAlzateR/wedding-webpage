@@ -12,6 +12,25 @@ import galleryWinter from "../../photos/IMG_20251225_000451.jpg";
 import heroImage from "../../photos/IMG_5961.JPG";
 import socialImage from "../../photos/IMG_20240804_155455.jpg";
 import storyImage from "../../photos/IMG_20241010_141503.jpg";
+import engagementApril05Photo1 from "../../photos/engagement/april05-photo1.jpg";
+import engagementApril05Photo2 from "../../photos/engagement/april05-photo2.jpg";
+import engagementApril05Photo3 from "../../photos/engagement/april05-photo3.jpg";
+import engagementApril05Photo4 from "../../photos/engagement/april05-photo4.jpg";
+import engagementApril05Photo5 from "../../photos/engagement/april05-photo5.jpg";
+import engagementApril12Photo1 from "../../photos/engagement/april12-photo1.jpg";
+import engagementApril12Photo2 from "../../photos/engagement/april12-photo2.jpg";
+import engagementApril12Photo3 from "../../photos/engagement/april12-photo3.jpg";
+import engagementApril12Photo4 from "../../photos/engagement/april12-photo4.jpg";
+import engagementApril12Photo5 from "../../photos/engagement/april12-photo5.jpg";
+import engagementApril12Photo6 from "../../photos/engagement/april12-photo6.jpg";
+import engagementApril19Photo1 from "../../photos/engagement/april19-photo1.jpg";
+import engagementApril19Photo2 from "../../photos/engagement/april19-photo2.png";
+import engagementApril19Photo3 from "../../photos/engagement/april19-photo3.png";
+import engagementApril19Photo4 from "../../photos/engagement/april19-photo4.png";
+import engagementApril19Photo5 from "../../photos/engagement/april19-photo5.jpg";
+import engagementApril19Photo6 from "../../photos/engagement/april19-photo6.jpg";
+import engagementApril19Photo7 from "../../photos/engagement/april19-photo7.jpg";
+import engagementApril19Photo8 from "../../photos/engagement/april19-photo8.jpg";
 
 export type PhotoLayout = "portrait" | "landscape" | "feature";
 
@@ -37,6 +56,163 @@ export const featuredPhotos = {
   },
   social: socialImage,
 } as const;
+
+export const engagementFeaturedPhoto = {
+  src: engagementApril05Photo3,
+  alt: "La pareja posa con varias tarjetas del juego.",
+} as const;
+
+/**
+ * Biblioteca de fotografías del compromiso.
+ * El orden narrativo se define en `weddingContent.engagement.storyChapters`.
+ */
+export const engagementPhotos = [
+  {
+    id: "april05-photo1",
+    src: engagementApril05Photo1,
+    alt: "Una persona completa una actividad impresa sobre una mesa.",
+    layout: "portrait",
+    position: "center",
+  },
+  {
+    id: "april05-photo2",
+    src: engagementApril05Photo2,
+    alt: "Una persona sostiene un celular y una tarjeta con código QR.",
+    layout: "portrait",
+    position: "center",
+  },
+  {
+    id: "april05-photo3",
+    src: engagementApril05Photo3,
+    alt: "La pareja posa con varias tarjetas del juego.",
+    layout: "feature",
+    position: "center",
+  },
+  {
+    id: "april05-photo4",
+    src: engagementApril05Photo4,
+    alt: "Una persona muestra el celular frente a una parroquia iluminada.",
+    layout: "portrait",
+    position: "center",
+  },
+  {
+    id: "april05-photo5",
+    src: engagementApril05Photo5,
+    alt: "La pareja se toma una fotografía sentada al final del día.",
+    layout: "landscape",
+    position: "center",
+  },
+  {
+    id: "april12-photo1",
+    src: engagementApril12Photo1,
+    alt: "Una persona resuelve una actividad frente a la Universidad Nacional.",
+    layout: "portrait",
+    position: "center",
+  },
+  {
+    id: "april12-photo2",
+    src: engagementApril12Photo2,
+    alt: "La pareja sostiene una caja decorada.",
+    layout: "landscape",
+    position: "center",
+  },
+  {
+    id: "april12-photo3",
+    src: engagementApril12Photo3,
+    alt: "La pareja sonríe dentro de una iglesia.",
+    layout: "portrait",
+    position: "center",
+  },
+  {
+    id: "april12-photo4",
+    src: engagementApril12Photo4,
+    alt: "Una persona abre una caja decorada sobre una mesa.",
+    layout: "portrait",
+    position: "center",
+  },
+  {
+    id: "april12-photo5",
+    src: engagementApril12Photo5,
+    alt: "La pareja sonríe frente al letrero del Jardín Botánico.",
+    layout: "landscape",
+    position: "center",
+  },
+  {
+    id: "april12-photo6",
+    src: engagementApril12Photo6,
+    alt: "La pareja sonríe frente a una edificación iluminada de noche.",
+    layout: "landscape",
+    position: "center",
+  },
+  {
+    id: "april19-photo1",
+    src: engagementApril19Photo1,
+    alt: "La pareja se abraza sentada entre vegetación.",
+    layout: "landscape",
+    position: "center",
+  },
+  {
+    id: "april19-photo2",
+    src: engagementApril19Photo2,
+    alt: "Una persona sostiene un vaso junto a las cartas del juego.",
+    layout: "portrait",
+    position: "center",
+  },
+  {
+    id: "april19-photo3",
+    src: engagementApril19Photo3,
+    alt: "Una persona con casco y ropa para la lluvia sostiene varias cartas.",
+    layout: "portrait",
+    position: "center",
+  },
+  {
+    id: "april19-photo4",
+    src: engagementApril19Photo4,
+    alt: "Una persona con casco consulta el celular junto a las cartas del juego.",
+    layout: "portrait",
+    position: "center",
+  },
+  {
+    id: "april19-photo5",
+    src: engagementApril19Photo5,
+    alt: "Una persona se arrodilla frente a su pareja y sostiene una caja.",
+    layout: "landscape",
+    position: "center",
+  },
+  {
+    id: "april19-photo6",
+    src: engagementApril19Photo6,
+    alt: "Dos anillos descansan sobre una flor decorativa roja.",
+    layout: "portrait",
+    position: "center",
+  },
+  {
+    id: "april19-photo7",
+    src: engagementApril19Photo7,
+    alt: "Una mano muestra dos anillos y una manilla.",
+    layout: "portrait",
+    position: "center",
+  },
+  {
+    id: "april19-photo8",
+    src: engagementApril19Photo8,
+    alt: "La pareja sonríe con ropa abrigada.",
+    layout: "portrait",
+    position: "center",
+  },
+] as const satisfies readonly WeddingPhoto[];
+
+export type EngagementPhotoId = (typeof engagementPhotos)[number]["id"];
+
+export function getEngagementPhoto(id: EngagementPhotoId): WeddingPhoto {
+  const photo = engagementPhotos.find((candidate) => candidate.id === id);
+
+  if (!photo) {
+    throw new Error(`No existe la fotografía de compromiso "${id}".`);
+  }
+
+  return photo;
+}
 
 /**
  * El orden de este arreglo es el orden visual de la galería.

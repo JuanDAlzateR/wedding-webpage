@@ -7,7 +7,7 @@ El mismo diseño genera dos invitaciones independientes:
 - Eucaristía solamente.
 - Eucaristía y celebración posterior.
 
-La raíz `/` muestra la variante de eucaristía. Las rutas y la configuración de ambas variantes se mantienen en `src/content/invitations.ts`; la ruta no obvia de la invitación completa no se copia en esta documentación.
+La raíz `/` muestra la variante de Eucaristía. Las rutas y la configuración de ambas variantes se mantienen en `src/content/invitations.ts`; la ruta no obvia de la invitación completa no se copia en esta documentación.
 
 ## Requisitos
 
@@ -23,13 +23,16 @@ pnpm validate
 pnpm preview
 ```
 
-`pnpm dev` inicia el sitio local. Revisa la variante de eucaristía en `/invitacion/misa/` y consulta `src/content/invitations.ts` para abrir localmente la variante completa. `pnpm validate` revisa formato, lint, TypeScript/Astro, producción y el aislamiento entre invitaciones. `pnpm preview` permite revisar el resultado generado después de `pnpm build`.
+`pnpm dev` inicia el sitio local. Revisa la variante de Eucaristía en `/invitacion/misa/` y consulta `src/content/invitations.ts` para abrir localmente la variante completa. `pnpm validate` revisa formato, lint, TypeScript/Astro, producción y el aislamiento entre invitaciones. `pnpm preview` permite revisar el resultado generado después de `pnpm build`.
 
 ## Edición rápida
 
 - Información de la boda: `src/content/wedding.ts`
 - Tipos de invitación, rutas, metadatos y secciones: `src/content/invitations.ts`
 - Fotografías y orden de galería: `src/content/photos.ts`
+- Capítulos, texto, orden y visibilidad del compromiso: `weddingContent.engagement.storyChapters` en `src/content/wedding.ts`
+- Fotografías y alt text del compromiso: `engagementPhotos` en `src/content/photos.ts`
+- Página generada del compromiso: `/compromiso/`
 - Archivos originales: `photos/`
 - Colores y estilos: `src/styles/global.css`
 - Guía completa: `docs/CONTENT_EDITING.md`
@@ -39,6 +42,6 @@ La información todavía no confirmada aparece como pendiente. No reemplaces eso
 
 ## Estado actual
 
-Los nombres, la fecha, los horarios, los lugares, las direcciones, las referencias de ubicación y los mapas de la eucaristía y de la celebración posterior contienen la información confirmada. Todavía están pendientes el código de vestuario, las historias, la información adicional, la URL final y el favicon. Consulta `docs/CONTENT_EDITING.md` para la lista completa.
+Los nombres, la fecha, los horarios, los lugares, las direcciones, las referencias de ubicación, los mapas, la historia del compromiso y la información de regalos contienen la información confirmada. Todavía están pendientes el código de vestuario, la historia general de la pareja, la información adicional, la URL final y el favicon. Consulta `docs/CONTENT_EDITING.md` para la lista completa.
 
 Ambas variantes usan `noindex, nofollow` y `robots.txt` bloquea el rastreo. La ruta no obvia reduce el descubrimiento accidental, pero no autentica a los invitados ni protege el contenido frente a quien conozca o adivine la URL.
