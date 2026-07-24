@@ -12,20 +12,20 @@ export type AdditionalInfoItem = {
   visible: boolean;
 };
 
-export type VisibleParagraph = {
-  id: string;
-  text: string;
-  visible: boolean;
-};
-
 export type EngagementStoryEntry = {
   id: string;
   photoId: EngagementPhotoId;
   description: EditableText;
   title?: string;
-  date?: string;
   caption?: string;
   visible: boolean;
+};
+
+export type EngagementStoryChapter = {
+  id: string;
+  title: string;
+  dateLabel: string;
+  entries: EngagementStoryEntry[];
 };
 
 export type EventDetailsContent = {
@@ -126,164 +126,232 @@ export const weddingContent = {
     eyebrow: "Nuestra aventura",
     title: "Cómo nos comprometimos",
     summary:
-      "Una historia de juegos, códigos QR y pistas que nos condujeron al comienzo de una nueva etapa.",
+      "Durante tres domingos, un juego de pistas, cartas y lugares especiales nos fue acercando al comienzo de una nueva etapa.",
     callToAction: "Descubrir nuestra historia",
     pageTitle: "Cómo nos comprometimos | Juan David y Melisa",
     pageDescription:
-      "La historia de una aventura entre juegos, códigos QR y pistas que condujo a la propuesta de matrimonio de Juan David y Melisa.",
-    storyEyebrow: "Pista a pista",
-    storyTitle: "Una aventura con un destino especial",
-    galleryEyebrow: "Recuerdos del recorrido",
-    galleryTitle: "Nuestra aventura en imágenes",
+      "La historia del compromiso de Juan David y Melisa, contada a través de tres domingos de juegos, pistas y momentos compartidos.",
+    storyEyebrow: "Tres domingos, una historia",
+    storyTitle: "Pista a pista, hasta el destino final",
     /**
-     * Orden narrativo provisional: el orden del arreglo es el orden visible.
-     * La pareja debe confirmar la secuencia antes de considerarla cronológica.
+     * El orden de `storyChapters` y de cada arreglo `entries` es el orden visible.
      *
      * `visible` oculta o muestra la entrada completa.
      * `description.pending` conserva el borrador sin publicarlo.
      */
-    storyEntries: [
+    storyChapters: [
       {
-        id: "printed-activity",
-        photoId: "printed-activity",
-        description: {
-          value:
-            "[Texto pendiente: describir este momento de la actividad impresa.]",
-          pending: true,
-        },
-        visible: true,
+        id: "april-05",
+        title: "El juego comienza",
+        dateLabel: "Domingo de Resurrección · 5 de abril de 2026",
+        entries: [
+          {
+            id: "april05-photo1",
+            photoId: "april05-photo1",
+            description: {
+              value:
+                "El Domingo de Resurrección, 5 de abril de 2026, después de Misa, comenzamos nuestra aventura con un primer reto: Melisa debía resolver un sudoku. Al completarlo, recibió las seis cartas que formarían su mazo inicial.",
+              pending: false,
+            },
+            visible: true,
+          },
+          {
+            id: "april05-photo2",
+            photoId: "april05-photo2",
+            description: {
+              value:
+                "Cada turno nos llevaba a descubrir un lugar a partir de una pista. Para avanzar, Melisa jugaba las cartas, aplicaba sus efectos al escanear códigos QR con el celular y administraba cuatro recursos: amor, fe, dinero y tiempo.",
+              pending: false,
+            },
+            visible: true,
+          },
+          {
+            id: "april05-photo3",
+            photoId: "april05-photo3",
+            description: {
+              value:
+                "En cada lugar, Melisa ganaba una nueva carta. Así, poco a poco, fue fortaleciendo su mazo y afinando la estrategia para continuar el recorrido.",
+              pending: false,
+            },
+            visible: true,
+          },
+          {
+            id: "april05-photo4",
+            photoId: "april05-photo4",
+            description: {
+              value:
+                "La ruta nos llevó por restaurantes, centros comerciales, parroquias y otros espacios. Cada lugar, conocido o nuevo, se convirtió en un turno distinto: un reto, una aventura y una sorpresa más.",
+              pending: false,
+            },
+            visible: true,
+          },
+          {
+            id: "april05-photo5",
+            photoId: "april05-photo5",
+            description: {
+              value:
+                "Terminamos el primer día contentos y muy cansados. Antes de guardar el juego para retomarlo después, agradecimos a Dios con una oración.",
+              pending: false,
+            },
+            visible: true,
+          },
+        ],
       },
       {
-        id: "qr-clue",
-        photoId: "qr-clue",
-        description: {
-          value:
-            "[Texto pendiente: describir el momento relacionado con el código QR.]",
-          pending: true,
-        },
-        visible: true,
+        id: "april-12",
+        title: "La aventura continúa",
+        dateLabel: "12 de abril de 2026",
+        entries: [
+          {
+            id: "april12-photo1",
+            photoId: "april12-photo1",
+            description: {
+              value:
+                "El domingo siguiente retomamos la aventura en la Universidad Nacional. Allí, Melisa debía resolver una ecuación cuadrática para poder avanzar.",
+              pending: false,
+            },
+            visible: true,
+          },
+          {
+            id: "april12-photo2",
+            photoId: "april12-photo2",
+            description: {
+              value:
+                "Después de resolver el reto, Melisa obtuvo la carta «Mapa, parte A», una pieza que más adelante tendría un papel importante en el juego.",
+              pending: false,
+            },
+            visible: true,
+          },
+          {
+            id: "april12-photo3",
+            photoId: "april12-photo3",
+            description: {
+              value:
+                "Luego fuimos a Misa y continuamos el recorrido de la mano de María, caminando hacia Jesús.",
+              pending: false,
+            },
+            visible: true,
+          },
+          {
+            id: "april12-photo4",
+            photoId: "april12-photo4",
+            description: {
+              value:
+                "Más tarde almorzamos en Parques del Río. La aventura también nos regaló un espacio para hablar, compartir y reflexionar sobre nuestro noviazgo.",
+              pending: false,
+            },
+            visible: true,
+          },
+          {
+            id: "april12-photo5",
+            photoId: "april12-photo5",
+            description: {
+              value:
+                "Después continuamos el recorrido en el Jardín Botánico, sumando un nuevo lugar a esta aventura.",
+              pending: false,
+            },
+            visible: true,
+          },
+          {
+            id: "april12-photo6",
+            photoId: "april12-photo6",
+            description: {
+              value:
+                "Terminamos el día ya entrada la noche, haciendo una breve visita a Jesús. Luego Melisa obtuvo la carta «Mapa, parte B» y, al jugar ambas partes en el mismo turno, desbloqueó el mapa del juego: una guía con las bases y las rutas posibles que le ayudó a orientarse.",
+              pending: false,
+            },
+            visible: true,
+          },
+        ],
       },
       {
-        id: "clue-cards",
-        photoId: "clue-cards",
-        description: {
-          value:
-            "[Texto pendiente: describir el momento de las tarjetas de pistas.]",
-          pending: true,
-        },
-        visible: true,
+        id: "april-19",
+        title: "El destino final",
+        dateLabel: "19 de abril de 2026",
+        entries: [
+          {
+            id: "april19-photo1",
+            photoId: "april19-photo1",
+            description: {
+              value:
+                "El tercer domingo, después de Misa, regresamos a Parques del Río. El juego permitía volver a lugares anteriores, aunque esta vez no se obtenían cartas nuevas.",
+              pending: false,
+            },
+            visible: true,
+          },
+          {
+            id: "april19-photo2",
+            photoId: "april19-photo2",
+            description: {
+              value:
+                "A medida que avanzábamos, los turnos se hacían más complejos y estratégicos. Cada uno consumía un punto de amor, así que la regla más importante era no permitir que ese recurso se agotara.",
+              pending: false,
+            },
+            visible: true,
+          },
+          {
+            id: "april19-photo3",
+            photoId: "april19-photo3",
+            description: {
+              value:
+                "Entonces comenzó la segunda fase del juego, que nos llevaría a recorrer varios lugares fuera de Medellín.",
+              pending: false,
+            },
+            visible: true,
+          },
+          {
+            id: "april19-photo4",
+            photoId: "april19-photo4",
+            description: {
+              value:
+                "Ni la lluvia ni el frío nos impidieron continuar. Seguimos jugando hasta llegar al destino final.",
+              pending: false,
+            },
+            visible: true,
+          },
+          {
+            id: "april19-photo5",
+            photoId: "april19-photo5",
+            description: {
+              value:
+                "En el Ave María, con las Hijas del Fiat, llegamos al mismo lugar donde Melisa le había escrito una carta a San José dos años antes. Allí, Juan David le pidió que fuera su esposa.",
+              pending: false,
+            },
+            visible: true,
+          },
+          {
+            id: "april19-photo6",
+            photoId: "april19-photo6",
+            description: {
+              value:
+                "El anillo no fue elegido por ser el más costoso ni el más lujoso, sino por haber sido escogido y entregado con mucho amor.",
+              pending: false,
+            },
+            visible: true,
+          },
+          {
+            id: "april19-photo7",
+            photoId: "april19-photo7",
+            description: {
+              value:
+                "Junto al anillo de compromiso estaban otros regalos llenos de significado: la manilla de nuestro primer aniversario y el anillo con los corazones de la Sagrada Familia, entregado en octubre de 2025 como promesa de una futura propuesta de matrimonio.",
+              pending: false,
+            },
+            visible: true,
+          },
+          {
+            id: "april19-photo8",
+            photoId: "april19-photo8",
+            description: {
+              value:
+                "Después de las dificultades y los obstáculos, tanto en el juego como durante nuestro noviazgo, llegamos a este momento: nos comprometimos y comenzamos una nueva etapa, felices y agradecidos con Dios, María y San José.",
+              pending: false,
+            },
+            visible: true,
+          },
+        ],
       },
-      {
-        id: "seated-selfie",
-        photoId: "seated-selfie",
-        description: {
-          value: "[Texto pendiente: describir este momento compartido.]",
-          pending: true,
-        },
-        visible: true,
-      },
-      {
-        id: "decorated-box",
-        photoId: "decorated-box",
-        description: {
-          value: "[Texto pendiente: describir el momento de la caja decorada.]",
-          pending: true,
-        },
-        visible: true,
-      },
-      {
-        id: "opening-box",
-        photoId: "opening-box",
-        description: {
-          value:
-            "[Texto pendiente: describir la apertura de la caja decorada.]",
-          pending: true,
-        },
-        visible: true,
-      },
-      {
-        id: "night-building",
-        photoId: "night-building",
-        description: {
-          value: "[Texto pendiente: describir este momento del recorrido.]",
-          pending: true,
-        },
-        visible: true,
-      },
-      {
-        id: "garden-embrace",
-        photoId: "garden-embrace",
-        description: {
-          value: "[Texto pendiente: describir este momento entre vegetación.]",
-          pending: true,
-        },
-        visible: true,
-      },
-      {
-        id: "proposal",
-        photoId: "proposal",
-        description: {
-          value: "[Texto pendiente: describir cómo ocurrió la propuesta.]",
-          pending: true,
-        },
-        visible: true,
-      },
-      {
-        id: "rings-on-hand",
-        photoId: "rings-on-hand",
-        description: {
-          value: "[Texto pendiente: describir este recuerdo de los anillos.]",
-          pending: true,
-        },
-        visible: true,
-      },
-      {
-        id: "ring-flower",
-        photoId: "ring-flower",
-        description: {
-          value: "[Texto pendiente: describir este detalle de los anillos.]",
-          pending: true,
-        },
-        visible: true,
-      },
-      {
-        id: "warm-selfie",
-        photoId: "warm-selfie",
-        description: {
-          value:
-            "[Texto pendiente: describir este momento al final del recorrido.]",
-          pending: true,
-        },
-        visible: true,
-      },
-    ] satisfies EngagementStoryEntry[],
-    paragraphs: [
-      {
-        id: "adventure",
-        text: "Nuestro compromiso nació de una aventura preparada con mucho cariño. Todo comenzó con una actividad que combinaba una carrera de observación, juegos de mesa y una aplicación en el celular para leer códigos QR.",
-        visible: true,
-      },
-      {
-        id: "clues",
-        text: "Cada código revelaba una nueva pista y nos guiaba hacia el siguiente paso. Entre preguntas, retos y momentos compartidos, fuimos avanzando poco a poco hasta llegar al destino final.",
-        visible: true,
-      },
-      {
-        id: "proposal",
-        text: "Allí nos esperaba el momento más importante de la aventura: la propuesta de matrimonio que abrió una nueva etapa en nuestra historia.",
-        visible: true,
-      },
-      {
-        id: "new-chapter",
-        text: "Fue una experiencia especial, divertida y llena de significado. Cada pista nos acercó no solo al final del recorrido, sino también al comienzo del camino que hoy nos lleva hacia nuestro matrimonio.",
-        visible: true,
-      },
-    ] satisfies VisibleParagraph[],
-    editorialNotes: [
-      "[Texto pendiente: agregar cómo comenzó la actividad.]",
-      "[Texto pendiente: describir una pista o momento especial del recorrido.]",
-      "[Texto pendiente: agregar cómo ocurrió la propuesta y cómo vivimos ese momento.]",
-    ],
+    ] satisfies EngagementStoryChapter[],
   },
   gifts: {
     eyebrow: "Con cariño",

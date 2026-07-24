@@ -12,18 +12,25 @@ import galleryWinter from "../../photos/IMG_20251225_000451.jpg";
 import heroImage from "../../photos/IMG_5961.JPG";
 import socialImage from "../../photos/IMG_20240804_155455.jpg";
 import storyImage from "../../photos/IMG_20241010_141503.jpg";
-import engagementActivity from "../../photos/engagement/IMG_20260405_120048.jpg";
-import engagementQr from "../../photos/engagement/IMG_20260405_135257.jpg";
-import engagementClueCards from "../../photos/engagement/IMG_20260405_135515.jpg";
-import engagementSeatedSelfie from "../../photos/engagement/IMG_20260405_214807.jpg";
-import engagementDecoratedBox from "../../photos/engagement/IMG_20260412_114243.jpg";
-import engagementOpeningBox from "../../photos/engagement/IMG_20260412_151959.jpg";
-import engagementNightBuilding from "../../photos/engagement/IMG_20260412_213547.jpg";
-import engagementGardenEmbrace from "../../photos/engagement/IMG_20260419_134249.jpg";
-import engagementProposal from "../../photos/engagement/SNOW_20260422_134757_793.jpg";
-import engagementRingsOnHand from "../../photos/engagement/IMG_20260419_183821.jpg";
-import engagementRingFlower from "../../photos/engagement/IMG_20260419_184112.jpg";
-import engagementWarmSelfie from "../../photos/engagement/IMG_20260419_195944.jpg";
+import engagementApril05Photo1 from "../../photos/engagement/april05-photo1.jpg";
+import engagementApril05Photo2 from "../../photos/engagement/april05-photo2.jpg";
+import engagementApril05Photo3 from "../../photos/engagement/april05-photo3.jpg";
+import engagementApril05Photo4 from "../../photos/engagement/april05-photo4.jpg";
+import engagementApril05Photo5 from "../../photos/engagement/april05-photo5.jpg";
+import engagementApril12Photo1 from "../../photos/engagement/april12-photo1.jpg";
+import engagementApril12Photo2 from "../../photos/engagement/april12-photo2.jpg";
+import engagementApril12Photo3 from "../../photos/engagement/april12-photo3.jpg";
+import engagementApril12Photo4 from "../../photos/engagement/april12-photo4.jpg";
+import engagementApril12Photo5 from "../../photos/engagement/april12-photo5.jpg";
+import engagementApril12Photo6 from "../../photos/engagement/april12-photo6.jpg";
+import engagementApril19Photo1 from "../../photos/engagement/april19-photo1.jpg";
+import engagementApril19Photo2 from "../../photos/engagement/april19-photo2.png";
+import engagementApril19Photo3 from "../../photos/engagement/april19-photo3.png";
+import engagementApril19Photo4 from "../../photos/engagement/april19-photo4.png";
+import engagementApril19Photo5 from "../../photos/engagement/april19-photo5.jpg";
+import engagementApril19Photo6 from "../../photos/engagement/april19-photo6.jpg";
+import engagementApril19Photo7 from "../../photos/engagement/april19-photo7.jpg";
+import engagementApril19Photo8 from "../../photos/engagement/april19-photo8.jpg";
 
 export type PhotoLayout = "portrait" | "landscape" | "feature";
 
@@ -51,95 +58,144 @@ export const featuredPhotos = {
 } as const;
 
 export const engagementFeaturedPhoto = {
-  src: engagementProposal,
-  alt: "Una persona se arrodilla frente a su pareja y sostiene una caja.",
+  src: engagementApril05Photo3,
+  alt: "La pareja posa con varias tarjetas del juego.",
 } as const;
 
 /**
  * Biblioteca de fotografías del compromiso.
- * El orden narrativo se define en `weddingContent.engagement.storyEntries`.
+ * El orden narrativo se define en `weddingContent.engagement.storyChapters`.
  */
 export const engagementPhotos = [
   {
-    id: "printed-activity",
-    src: engagementActivity,
+    id: "april05-photo1",
+    src: engagementApril05Photo1,
     alt: "Una persona completa una actividad impresa sobre una mesa.",
     layout: "portrait",
     position: "center",
   },
   {
-    id: "qr-clue",
-    src: engagementQr,
+    id: "april05-photo2",
+    src: engagementApril05Photo2,
     alt: "Una persona sostiene un celular y una tarjeta con código QR.",
     layout: "portrait",
     position: "center",
   },
   {
-    id: "clue-cards",
-    src: engagementClueCards,
-    alt: "La pareja posa con varias tarjetas de pistas.",
+    id: "april05-photo3",
+    src: engagementApril05Photo3,
+    alt: "La pareja posa con varias tarjetas del juego.",
     layout: "feature",
     position: "center",
   },
   {
-    id: "seated-selfie",
-    src: engagementSeatedSelfie,
-    alt: "La pareja se toma una fotografía sentada.",
+    id: "april05-photo4",
+    src: engagementApril05Photo4,
+    alt: "Una persona muestra el celular frente a una parroquia iluminada.",
+    layout: "portrait",
+    position: "center",
+  },
+  {
+    id: "april05-photo5",
+    src: engagementApril05Photo5,
+    alt: "La pareja se toma una fotografía sentada al final del día.",
     layout: "landscape",
     position: "center",
   },
   {
-    id: "decorated-box",
-    src: engagementDecoratedBox,
+    id: "april12-photo1",
+    src: engagementApril12Photo1,
+    alt: "Una persona resuelve una actividad frente a la Universidad Nacional.",
+    layout: "portrait",
+    position: "center",
+  },
+  {
+    id: "april12-photo2",
+    src: engagementApril12Photo2,
     alt: "La pareja sostiene una caja decorada.",
     layout: "landscape",
     position: "center",
   },
   {
-    id: "opening-box",
-    src: engagementOpeningBox,
+    id: "april12-photo3",
+    src: engagementApril12Photo3,
+    alt: "La pareja sonríe dentro de una iglesia.",
+    layout: "portrait",
+    position: "center",
+  },
+  {
+    id: "april12-photo4",
+    src: engagementApril12Photo4,
     alt: "Una persona abre una caja decorada sobre una mesa.",
     layout: "portrait",
     position: "center",
   },
   {
-    id: "night-building",
-    src: engagementNightBuilding,
-    alt: "La pareja sonríe frente a una edificación iluminada.",
+    id: "april12-photo5",
+    src: engagementApril12Photo5,
+    alt: "La pareja sonríe frente al letrero del Jardín Botánico.",
     layout: "landscape",
     position: "center",
   },
   {
-    id: "garden-embrace",
-    src: engagementGardenEmbrace,
+    id: "april12-photo6",
+    src: engagementApril12Photo6,
+    alt: "La pareja sonríe frente a una edificación iluminada de noche.",
+    layout: "landscape",
+    position: "center",
+  },
+  {
+    id: "april19-photo1",
+    src: engagementApril19Photo1,
     alt: "La pareja se abraza sentada entre vegetación.",
-    layout: "feature",
+    layout: "landscape",
     position: "center",
   },
   {
-    id: "proposal",
-    src: engagementProposal,
-    alt: "Una persona se arrodilla frente a su pareja y sostiene una caja.",
-    layout: "feature",
-    position: "center",
-  },
-  {
-    id: "rings-on-hand",
-    src: engagementRingsOnHand,
-    alt: "Una mano muestra dos anillos.",
+    id: "april19-photo2",
+    src: engagementApril19Photo2,
+    alt: "Una persona sostiene un vaso junto a las cartas del juego.",
     layout: "portrait",
     position: "center",
   },
   {
-    id: "ring-flower",
-    src: engagementRingFlower,
+    id: "april19-photo3",
+    src: engagementApril19Photo3,
+    alt: "Una persona con casco y ropa para la lluvia sostiene varias cartas.",
+    layout: "portrait",
+    position: "center",
+  },
+  {
+    id: "april19-photo4",
+    src: engagementApril19Photo4,
+    alt: "Una persona con casco consulta el celular junto a las cartas del juego.",
+    layout: "portrait",
+    position: "center",
+  },
+  {
+    id: "april19-photo5",
+    src: engagementApril19Photo5,
+    alt: "Una persona se arrodilla frente a su pareja y sostiene una caja.",
+    layout: "landscape",
+    position: "center",
+  },
+  {
+    id: "april19-photo6",
+    src: engagementApril19Photo6,
     alt: "Dos anillos descansan sobre una flor decorativa roja.",
     layout: "portrait",
     position: "center",
   },
   {
-    id: "warm-selfie",
-    src: engagementWarmSelfie,
+    id: "april19-photo7",
+    src: engagementApril19Photo7,
+    alt: "Una mano muestra dos anillos y una manilla.",
+    layout: "portrait",
+    position: "center",
+  },
+  {
+    id: "april19-photo8",
+    src: engagementApril19Photo8,
     alt: "La pareja sonríe con ropa abrigada.",
     layout: "portrait",
     position: "center",

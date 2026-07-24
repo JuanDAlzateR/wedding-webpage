@@ -1,25 +1,18 @@
 ---
 import { Image } from "astro:assets";
 import SectionHeading from "../components/SectionHeading.astro";
-import {
-  engagementStoryEntries,
-  type ResolvedEngagementStoryEntry,
-} from "../content/engagement";
+import { engagementStoryChapters } from "../content/engagement";
 import { engagementFeaturedPhoto } from "../content/photos";
 import { weddingContent } from "../content/wedding";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const { couple, engagement } = weddingContent;
-const visibleParagraphs = engagement.paragraphs.filter(
-  (paragraph) => paragraph.visible,
-);
-const visibleStoryEntries = engagementStoryEntries.filter(
-  (entry) => entry.visible,
-);
-const hasVisibleStoryText = (entry: ResolvedEngagementStoryEntry) =>
-  Boolean(
-    entry.title || entry.date || entry.caption || !entry.description.pending,
-  );
+const visibleStoryChapters = engagementStoryChapters
+  .map((chapter) => ({
+    ...chapter,
+    entries: chapter.entries.filter((entry) => entry.visible),
+  }))
+  .filter((chapter) => chapter.entries.length > 0);
 const basePath = import.meta.env.BASE_URL;
 const homePath = basePath;
 ---
@@ -78,84 +71,71 @@ const homePath = basePath;
       id="historia-compromiso"
       aria-labelledby="engagement-story-title"
     >
-      <div class="section__inner engagement-page-story__layout">
+      <div class="section__inner">
         <SectionHeading
           id="engagement-story-title"
           eyebrow={engagement.storyEyebrow}
           title={engagement.storyTitle}
-        />
-        <div class="engagement-page-story__copy">
-          {visibleParagraphs.map((paragraph) => <p>{paragraph.text}</p>)}
-        </div>
-      </div>
-    </section>
-
-    <section
-      class="section engagement-page-gallery"
-      id="recuerdos-compromiso"
-      aria-labelledby="engagement-gallery-title"
-    >
-      <div class="section__inner">
-        <SectionHeading
-          id="engagement-gallery-title"
-          eyebrow={engagement.galleryEyebrow}
-          title={engagement.galleryTitle}
           align="center"
         />
-        <ol class="engagement-gallery-grid">
+        <div class="engagement-story-chapters">
           {
-            visibleStoryEntries.map((entry) => (
-              <li
-                class:list={[
-                  "engagement-gallery-card",
-                  `engagement-gallery-card--${entry.photo.layout}`,
-                ]}
-                data-story-id={entry.id}
+            visibleStoryChapters.map((chapter, chapterIndex) => (
+              <section
+                class="engagement-story-chapter"
+                aria-labelledby={`engagement-chapter-${chapter.id}`}
+                data-chapter={chapter.id}
               >
-                <figure class="engagement-gallery-card__figure">
-                  <Image
-                    src={entry.photo.src}
-                    alt={entry.photo.alt}
-                    width={entry.photo.layout === "feature" ? 1400 : 900}
-                    widths={
-                      entry.photo.layout === "feature"
-                        ? [480, 760, 1040, 1400]
-                        : [360, 600, 900]
-                    }
-                    sizes={
-                      entry.photo.layout === "feature"
-                        ? "92vw"
-                        : "(min-width: 800px) 46vw, 92vw"
-                    }
-                    format="webp"
-                    quality={84}
-                    loading="lazy"
-                    decoding="async"
-                    style={`object-position: ${entry.photo.position}`}
-                  />
-                  {hasVisibleStoryText(entry) && (
-                    <figcaption class="engagement-gallery-card__copy">
-                      {entry.date && (
-                        <p class="engagement-gallery-card__date">
-                          {entry.date}
-                        </p>
-                      )}
-                      {entry.title && <h3>{entry.title}</h3>}
-                      {!entry.description.pending && (
+                <header class="engagement-story-chapter__header">
+                  <p class="engagement-story-chapter__number">
+                    Capítulo {chapterIndex + 1}
+                  </p>
+                  <h3 id={`engagement-chapter-${chapter.id}`}>
+                    {chapter.title}
+                  </h3>
+                  <p class="engagement-story-chapter__date">
+                    {chapter.dateLabel}
+                  </p>
+                </header>
+
+                <ol class="engagement-story-moments">
+                  {chapter.entries.map((entry) => (
+                    <li
+                      class:list={[
+                        "engagement-story-moment",
+                        `engagement-story-moment--${entry.photo.layout}`,
+                      ]}
+                      data-story-id={entry.id}
+                    >
+                      <figure class="engagement-story-moment__photo">
+                        <Image
+                          src={entry.photo.src}
+                          alt={entry.photo.alt}
+                          width={entry.photo.layout === "feature" ? 1280 : 960}
+                          widths={[420, 720, 960, 1280]}
+                          sizes="(min-width: 900px) 50vw, 92vw"
+                          format="webp"
+                          quality={84}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </figure>
+                      <div class="engagement-story-moment__copy">
+                        {entry.title && <h4>{entry.title}</h4>}
                         <p>{entry.description.value}</p>
-                      )}
-                      {entry.caption && (
-                        <p class="engagement-gallery-card__caption">
-                          {entry.caption}
-                        </p>
-                      )}
-                    </figcaption>
-                  )}
-                </figure>
-              </li>
+                        {entry.caption && (
+                          <p class="engagement-story-moment__caption">
+                            {entry.caption}
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </section>
             ))
           }
-        </ol>
+        </div>
       </div>
     </section>
   </main>

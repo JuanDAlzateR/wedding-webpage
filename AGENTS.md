@@ -16,7 +16,7 @@ Este repositorio contiene un sitio web estático de boda, móvil primero y únic
 
 - `src/content/wedding.ts`: única fuente de información editable de la boda
 - `src/content/invitations.ts`: tipos, rutas, metadatos y visibilidad por variante
-- `src/content/photos.ts`: manifiesto, orden, alt text y punto focal de imágenes
+- `src/content/photos.ts`: manifiestos, alt text y tratamiento de imágenes
 - `photos/`: originales de fotografías
 - `src/components/`: secciones visuales
 - `src/styles/global.css`: sistema visual y responsive
@@ -28,14 +28,26 @@ Este repositorio contiene un sitio web estático de boda, móvil primero y únic
 - La invitación `mass_only` no puede incluir texto, metadatos, navegación, assets de texto ni referencias a la celebración posterior.
 - La ruta no obvia de `mass_and_celebration` no debe copiarse en menús, pies, sitemaps o documentación general.
 - Mantener placeholders centralizados y claramente marcados.
-- La historia del compromiso debe permanecer pendiente hasta recibir el texto real.
 - Las secciones opcionales sin información confirmada deben permanecer ocultas.
 - El sitio es solo en español; no añadir traducciones ni selector de idioma salvo petición explícita.
+
+## Relato del compromiso
+
+- La fuente canónica del relato es `weddingContent.engagement.storyChapters` en `src/content/wedding.ts`.
+- Cada capítulo tiene `id`, `title`, `dateLabel` y `entries`; el orden de ambos arreglos es el orden cronológico visible.
+- Cada entrada usa `id`, `photoId`, `description` y `visible`; puede incluir `title` o `caption`.
+- `photoId` debe coincidir con un ID de `engagementPhotos` en `src/content/photos.ts`. El build valida IDs, cobertura, textos y asociaciones.
+- Para añadir una foto, registra primero su import, alt text, layout y position en `engagementPhotos`; después crea su entrada en el capítulo correcto.
+- Para editar, ocultar o reordenar, cambia únicamente los datos. Una entrada con `description.pending: true` debe usar `visible: false`; los placeholders nunca se muestran.
+- Para retirar un momento, elimina tanto la entrada como su elemento del manifiesto activo. Conserva el original cuando sea práctico.
+- Las fotos de compromiso viven en `photos/engagement/` y no deben duplicarse en `galleryPhotos`.
+- `/compromiso/` es compartida y privada por `noindex`; no debe nombrar ni enlazar la ruta completa ni serializar información exclusiva de la celebración.
+- No inventar detalles personales ni inferir lugares o personas solo a partir de una imagen.
 
 ## Fotografías
 
 - Conservar originales cuando sea práctico.
-- Registrar rutas, orden, alt text y captions únicamente en `src/content/photos.ts`.
+- Registrar rutas, alt text, captions y tratamiento visual únicamente en `src/content/photos.ts`; el orden del relato se mantiene en `storyChapters`.
 - Usar descripciones objetivas y no identificar personas o lugares sin confirmación.
 - Ajustar `position` antes de aceptar un recorte que pueda ocultar sujetos importantes.
 - No publicar HEIC directamente; convertirlo a un formato web compatible.

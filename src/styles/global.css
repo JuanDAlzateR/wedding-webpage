@@ -887,90 +887,126 @@ p {
 }
 
 .engagement-page-story {
-  background: var(--color-surface);
-}
-
-.engagement-page-story__layout {
-  display: grid;
-  gap: clamp(2.5rem, 7vw, 6rem);
-}
-
-.engagement-page-story__copy {
-  max-width: 43rem;
-  color: var(--color-text-muted);
-  font-size: clamp(1rem, 2vw, 1.12rem);
-}
-
-.engagement-page-story__copy p:not(:last-child) {
-  margin-bottom: 1.5rem;
-}
-
-.engagement-page-story__copy p:last-child {
-  margin-bottom: 0;
-}
-
-.engagement-page-gallery {
   background: var(--color-background-alt);
 }
 
-.engagement-gallery-grid {
+.engagement-story-chapters {
   display: grid;
-  gap: 1.25rem;
+  gap: clamp(5.5rem, 12vw, 9rem);
+  margin-top: clamp(4rem, 9vw, 7rem);
+}
+
+.engagement-story-chapter {
+  min-width: 0;
+}
+
+.engagement-story-chapter__header {
+  width: min(100%, 42rem);
+  margin: 0 auto clamp(3rem, 7vw, 5.5rem);
+  text-align: center;
+}
+
+.engagement-story-chapter__number,
+.engagement-story-chapter__date {
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.engagement-story-chapter__number {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.8rem;
+  color: var(--color-accent);
+}
+
+.engagement-story-chapter__number::before,
+.engagement-story-chapter__number::after {
+  width: 2.25rem;
+  height: 1px;
+  background: currentColor;
+  content: "";
+}
+
+.engagement-story-chapter__header h3 {
+  margin-bottom: 0.75rem;
+  color: var(--color-primary);
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 8vw, 4.5rem);
+  font-weight: 520;
+  letter-spacing: -0.025em;
+  line-height: 0.95;
+}
+
+.engagement-story-chapter__date {
+  margin-bottom: 0;
+  color: var(--color-text-muted);
+}
+
+.engagement-story-moments {
+  display: grid;
+  gap: clamp(4rem, 10vw, 7rem);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.engagement-gallery-card {
-  margin: 0;
+.engagement-story-moment {
+  display: grid;
   min-width: 0;
+  gap: 1.5rem;
+  align-items: center;
 }
 
-.engagement-gallery-card__figure {
-  margin: 0;
+.engagement-story-moment__photo {
+  width: min(100%, 40rem);
+  margin: 0 auto;
   padding: 0.45rem;
+  transform: rotate(-0.35deg);
   background: var(--color-surface);
   box-shadow: var(--shadow-soft);
 }
 
-.engagement-gallery-card img {
+.engagement-story-moment:nth-child(even) .engagement-story-moment__photo {
+  transform: rotate(0.35deg);
+}
+
+.engagement-story-moment--portrait .engagement-story-moment__photo {
+  width: min(100%, 31rem);
+}
+
+.engagement-story-moment__photo img {
+  display: block;
   width: 100%;
   height: auto;
 }
 
-.engagement-gallery-card__copy {
-  padding: 1.25rem 1rem 0.85rem;
+.engagement-story-moment__copy {
+  max-width: 34rem;
+  margin-inline: auto;
+  padding: 0.35rem 0 0.35rem 1.25rem;
+  border-left: 2px solid var(--color-accent);
+  color: var(--color-text-muted);
+  font-size: clamp(1rem, 2.4vw, 1.12rem);
 }
 
-.engagement-gallery-card__copy h3 {
+.engagement-story-moment__copy h4 {
   margin-bottom: 0.65rem;
+  color: var(--color-primary);
   font-family: var(--font-display);
-  font-size: clamp(1.65rem, 4vw, 2.15rem);
+  font-size: clamp(1.7rem, 4vw, 2.35rem);
   font-weight: 550;
   line-height: 1.05;
 }
 
-.engagement-gallery-card__copy p {
+.engagement-story-moment__copy p {
   margin-bottom: 0;
-  color: var(--color-text-muted);
 }
 
-.engagement-gallery-card__date,
-.engagement-gallery-card__caption {
-  font-size: 0.78rem;
-}
-
-.engagement-gallery-card__date {
-  margin-bottom: 0.55rem !important;
-  color: var(--color-accent) !important;
-  font-weight: 750;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.engagement-gallery-card__caption {
-  margin-top: 0.75rem;
-  font-family: var(--font-display);
+.engagement-story-moment__caption {
+  margin-top: 0.8rem;
   font-style: italic;
 }
 
@@ -1181,27 +1217,23 @@ p {
     padding-inline: 2rem;
   }
 
-  .engagement-page-story__layout {
-    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-    align-items: start;
+  .engagement-story-moment {
+    grid-template-columns: minmax(0, 1.08fr) minmax(16rem, 0.92fr);
+    gap: clamp(3rem, 7vw, 7rem);
   }
 
-  .engagement-gallery-grid {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 1.5rem;
-    align-items: start;
+  .engagement-story-moment:nth-child(even) {
+    grid-template-columns: minmax(16rem, 0.92fr) minmax(0, 1.08fr);
   }
 
-  .engagement-gallery-card--portrait {
-    grid-column: span 4;
+  .engagement-story-moment:nth-child(even) .engagement-story-moment__photo {
+    grid-column: 2;
+    grid-row: 1;
   }
 
-  .engagement-gallery-card--landscape {
-    grid-column: span 6;
-  }
-
-  .engagement-gallery-card--feature {
-    grid-column: span 12;
+  .engagement-story-moment:nth-child(even) .engagement-story-moment__copy {
+    grid-column: 1;
+    grid-row: 1;
   }
 
   .gallery-grid {
@@ -1276,10 +1308,6 @@ p {
 
   .engagement-page-hero__copy h1 {
     font-size: clamp(4.2rem, 7vw, 6.25rem);
-  }
-
-  .engagement-gallery-card--feature {
-    grid-column: span 8;
   }
 }
 

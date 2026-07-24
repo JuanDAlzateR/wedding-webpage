@@ -133,10 +133,12 @@ for (const text of completeOnlyText) {
 
 const engagementText = [
   "Cómo nos comprometimos",
-  "Nuestro compromiso nació de una aventura preparada con mucho cariño",
-  "aplicación en el celular para leer códigos QR",
-  "la propuesta de matrimonio que abrió una nueva etapa",
-  "Nuestra aventura en imágenes",
+  "Durante tres domingos, un juego de pistas",
+  "El juego comienza",
+  "La aventura continúa",
+  "El destino final",
+  "Domingo de Resurrección · 5 de abril de 2026",
+  "Juan David le pidió que fuera su esposa",
 ];
 
 for (const text of engagementText) {
@@ -147,18 +149,25 @@ for (const text of engagementText) {
 }
 
 const engagementPhotoMarkers = [
-  "IMG_20260405_120048",
-  "IMG_20260405_135257",
-  "IMG_20260405_135515",
-  "IMG_20260405_214807",
-  "IMG_20260412_114243",
-  "IMG_20260412_151959",
-  "IMG_20260412_213547",
-  "IMG_20260419_134249",
-  "SNOW_20260422_134757_793",
-  "IMG_20260419_183821",
-  "IMG_20260419_184112",
-  "IMG_20260419_195944",
+  "april05-photo1",
+  "april05-photo2",
+  "april05-photo3",
+  "april05-photo4",
+  "april05-photo5",
+  "april12-photo1",
+  "april12-photo2",
+  "april12-photo3",
+  "april12-photo4",
+  "april12-photo5",
+  "april12-photo6",
+  "april19-photo1",
+  "april19-photo2",
+  "april19-photo3",
+  "april19-photo4",
+  "april19-photo5",
+  "april19-photo6",
+  "april19-photo7",
+  "april19-photo8",
 ];
 
 for (const marker of engagementPhotoMarkers) {
