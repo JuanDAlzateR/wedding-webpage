@@ -31,6 +31,19 @@ Este repositorio contiene un sitio web estático de boda, móvil primero y únic
 - Las secciones opcionales sin información confirmada deben permanecer ocultas.
 - El sitio es solo en español; no añadir traducciones ni selector de idioma salvo petición explícita.
 
+## Navegación y citas
+
+- Las etiquetas y el orden de navegación se mantienen en `src/content/invitations.ts`; la navegación final se filtra según las secciones realmente visibles.
+- Todo enlace interno debe resolver a un ID existente. `Confirmación` y cualquier otro acceso relacionado con la celebración son exclusivos de `mass_and_celebration`.
+- Los textos y referencias bíblicas se mantienen en `weddingContent.biblicalQuotes`; su marcado canónico es `BiblicalQuote.astro`.
+- Conservar literalmente la puntuación y referencia de una cita confirmada. Las referencias se muestran sin paréntesis.
+
+## Celebración posterior
+
+- Introducción, aviso de acceso, URL de confirmación y fecha límite viven en `weddingContent.celebration`.
+- Estos datos solo pueden pasarse al bloque de celebración de `mass_and_celebration`; deben permanecer ausentes del HTML, metadatos y assets de texto de `mass_only`.
+- La confirmación continúa siendo un enlace externo. No crear formularios, almacenamiento ni backend.
+
 ## Relato del compromiso
 
 - La fuente canónica del relato es `weddingContent.engagement.storyChapters` en `src/content/wedding.ts`.
@@ -48,6 +61,10 @@ Este repositorio contiene un sitio web estático de boda, móvil primero y únic
 
 - Conservar originales cuando sea práctico.
 - Registrar rutas, alt text, captions y tratamiento visual únicamente en `src/content/photos.ts`; el orden del relato se mantiene en `storyChapters`.
+- La galería general usa exclusivamente los originales de `photos/gallery/` y el orden explícito de `galleryPhotos`.
+- Los HEIC de la galería conservan su original y usan un JPG homónimo desde `photos/gallery/web-compatible/`. Los videos no forman parte del manifiesto fotográfico.
+- Las posiciones de las citas intercaladas se cambian mediante `afterPhotoId` en `weddingContent.biblicalQuotes.galleryInterludes`.
+- No mezclar `photos/gallery/` con `photos/engagement/`; sus manifiestos y experiencias son independientes.
 - Usar descripciones objetivas y no identificar personas o lugares sin confirmación.
 - Ajustar `position` antes de aceptar un recorte que pueda ocultar sujetos importantes.
 - No publicar HEIC directamente; convertirlo a un formato web compatible.

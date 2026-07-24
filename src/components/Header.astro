@@ -20,7 +20,27 @@ const { navigation } = Astro.props;
     <span aria-hidden="true">{initials}</span>
   </a>
 
-  <nav class="site-header__nav" aria-label="Navegación principal">
+  <nav
+    class="site-header__nav site-header__nav--desktop"
+    aria-label="Navegación principal"
+  >
     {navigation.map((item) => <a href={item.href}>{item.label}</a>)}
   </nav>
+
+  <details class="site-header__menu">
+    <summary>Menú</summary>
+    <nav aria-label="Navegación principal en móvil">
+      {navigation.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+  </details>
 </header>
+
+<script>
+  document
+    .querySelectorAll<HTMLDetailsElement>(".site-header__menu")
+    .forEach((menu) => {
+      menu.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => menu.removeAttribute("open"));
+      });
+    });
+</script>

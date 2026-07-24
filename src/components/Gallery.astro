@@ -1,54 +1,51 @@
 ---
 import { Image } from "astro:assets";
-import SectionHeading from "./SectionHeading.astro";
-import { galleryPhotos } from "../content/photos";
+import BiblicalQuote from "./BiblicalQuote.astro";
+import { getGallerySegments } from "../content/gallery";
+import { weddingContent } from "../content/wedding";
+
+const segments = getGallerySegments();
+const { galleryIntroduction } = weddingContent.biblicalQuotes;
 ---
 
 <section
   class="section section--gallery"
-  id="fotos"
+  id="galeria"
   aria-labelledby="gallery-title"
 >
   <div class="section__inner">
-    <SectionHeading
-      id="gallery-title"
-      eyebrow="Instantes compartidos"
-      title="Nuestra galería"
-      align="center"
-    />
-    <p class="section-intro">
-      Algunos recuerdos que guardamos con especial cariño.
-    </p>
+    <h2 class="visually-hidden" id="gallery-title">Galería de nuestro amor</h2>
+    <BiblicalQuote quote={galleryIntroduction} variant="introduction" />
 
-    <div class="gallery-grid">
+    <div class="gallery-journey">
       {
-        galleryPhotos.map((photo) => (
-          <figure
-            class:list={["gallery-card", `gallery-card--${photo.layout}`]}
-          >
-            <Image
-              class="gallery-card__image"
-              src={photo.src}
-              alt={photo.alt}
-              width={photo.layout === "feature" ? 1280 : 760}
-              widths={
-                photo.layout === "feature"
-                  ? [480, 760, 1040, 1280]
-                  : [320, 520, 760]
-              }
-              sizes={
-                photo.layout === "feature"
-                  ? "92vw"
-                  : "(min-width: 800px) 30vw, 46vw"
-              }
-              format="webp"
-              quality={84}
-              loading="lazy"
-              decoding="async"
-              style={`object-position: ${photo.position}`}
-            />
-            {photo.caption && <figcaption>{photo.caption}</figcaption>}
-          </figure>
+        segments.map((segment, segmentIndex) => (
+          <div class="gallery-journey__segment">
+            <div
+              class="gallery-masonry"
+              aria-label={`Galería, tramo ${segmentIndex + 1} de ${segments.length}`}
+            >
+              {segment.photos.map((photo) => (
+                <figure class="gallery-photo" data-gallery-photo-id={photo.id}>
+                  <Image
+                    src={photo.src}
+                    alt={photo.alt}
+                    width={760}
+                    widths={[360, 520, 760]}
+                    sizes="(min-width: 1000px) 30vw, (min-width: 640px) 46vw, 92vw"
+                    format="webp"
+                    quality={84}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </figure>
+              ))}
+            </div>
+
+            {segment.quote && (
+              <BiblicalQuote quote={segment.quote} variant="interlude" />
+            )}
+          </div>
         ))
       }
     </div>

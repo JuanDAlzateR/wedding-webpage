@@ -1,0 +1,29 @@
+---
+import type { BiblicalQuote } from "../content/wedding";
+
+interface Props {
+  quote: BiblicalQuote;
+  variant?: "hero" | "introduction" | "interlude";
+}
+
+const { quote, variant = "interlude" } = Astro.props;
+---
+
+<figure
+  class:list={["biblical-quote", `biblical-quote--${variant}`]}
+  data-biblical-quote-id={quote.id}
+>
+  <blockquote>
+    {
+      quote.lines.map((line) => (
+        <p>
+          {line.speaker && (
+            <span class="biblical-quote__speaker">{line.speaker}:</span>
+          )}
+          <span>{line.text}</span>
+        </p>
+      ))
+    }
+  </blockquote>
+  <figcaption>{quote.reference}</figcaption>
+</figure>

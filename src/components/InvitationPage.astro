@@ -11,6 +11,7 @@ import Hero from "./Hero.astro";
 import Story from "./Story.astro";
 import { featuredPhotos } from "../content/photos";
 import {
+  getInvitationNavigation,
   getInvitationVariant,
   type InvitationType,
 } from "../content/invitations";
@@ -35,6 +36,8 @@ const sections = {
   additionalInfo:
     variant.sections.additionalInfo && contentSections.additionalInfo,
 };
+const navigation = getInvitationNavigation(variant, sections);
+const { confirmation, accessNotice, ...celebrationEvent } = celebration;
 ---
 
 <BaseLayout
@@ -44,7 +47,7 @@ const sections = {
   socialImage={featuredPhotos.social}
   socialImageAlt="La pareja sonriendo al aire libre."
 >
-  <Header navigation={variant.navigation} />
+  <Header navigation={navigation} />
   <main id="contenido">
     <Hero message={variant.heroMessage} detailsAnchor="#eucaristia" />
     {
@@ -52,7 +55,7 @@ const sections = {
         <EventDetails
           id="eucaristia"
           eyebrow="Nuestro matrimonio"
-          title="La Eucaristía"
+          title="Celebración Litúrgica"
           description={ceremony.description}
           event={ceremony}
         />
@@ -66,10 +69,12 @@ const sections = {
           title="Celebración posterior"
           description={celebration.description}
           event={{
-            ...celebration,
+            ...celebrationEvent,
             date: ceremony.date,
             dateIso: ceremony.dateIso,
           }}
+          confirmation={confirmation}
+          accessNotice={accessNotice}
         />
       )
     }

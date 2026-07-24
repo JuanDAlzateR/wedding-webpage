@@ -1,4 +1,4 @@
-import type { EngagementPhotoId } from "./photos";
+import type { EngagementPhotoId, GalleryPhotoId } from "./photos";
 
 export type EditableText = {
   value: string;
@@ -28,6 +28,21 @@ export type EngagementStoryChapter = {
   entries: EngagementStoryEntry[];
 };
 
+export type BiblicalQuoteLine = {
+  speaker?: "Ella" | "Él";
+  text: string;
+};
+
+export type BiblicalQuote = {
+  id: string;
+  lines: readonly BiblicalQuoteLine[];
+  reference: string;
+};
+
+export type GalleryEditorialQuote = BiblicalQuote & {
+  afterPhotoId: GalleryPhotoId;
+};
+
 export type EventDetailsContent = {
   date: EditableText;
   dateIso: string;
@@ -39,10 +54,27 @@ export type EventDetailsContent = {
   venue: EditableText;
   address: EditableText;
   locationReference: string;
-  description: string;
+  description: readonly string[];
   mapUrl: string;
   mapLabel: string;
   arrivalNotes?: EditableText;
+};
+
+export type CelebrationDetailsContent = Omit<
+  EventDetailsContent,
+  "date" | "dateIso"
+> & {
+  confirmation: {
+    title: string;
+    body: string;
+    callToAction: string;
+    url: string;
+    deadline: string;
+  };
+  accessNotice: {
+    label: string;
+    body: string;
+  };
 };
 
 /**
@@ -62,6 +94,63 @@ export const weddingContent = {
     eyebrow: "Nos casamos",
     callToAction: "Conocer los detalles",
   },
+  biblicalQuotes: {
+    hero: {
+      id: "ephesians-unity",
+      lines: [
+        {
+          text: "«La Escritura dice: “A causa de esto dejará el hombre a su padre y a su madre, y se adherirá a su mujer, y los dos serán una sola carne”. Este es un misterio muy grande, pues hace referencia a Cristo y a la Iglesia.»",
+        },
+      ],
+      reference: "Ef 5:31–32",
+    } satisfies BiblicalQuote,
+    galleryIntroduction: {
+      id: "song-belonging",
+      lines: [
+        {
+          text: "Mi amado es para mí, y yo soy para mi amado: él pastorea entre los lirios.",
+        },
+      ],
+      reference: "Cant 2:16",
+    } satisfies BiblicalQuote,
+    galleryInterludes: [
+      {
+        id: "song-beauty",
+        lines: [
+          {
+            speaker: "Ella",
+            text: "«¡Que me bese con los besos de su boca! Mejores son que el vino tus amores; el olor de tu perfume es exquisito, tu nombre es esencia penetrante.»",
+          },
+          {
+            speaker: "Él",
+            text: "«¡Qué bella eres, amada mía! ¡Qué bella eres! ¡Palomas son tus ojos!»",
+          },
+        ],
+        reference: "Cant 1:2, 15–17",
+        afterPhotoId: "IMG_20240513_140005",
+      },
+      {
+        id: "song-spring",
+        lines: [
+          {
+            text: "«Levántate, amada mía, hermosa mía, y ven. Mira que ya ha pasado el invierno, han cesado las lluvias. Brotan las flores, es el tiempo de las canciones, se oye el arrullo de la tórtola en nuestra tierra.»",
+          },
+        ],
+        reference: "Cant 2:10–11",
+        afterPhotoId: "IMG_20240822_193157",
+      },
+      {
+        id: "song-heart",
+        lines: [
+          {
+            text: "«Me robaste el corazón, hermana y novia mía, me robaste el corazón con una sola mirada, con una sola perla del collar. ¡Qué hermosos tus amores, hermana mía y novia mía! ¡Tus amores son más sabrosos que el vino!»",
+          },
+        ],
+        reference: "Cant 4:9–10",
+        afterPhotoId: "IMG_6218",
+      },
+    ] satisfies readonly GalleryEditorialQuote[],
+  },
   ceremony: {
     date: {
       value: "12 de octubre de 2026",
@@ -79,9 +168,10 @@ export const weddingContent = {
       value: "Calle 33B Sur #46A-11, Envigado, Antioquia",
       pending: false,
     } satisfies EditableText,
-    locationReference: "A dos cuadras de Viva Envigado",
-    description:
-      "Nuestra liturgia se celebrará en la Parroquia El Portal de Jesús, ubicada en la Calle 33B Sur #46A-11, Envigado, Antioquia, a dos cuadras de Viva Envigado.",
+    locationReference: "Cerca de Viva Envigado",
+    description: [
+      "La liturgia se celebrará en la Parroquia El Portal de Jesús, ubicada en la Calle 33B Sur #46A-11, Envigado, Antioquia, cerca de Viva Envigado.",
+    ],
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Parroquia%20El%20Portal%20de%20Jes%C3%BAs%2C%20Calle%2033B%20Sur%20%2346A-11%2C%20Envigado%2C%20Antioquia",
     mapLabel: "Ver ubicación de la Parroquia El Portal de Jesús en Google Maps",
@@ -105,12 +195,25 @@ export const weddingContent = {
       pending: false,
     } satisfies EditableText,
     locationReference: "Cerca de la Parroquia San Felipe Apóstol",
-    description:
-      "Después de la Eucaristía, celebraremos juntos en el Noviciado Hermanas Oblatas de San Francisco de Sales.",
+    description: [
+      "Ocupas un lugar muy especial en nuestro corazón y en nuestra historia. Por eso, hemos reservado un lugar para que nos acompañes en la prolongación de la alegría de la celebración del sacramento.",
+      "Te invitamos a compartir con nosotros el almuerzo y a continuar la celebración con una tarde de juegos, música, alegría y fiesta.",
+    ],
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Noviciado%20Hermanas%20Oblatas%20de%20San%20Francisco%20de%20Sales%2C%20Carrera%2032%20%2371%20Sur-240%2C%20Poblado%20del%20Sur%2C%20Sabaneta%2C%20Antioquia",
     mapLabel: "Ver ubicación de la celebración en Google Maps",
-  } satisfies Omit<EventDetailsContent, "date" | "dateIso">,
+    confirmation: {
+      title: "Confirmación",
+      body: "Agradeceremos tu pronta confirmación para preparar cada detalle con cariño y, en caso de que no puedas acompañarnos, brindar la oportunidad a otro ser querido de compartir este día con nosotros.",
+      callToAction: "Confirmar asistencia",
+      url: "https://forms.gle/ubKwM6ez5RWDWNKy8",
+      deadline: "Por favor, hazlo antes del 12 de septiembre.",
+    },
+    accessNotice: {
+      label: "Importante",
+      body: "Recuerda llevar contigo la tarjeta de invitación color naranja con tu nombre. Tu puesto ha sido reservado especialmente para ti y el acceso se realizará conforme a la lista de invitados confirmados.",
+    },
+  } satisfies CelebrationDetailsContent,
   dressCode: {
     title: "Código de vestuario pendiente",
     description: "Publicaremos la guía de vestuario cuando esté confirmada.",

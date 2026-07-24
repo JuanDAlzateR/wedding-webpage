@@ -29,7 +29,8 @@ pnpm preview
 
 - Información de la boda: `src/content/wedding.ts`
 - Tipos de invitación, rutas, metadatos y secciones: `src/content/invitations.ts`
-- Fotografías y orden de galería: `src/content/photos.ts`
+- Galería general: originales en `photos/gallery/`, orden y alt text en `galleryPhotos` dentro de `src/content/photos.ts`
+- Citas bíblicas y posiciones editoriales de galería: `weddingContent.biblicalQuotes` en `src/content/wedding.ts`
 - Capítulos, texto, orden y visibilidad del compromiso: `weddingContent.engagement.storyChapters` en `src/content/wedding.ts`
 - Fotografías y alt text del compromiso: `engagementPhotos` en `src/content/photos.ts`
 - Página generada del compromiso: `/compromiso/`

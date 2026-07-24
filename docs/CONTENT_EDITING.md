@@ -4,9 +4,9 @@ No es necesario modificar los componentes visuales para cambiar los datos de la 
 
 ## Tipos de invitación
 
-`src/content/invitations.ts` define los identificadores `mass_only` y `mass_and_celebration`, sus rutas, metadatos, texto de introducción, navegación y secciones visibles. La sección `gifts` es compartida por ambas variantes.
+`src/content/invitations.ts` define los identificadores `mass_only` y `mass_and_celebration`, sus rutas, metadatos, texto de introducción, orden de navegación y secciones visibles. Las etiquetas de los enlaces viven una sola vez en `invitationNavigationItems`; `navigationOrder` establece el orden de cada variante y `getInvitationNavigation` retira automáticamente los destinos que no se renderizan.
 
-La variante de Eucaristía nunca renderiza la celebración posterior, el código de vestuario ni la información adicional. No añadas un selector ni enlaces entre variantes.
+La variante de Eucaristía nunca renderiza la celebración posterior, su confirmación ni la información adicional. El código de vestuario está preparado como contenido compartido, pero permanece oculto en ambas variantes mientras siga pendiente. No añadas un selector ni enlaces entre variantes.
 
 Para cambiar la ruta no obvia de la invitación completa:
 
@@ -22,7 +22,8 @@ No copies el slug en menús, pies de página o documentación general. Ocultarlo
 Abre `src/content/wedding.ts`. Este archivo contiene nombres, datos compartidos de la Eucaristía, datos exclusivos de la celebración posterior, dress code, historias, información adicional y visibilidad de secciones.
 
 - `ceremony`: fecha, hora, lugar, dirección, mapa e indicaciones compartidos por ambas invitaciones.
-- `celebration`: horario, lugar, dirección, referencia y mapa que solo puede renderizar la invitación completa.
+- `celebration`: horario, lugar, dirección, introducción, referencia, mapa, confirmación y aviso de acceso que solo puede renderizar la invitación completa.
+- `biblicalQuotes`: texto, referencia y posición editorial de todas las citas bíblicas.
 - `engagement`: resumen, metadatos, relato, notas editoriales y textos de la página de compromiso.
 - `gifts`: encabezado y mensaje compartido de lluvia de sobres.
 - `sections`: disponibilidad global de cada sección. La configuración de cada variante puede ocultarla adicionalmente.
@@ -54,6 +55,20 @@ dressCode: {
 ```
 
 Para ocultar o mostrar una sección, cambia su valor en `sections` entre `false` y `true`. Una sección aparece solo cuando está habilitada tanto en `wedding.ts` como en la variante correspondiente de `invitations.ts`.
+
+## Citas bíblicas
+
+Edita el texto y la referencia únicamente en `weddingContent.biblicalQuotes`. `BiblicalQuote.astro` proporciona el marcado y los estilos compartidos; no copies su estructura en otros componentes.
+
+Cada cita contiene `id`, `lines` y `reference`. Una línea puede añadir `speaker: "Ella"` o `speaker: "Él"`. Las citas intercaladas de la galería también incluyen `afterPhotoId`, que indica después de qué fotografía deben aparecer. Para mover una cita, cambia solo ese ID por otro existente en `galleryPhotos`.
+
+Las referencias se escriben sin paréntesis y el texto confirmado se conserva literalmente.
+
+## Confirmación de la celebración
+
+La tarjeta de confirmación se edita en `weddingContent.celebration.confirmation`: `body`, `callToAction`, `url` y `deadline`. El aviso de la tarjeta naranja vive en `weddingContent.celebration.accessNotice`.
+
+Ambos bloques son exclusivos de la invitación completa. Si cambias alguno de sus textos, agrega o actualiza su marcador en `scripts/verify-invitations.mjs` para que una filtración en la invitación de Eucaristía falle durante la validación.
 
 ## Lluvia de sobres
 
@@ -130,13 +145,21 @@ Los originales se conservan en `photos/`. La página genera automáticamente cop
 2. En `src/content/photos.ts`, cambia la importación asignada a `heroImage`.
 3. Actualiza el `alt` y, si hace falta, `position` dentro de `featuredPhotos.hero`.
 
-### Añadir una fotografía a la galería
+### Galería general
 
-1. Copia el archivo dentro de `photos/`.
-2. Impórtalo al inicio de `src/content/photos.ts`.
-3. Agrega un elemento a `galleryPhotos` con `id`, `src`, `alt`, `layout` y `position`.
+La selección fuente vive en `photos/gallery/`. `galleryPhotos`, dentro de `src/content/photos.ts`, es el único manifiesto activo y su orden es el orden editorial. Las imágenes se muestran con su proporción natural; por eso cada entrada necesita únicamente `id`, `src` y `alt`.
 
-`layout` puede ser `portrait`, `landscape` o `feature`. `position` controla el punto focal del recorte; por ejemplo, `center 35%` desplaza el enfoque hacia arriba.
+Los cinco archivos MOV/MP4 actuales no forman parte de la galería fotográfica. Los originales HEIC se conservan y cada uno usa un JPG homónimo en `photos/gallery/web-compatible/`; nunca registres el original y su derivado como dos momentos.
+
+Para añadir una fotografía:
+
+1. Copia el original en el nivel superior de `photos/gallery/`.
+2. Si es HEIC, crea su JPG homónimo en `photos/gallery/web-compatible/`.
+3. Agrega una entrada a `galleryPhotos` en la posición deseada con ID estable, `loadGalleryImage(...)` y alt text objetivo.
+4. Si una cita debe cambiar de lugar, actualiza su `afterPhotoId` en `weddingContent.biblicalQuotes.galleryInterludes`.
+5. Ejecuta `pnpm validate`; la verificación compara el manifiesto renderizado con todos los archivos fotográficos del nivel superior.
+
+Para reordenar, mueve la entrada completa dentro de `galleryPhotos`. Para retirar una foto, elimina su entrada y saca el original del nivel superior de `photos/gallery/`; conserva una copia fuera de la selección activa si todavía puede ser útil.
 
 ### Fotografías del compromiso
 
@@ -154,15 +177,9 @@ Para cambiar una foto sin alterar su texto ni su posición narrativa, cambia ún
 
 El orden de `engagementPhotos` no controla la historia. El orden visible se mantiene únicamente en los arreglos de `storyChapters`.
 
-### Eliminar o reordenar
-
-- Para eliminar una foto, retira su elemento de `galleryPhotos`.
-- Para cambiar el orden, mueve el elemento dentro del arreglo.
-- Conserva el archivo original si todavía puede ser útil; elimínalo solo cuando exista una copia segura.
-
 ### Archivos HEIC
 
-Los navegadores no manejan HEIC de forma consistente. Convierte estos archivos a JPG, WebP o AVIF antes de agregarlos al manifiesto. Los dos archivos `.HEIC` actuales no se publican.
+Los navegadores no manejan HEIC de forma consistente. La galería general conserva esos originales, pero el manifiesto referencia sus derivados JPG en `photos/gallery/web-compatible/`. Las fotos de otras secciones también deben convertirse a JPG, WebP o AVIF antes de publicarse.
 
 ## Textos alternativos y captions
 

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { log } from "node:console";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { join } from "node:path";
+import { basename, extname, join } from "node:path";
 import { cwd } from "node:process";
 
 const projectRoot = cwd();
@@ -10,6 +10,7 @@ const invitationsDirectory = join(distDirectory, "invitacion");
 const massDirectory = join(invitationsDirectory, "misa");
 const rootHtmlPath = join(distDirectory, "index.html");
 const engagementHtmlPath = join(distDirectory, "compromiso", "index.html");
+const gallerySourceDirectory = join(projectRoot, "photos", "gallery");
 
 assert.ok(
   existsSync(distDirectory),
@@ -75,6 +76,15 @@ for (const text of sharedCeremonyText) {
 }
 
 const sharedInvitationText = [
+  "Celebración Litúrgica",
+  "Cerca de Viva Envigado",
+  "Ef 5:31–32",
+  "Cant 2:16",
+  "Cant 1:2, 15–17",
+  "Cant 2:10–11",
+  "Cant 4:9–10",
+  "Galería de nuestro amor",
+  "Nuestra historia",
   "Un detalle para nosotros",
   "Su presencia y compañía son nuestro mejor regalo",
   "lluvia de sobres",
@@ -99,7 +109,8 @@ for (const text of sharedInvitationText) {
 
 const completeOnlyText = [
   "Celebración posterior",
-  "Después de la Eucaristía, celebraremos juntos",
+  "Ocupas un lugar muy especial en nuestro corazón y en nuestra historia.",
+  "Te invitamos a compartir con nosotros el almuerzo",
   "12:30 p. m.",
   "6:00 p. m.",
   "2026-10-12T12:30:00-05:00",
@@ -109,7 +120,12 @@ const completeOnlyText = [
   "Cerca de la Parroquia San Felipe Apóstol",
   "Ver ubicación de la celebración en Google Maps",
   "Noviciado%20Hermanas%20Oblatas%20de%20San%20Francisco%20de%20Sales",
+  "Agradeceremos tu pronta confirmación",
+  "https://forms.gle/ubKwM6ez5RWDWNKy8",
+  "Por favor, hazlo antes del 12 de septiembre.",
+  "Recuerda llevar contigo la tarjeta de invitación color naranja con tu nombre.",
   'href="#encuentro"',
+  'href="#confirmacion"',
 ];
 
 for (const text of completeOnlyText) {
@@ -198,6 +214,133 @@ for (const text of removedCelebrationPlaceholders) {
   assert.ok(
     !completeHtml.includes(text),
     `La invitación completa conserva un placeholder reemplazado: ${text}`,
+  );
+}
+
+const removedInvitationText = [
+  "Una vida, una historia, un sí.",
+  "Nuestra liturgia",
+  "A dos cuadras de Viva Envigado",
+  "Instantes compartidos",
+  'href="#fotos"',
+  ">Fotos<",
+];
+
+for (const [html, routeLabel] of [
+  [massHtml, "la invitación de Eucaristía"],
+  [rootHtml, "la raíz"],
+  [completeHtml, "la invitación completa"],
+]) {
+  for (const text of removedInvitationText) {
+    assert.ok(
+      !html.includes(text),
+      `Permanece texto reemplazado en ${routeLabel}: ${text}`,
+    );
+  }
+}
+
+const biblicalQuoteIds = [
+  "ephesians-unity",
+  "song-belonging",
+  "song-beauty",
+  "song-spring",
+  "song-heart",
+];
+
+for (const [html, routeLabel] of [
+  [massHtml, "la invitación de Eucaristía"],
+  [rootHtml, "la raíz"],
+  [completeHtml, "la invitación completa"],
+]) {
+  for (const quoteId of biblicalQuoteIds) {
+    assert.ok(
+      html.includes(`data-biblical-quote-id="${quoteId}"`),
+      `Falta la cita bíblica "${quoteId}" en ${routeLabel}.`,
+    );
+  }
+}
+
+const galleryImageExtensions = new Set([
+  ".jpg",
+  ".jpeg",
+  ".png",
+  ".heic",
+  ".webp",
+  ".avif",
+]);
+const expectedGalleryPhotoIds = readdirSync(gallerySourceDirectory, {
+  withFileTypes: true,
+})
+  .filter(
+    (entry) =>
+      entry.isFile() &&
+      galleryImageExtensions.has(extname(entry.name).toLowerCase()),
+  )
+  .map((entry) => basename(entry.name, extname(entry.name)))
+  .sort();
+
+function assertGalleryCoverage(html, routeLabel) {
+  const galleryPhotoIds = [...html.matchAll(/data-gallery-photo-id="([^"]+)"/g)]
+    .map((match) => match[1])
+    .sort();
+
+  assert.equal(
+    galleryPhotoIds.length,
+    expectedGalleryPhotoIds.length,
+    `La galería de ${routeLabel} no cubre todas las imágenes fuente.`,
+  );
+  assert.deepEqual(
+    galleryPhotoIds,
+    expectedGalleryPhotoIds,
+    `La galería de ${routeLabel} no cubre exactamente photos/gallery.`,
+  );
+  assert.equal(
+    new Set(galleryPhotoIds).size,
+    galleryPhotoIds.length,
+    `La galería de ${routeLabel} repite fotografías.`,
+  );
+
+  const gallerySection =
+    html.match(/<section[^>]*id="galeria"[\s\S]*?<\/section>/)?.[0] ?? "";
+  const imageSources = [
+    ...gallerySection.matchAll(/\ssrc="([^"]+\.(?:webp|avif|png|jpe?g))"/g),
+  ].map((match) => match[1]);
+
+  assert.equal(
+    imageSources.length,
+    expectedGalleryPhotoIds.length,
+    `La galería de ${routeLabel} no genera un src por fotografía.`,
+  );
+
+  for (const source of imageSources) {
+    const relativeSource = decodeURIComponent(source)
+      .replace(/^https?:\/\/[^/]+/, "")
+      .replace(/^\/+/, "");
+    assert.ok(
+      existsSync(join(distDirectory, relativeSource)),
+      `No existe el asset de galería "${source}" en ${routeLabel}.`,
+    );
+  }
+}
+
+assertGalleryCoverage(massHtml, "la invitación de Eucaristía");
+assertGalleryCoverage(rootHtml, "la raíz");
+assertGalleryCoverage(completeHtml, "la invitación completa");
+assert.doesNotMatch(
+  engagementHtml,
+  /data-gallery-photo-id=/,
+  "La experiencia de compromiso carga la galería general.",
+);
+
+for (const [html, routeLabel] of [
+  [massHtml, "la invitación de Eucaristía"],
+  [rootHtml, "la raíz"],
+  [completeHtml, "la invitación completa"],
+  [engagementHtml, "la experiencia de compromiso"],
+]) {
+  assert.ok(
+    !html.includes("photos.app.goo.gl"),
+    `${routeLabel} conserva el enlace obsoleto de Google Photos.`,
   );
 }
 
