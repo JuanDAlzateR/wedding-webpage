@@ -49,7 +49,7 @@ export const invitationNavigationItems = {
   confirmation: { href: "#confirmacion", label: "Confirmación" },
   engagement: { href: "#historia", label: "Nuestra historia" },
   gallery: { href: "#galeria", label: "Galería de nuestro amor" },
-  dressCode: { href: "#vestuario", label: "Código de vestir" },
+  dressCode: { href: "#vestuario", label: "Código de vestimenta" },
   gifts: { href: "#regalos", label: "Un detalle para nosotros" },
   additionalInfo: { href: "#informacion", label: "Información adicional" },
 } as const satisfies Record<InvitationNavigationKey, InvitationNavigationItem>;
@@ -77,10 +77,10 @@ export const invitationVariants = {
     navigationOrder: [
       "home",
       "ceremony",
-      "engagement",
-      "gallery",
       "dressCode",
       "gifts",
+      "engagement",
+      "gallery",
     ],
   },
   mass_and_celebration: {
@@ -107,10 +107,10 @@ export const invitationVariants = {
       "ceremony",
       "celebration",
       "confirmation",
-      "engagement",
-      "gallery",
       "dressCode",
       "gifts",
+      "engagement",
+      "gallery",
     ],
   },
 } as const satisfies Record<InvitationType, InvitationVariant>;

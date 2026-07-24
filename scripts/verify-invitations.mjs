@@ -79,12 +79,27 @@ const sharedInvitationText = [
   "Celebración Litúrgica",
   "Cerca de Viva Envigado",
   "Ef 5:31–32",
+  "Tobías 8:9",
+  "Ten misericordia de nosotros, oh Señor",
   "Cant 2:16",
   "Cant 1:2, 15–17",
   "Cant 2:10–11",
   "Cant 4:9–10",
   "Galería de nuestro amor",
   "Nuestra historia",
+  "Código de vestimenta",
+  "Cóctel clásico",
+  "vestido midi o largo, o conjunto de pantalón de corte amplio.",
+  "traje o blazer con pantalón de vestir.",
+  "Por respeto al carácter sagrado de la celebración, elige atuendos sin escotes.",
+  "El código de vestimenta hace parte de los detalles que hemos elegido cuidadosamente para este día, por lo que apreciamos su cumplimiento.",
+  "Naranja tigre",
+  "Albaricoque",
+  "Azul hielo",
+  "Azul bebé",
+  "Azul cielo",
+  "Gracias por acompañarnos y por respetar este deseo en una ocasión tan especial para nosotros.",
+  "La celebración dará inicio puntualmente a las 10:00 a. m. Te invitamos a llegar con anticipación para disponernos juntos a vivir la Santa Misa desde el comienzo.",
   "Un detalle para nosotros",
   "Su presencia y compañía son nuestro mejor regalo",
   "lluvia de sobres",
@@ -222,6 +237,11 @@ const removedInvitationText = [
   "Nuestra liturgia",
   "A dos cuadras de Viva Envigado",
   "Instantes compartidos",
+  "La liturgia comienza puntualmente a las 10:00 a. m.",
+  "La liturgia se celebrará en la Parroquia El Portal de Jesús",
+  "Código de vestuario pendiente",
+  "Publicaremos la guía de vestuario cuando esté confirmada.",
+  "Cóctel elegante",
   'href="#fotos"',
   ">Fotos<",
 ];
@@ -241,6 +261,7 @@ for (const [html, routeLabel] of [
 
 const biblicalQuoteIds = [
   "ephesians-unity",
+  "tobit-prayer",
   "song-belonging",
   "song-beauty",
   "song-spring",
@@ -411,6 +432,102 @@ assertHashLinksResolve(massHtml, "la invitación de Eucaristía");
 assertHashLinksResolve(rootHtml, "la raíz");
 assertHashLinksResolve(completeHtml, "la invitación completa");
 assertHashLinksResolve(engagementHtml, "la experiencia de compromiso");
+
+function assertOrderedMarkers(html, markers, routeLabel, markerKind) {
+  let previousIndex = -1;
+
+  for (const marker of markers) {
+    const currentIndex = html.indexOf(marker);
+    assert.ok(
+      currentIndex >= 0,
+      `Falta ${markerKind} "${marker}" en ${routeLabel}.`,
+    );
+    assert.ok(
+      currentIndex > previousIndex,
+      `El orden de ${markerKind} no coincide en ${routeLabel}: ${marker}.`,
+    );
+    previousIndex = currentIndex;
+  }
+}
+
+const sharedSectionOrder = [
+  'id="inicio"',
+  'id="eucaristia"',
+  'id="vestuario"',
+  'id="regalos"',
+  'id="historia"',
+  'id="galeria"',
+];
+const completeSectionOrder = [
+  'id="inicio"',
+  'id="eucaristia"',
+  'id="encuentro"',
+  'id="confirmacion"',
+  'id="vestuario"',
+  'id="regalos"',
+  'id="historia"',
+  'id="galeria"',
+];
+
+assertOrderedMarkers(
+  massHtml,
+  sharedSectionOrder,
+  "la invitación de Eucaristía",
+  "secciones",
+);
+assertOrderedMarkers(rootHtml, sharedSectionOrder, "la raíz", "secciones");
+assertOrderedMarkers(
+  completeHtml,
+  completeSectionOrder,
+  "la invitación completa",
+  "secciones",
+);
+
+function assertDesktopNavigationOrder(html, expectedLinks, routeLabel) {
+  const navigation =
+    html.match(
+      /<nav class="site-header__nav site-header__nav--desktop"[\s\S]*?<\/nav>/,
+    )?.[0] ?? "";
+
+  assert.ok(navigation, `Falta la navegación de escritorio en ${routeLabel}.`);
+  assertOrderedMarkers(
+    navigation,
+    expectedLinks.map((href) => `href="${href}"`),
+    routeLabel,
+    "enlaces de navegación",
+  );
+}
+
+const sharedNavigationOrder = [
+  "#inicio",
+  "#eucaristia",
+  "#vestuario",
+  "#regalos",
+  "#historia",
+  "#galeria",
+];
+const completeNavigationOrder = [
+  "#inicio",
+  "#eucaristia",
+  "#encuentro",
+  "#confirmacion",
+  "#vestuario",
+  "#regalos",
+  "#historia",
+  "#galeria",
+];
+
+assertDesktopNavigationOrder(
+  massHtml,
+  sharedNavigationOrder,
+  "la invitación de Eucaristía",
+);
+assertDesktopNavigationOrder(rootHtml, sharedNavigationOrder, "la raíz");
+assertDesktopNavigationOrder(
+  completeHtml,
+  completeNavigationOrder,
+  "la invitación completa",
+);
 
 for (const [html, routeLabel] of [
   [massHtml, "la invitación de Eucaristía"],

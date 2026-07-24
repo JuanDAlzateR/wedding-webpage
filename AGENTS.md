@@ -30,10 +30,14 @@ Este repositorio contiene un sitio web estático de boda, móvil primero y únic
 - Mantener placeholders centralizados y claramente marcados.
 - Las secciones opcionales sin información confirmada deben permanecer ocultas.
 - El sitio es solo en español; no añadir traducciones ni selector de idioma salvo petición explícita.
+- Mantener `Eucaristía`, `Misa` y `Santa Misa` con iniciales mayúsculas; usar `liturgia` cuando se hable específicamente del acto religioso.
+- El contenido confirmado del vestuario y sus muestras aproximadas se editan únicamente en `weddingContent.dressCode`; los nombres de los colores son la información autoritativa.
 
 ## Navegación y citas
 
+- El recorrido compartido es: Inicio, Eucaristía, código de vestimenta, regalos, compromiso y galería; la invitación completa inserta la celebración posterior, incluida su confirmación, después de la Eucaristía.
 - Las etiquetas y el orden de navegación se mantienen en `src/content/invitations.ts`; la navegación final se filtra según las secciones realmente visibles.
+- `navigationOrder` debe reproducir el orden renderizado y nunca incluir destinos ocultos.
 - Todo enlace interno debe resolver a un ID existente. `Confirmación` y cualquier otro acceso relacionado con la celebración son exclusivos de `mass_and_celebration`.
 - Los textos y referencias bíblicas se mantienen en `weddingContent.biblicalQuotes`; su marcado canónico es `BiblicalQuote.astro`.
 - Conservar literalmente la puntuación y referencia de una cita confirmada. Las referencias se muestran sin paréntesis.

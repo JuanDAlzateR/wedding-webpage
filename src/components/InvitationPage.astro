@@ -24,7 +24,12 @@ interface Props {
 
 const { type } = Astro.props;
 const variant = getInvitationVariant(type);
-const { ceremony, celebration, sections: contentSections } = weddingContent;
+const {
+  biblicalQuotes,
+  ceremony,
+  celebration,
+  sections: contentSections,
+} = weddingContent;
 const sections = {
   ceremony: variant.sections.ceremony && contentSections.ceremony,
   celebration: variant.sections.celebration && contentSections.celebration,
@@ -56,7 +61,7 @@ const { confirmation, accessNotice, ...celebrationEvent } = celebration;
           id="eucaristia"
           eyebrow="Nuestro matrimonio"
           title="Celebración Litúrgica"
-          description={ceremony.description}
+          biblicalQuote={biblicalQuotes.ceremony}
           event={ceremony}
         />
       )
@@ -79,10 +84,10 @@ const { confirmation, accessNotice, ...celebrationEvent } = celebration;
       )
     }
     {sections.dressCode && <DressCode />}
-    {sections.story && <Story />}
+    {sections.gifts && <GiftInfo />}
     {sections.engagement && <Engagement />}
     {sections.gallery && <Gallery />}
-    {sections.gifts && <GiftInfo />}
+    {sections.story && <Story />}
     {sections.additionalInfo && <AdditionalInfo />}
   </main>
   <Footer />

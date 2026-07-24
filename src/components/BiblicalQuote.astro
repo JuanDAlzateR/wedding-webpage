@@ -3,7 +3,7 @@ import type { BiblicalQuote } from "../content/wedding";
 
 interface Props {
   quote: BiblicalQuote;
-  variant?: "hero" | "introduction" | "interlude";
+  variant?: "hero" | "introduction" | "section" | "interlude";
 }
 
 const { quote, variant = "interlude" } = Astro.props;

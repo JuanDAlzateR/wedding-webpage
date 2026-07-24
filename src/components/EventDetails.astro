@@ -1,22 +1,41 @@
 ---
 import SectionHeading from "./SectionHeading.astro";
+import BiblicalQuote from "./BiblicalQuote.astro";
 import type {
+  BiblicalQuote as BiblicalQuoteContent,
   CelebrationDetailsContent,
   EventDetailsContent,
 } from "../content/wedding";
 
-interface Props {
+type Introduction =
+  | {
+      description: readonly string[];
+      biblicalQuote?: never;
+    }
+  | {
+      description?: never;
+      biblicalQuote: BiblicalQuoteContent;
+    };
+
+type Props = Introduction & {
   id: string;
   eyebrow: string;
   title: string;
-  description: readonly string[];
   event: EventDetailsContent;
   confirmation?: CelebrationDetailsContent["confirmation"];
   accessNotice?: CelebrationDetailsContent["accessNotice"];
-}
+};
 
-const { id, eyebrow, title, description, event, confirmation, accessNotice } =
-  Astro.props;
+const {
+  id,
+  eyebrow,
+  title,
+  description,
+  biblicalQuote,
+  event,
+  confirmation,
+  accessNotice,
+} = Astro.props;
 const titleId = `${id}-title`;
 ---
 
@@ -28,9 +47,17 @@ const titleId = `${id}-title`;
       title={title}
       align="center"
     />
-    <div class="section-intro section-intro--paragraphs">
-      {description.map((paragraph) => <p>{paragraph}</p>)}
-    </div>
+    {
+      description ? (
+        <div class="section-intro section-intro--paragraphs">
+          {description.map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
+        </div>
+      ) : (
+        <BiblicalQuote quote={biblicalQuote} variant="section" />
+      )
+    }
 
     <div
       class:list={[

@@ -6,7 +6,9 @@ No es necesario modificar los componentes visuales para cambiar los datos de la 
 
 `src/content/invitations.ts` define los identificadores `mass_only` y `mass_and_celebration`, sus rutas, metadatos, texto de introducción, orden de navegación y secciones visibles. Las etiquetas de los enlaces viven una sola vez en `invitationNavigationItems`; `navigationOrder` establece el orden de cada variante y `getInvitationNavigation` retira automáticamente los destinos que no se renderizan.
 
-La variante de Eucaristía nunca renderiza la celebración posterior, su confirmación ni la información adicional. El código de vestuario está preparado como contenido compartido, pero permanece oculto en ambas variantes mientras siga pendiente. No añadas un selector ni enlaces entre variantes.
+La variante de Eucaristía nunca renderiza la celebración posterior, su confirmación ni la información adicional. El código de vestimenta es contenido confirmado y compartido por ambas variantes. No añadas un selector ni enlaces entre variantes.
+
+El orden visible compartido es Eucaristía, código de vestimenta, regalos, compromiso y galería. La invitación completa inserta la celebración posterior, con su confirmación, después de la Eucaristía. `navigationOrder` debe mantener ese mismo recorrido y omitir automáticamente cualquier sección no renderizada.
 
 Para cambiar la ruta no obvia de la invitación completa:
 
@@ -23,6 +25,7 @@ Abre `src/content/wedding.ts`. Este archivo contiene nombres, datos compartidos 
 
 - `ceremony`: fecha, hora, lugar, dirección, mapa e indicaciones compartidos por ambas invitaciones.
 - `celebration`: horario, lugar, dirección, introducción, referencia, mapa, confirmación y aviso de acceso que solo puede renderizar la invitación completa.
+- `dressCode`: título, estilo, orientaciones, notas, colores restringidos y mensaje final compartidos.
 - `biblicalQuotes`: texto, referencia y posición editorial de todas las citas bíblicas.
 - `engagement`: resumen, metadatos, relato, notas editoriales y textos de la página de compromiso.
 - `gifts`: encabezado y mensaje compartido de lluvia de sobres.
@@ -32,35 +35,33 @@ Abre `src/content/wedding.ts`. Este archivo contiene nombres, datos compartidos 
 
 En todo texto visible para invitados, metadatos y etiquetas de accesibilidad:
 
-- Escribe siempre `Eucaristía` y `Misa` con inicial mayúscula, incluso en medio de una oración.
+- Escribe siempre `Eucaristía`, `Misa` y `Santa Misa` con las iniciales indicadas, incluso en medio de una oración.
 - Usa `liturgia` en lugar de `ceremonia` cuando se haga referencia al acto religioso de la boda.
 - Conserva identificadores internos como `ceremony`, `mass_only` y la ruta `/invitacion/misa/`; esta convención no requiere renombrar código ni rutas.
 
-Los campos todavía no confirmados conservan esta forma:
-
-```ts
-dressCode: {
-  title: "Código de vestuario pendiente",
-  pending: true
-}
-```
-
-Cuando recibas la información real, reemplázala y cambia `pending` a `false`:
-
-```ts
-dressCode: {
-  title: "Código de vestuario confirmado",
-  pending: false
-}
-```
-
 Para ocultar o mostrar una sección, cambia su valor en `sections` entre `false` y `true`. Una sección aparece solo cuando está habilitada tanto en `wedding.ts` como en la variante correspondiente de `invitations.ts`.
+
+## Código de vestimenta
+
+Edita toda la guía en `weddingContent.dressCode`. `title` y `style` controlan la jerarquía principal; `guidance` contiene las categorías de Mujeres y Hombres; `decorum`, `complianceNote` y `closingMessage` conservan los mensajes editoriales.
+
+`restrictedColors` es la lista visible y ordenada. Cada elemento tiene un `id` estable, un `name` autoritativo y un `swatch` hexadecimal aproximado:
+
+```ts
+{
+  id: "ice-blue",
+  name: "Azul hielo",
+  swatch: "#DDEBF2",
+}
+```
+
+Para añadir, retirar o reordenar un color, modifica el arreglo completo. La muestra solo ayuda a reconocer la familia visual: nunca reemplaza el nombre escrito ni debe presentarse como una especificación exacta. Comprueba contraste, lectura sin color y disposición en móvil después de ajustar cualquier valor.
 
 ## Citas bíblicas
 
 Edita el texto y la referencia únicamente en `weddingContent.biblicalQuotes`. `BiblicalQuote.astro` proporciona el marcado y los estilos compartidos; no copies su estructura en otros componentes.
 
-Cada cita contiene `id`, `lines` y `reference`. Una línea puede añadir `speaker: "Ella"` o `speaker: "Él"`. Las citas intercaladas de la galería también incluyen `afterPhotoId`, que indica después de qué fotografía deben aparecer. Para mover una cita, cambia solo ese ID por otro existente en `galleryPhotos`.
+Cada cita contiene `id`, `lines` y `reference`. Una línea puede añadir `speaker: "Ella"` o `speaker: "Él"`. Las citas intercaladas de la galería también incluyen `afterPhotoId`, que indica después de qué fotografía deben aparecer. Para mover una cita, cambia solo ese ID por otro existente en `galleryPhotos`. La cita de `ceremony` se muestra como introducción de Nuestro Matrimonio mediante la variante de sección del mismo componente.
 
 Las referencias se escriben sin paréntesis y el texto confirmado se conserva literalmente.
 
@@ -190,7 +191,6 @@ Los navegadores no manejan HEIC de forma consistente. La galería general conser
 
 ## Información pendiente antes de publicar
 
-- Código de vestuario.
 - Historia de la pareja.
 - Transporte, política de niños y contacto, si aplican.
 - URL final en `SITE_URL`.

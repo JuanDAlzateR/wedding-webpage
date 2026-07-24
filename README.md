@@ -29,6 +29,7 @@ pnpm preview
 
 - Información de la boda: `src/content/wedding.ts`
 - Tipos de invitación, rutas, metadatos y secciones: `src/content/invitations.ts`
+- Código de vestimenta y muestras de color: `weddingContent.dressCode` en `src/content/wedding.ts`
 - Galería general: originales en `photos/gallery/`, orden y alt text en `galleryPhotos` dentro de `src/content/photos.ts`
 - Citas bíblicas y posiciones editoriales de galería: `weddingContent.biblicalQuotes` en `src/content/wedding.ts`
 - Capítulos, texto, orden y visibilidad del compromiso: `weddingContent.engagement.storyChapters` en `src/content/wedding.ts`
@@ -43,6 +44,6 @@ La información todavía no confirmada aparece como pendiente. No reemplaces eso
 
 ## Estado actual
 
-Los nombres, la fecha, los horarios, los lugares, las direcciones, las referencias de ubicación, los mapas, la historia del compromiso y la información de regalos contienen la información confirmada. Todavía están pendientes el código de vestuario, la historia general de la pareja, la información adicional, la URL final y el favicon. Consulta `docs/CONTENT_EDITING.md` para la lista completa.
+Los nombres, la fecha, los horarios, los lugares, las direcciones, las referencias de ubicación, los mapas, el código de vestimenta, la historia del compromiso y la información de regalos contienen la información confirmada. Todavía están pendientes la historia general de la pareja, la información adicional, la URL final y el favicon. Consulta `docs/CONTENT_EDITING.md` para la lista completa.
 
 Ambas variantes usan `noindex, nofollow` y `robots.txt` bloquea el rastreo. La ruta no obvia reduce el descubrimiento accidental, pero no autentica a los invitados ni protege el contenido frente a quien conozca o adivine la URL.

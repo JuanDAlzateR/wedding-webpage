@@ -43,6 +43,30 @@ export type GalleryEditorialQuote = BiblicalQuote & {
   afterPhotoId: GalleryPhotoId;
 };
 
+export type DressCodeGuidance = {
+  id: "women" | "men";
+  label: string;
+  description: string;
+};
+
+export type DressCodeRestrictedColor = {
+  id: string;
+  name: string;
+  swatch: `#${string}`;
+};
+
+export type DressCodeContent = {
+  title: string;
+  style: string;
+  guidance: readonly DressCodeGuidance[];
+  decorum: string;
+  complianceNote: string;
+  restrictedColorsLabel: string;
+  restrictedColors: readonly DressCodeRestrictedColor[];
+  closingMessage: string;
+  pending: boolean;
+};
+
 export type EventDetailsContent = {
   date: EditableText;
   dateIso: string;
@@ -54,7 +78,6 @@ export type EventDetailsContent = {
   venue: EditableText;
   address: EditableText;
   locationReference: string;
-  description: readonly string[];
   mapUrl: string;
   mapLabel: string;
   arrivalNotes?: EditableText;
@@ -64,6 +87,7 @@ export type CelebrationDetailsContent = Omit<
   EventDetailsContent,
   "date" | "dateIso"
 > & {
+  description: readonly string[];
   confirmation: {
     title: string;
     body: string;
@@ -112,6 +136,15 @@ export const weddingContent = {
         },
       ],
       reference: "Cant 2:16",
+    } satisfies BiblicalQuote,
+    ceremony: {
+      id: "tobit-prayer",
+      lines: [
+        {
+          text: "«Oró: “Ten misericordia de nosotros, oh Señor, ten misericordia de nosotros, para que podamos llegar juntos a la vejez”. Dijeron a coro: “Amén, amén.” Y se acostaron para pasar la noche.»",
+        },
+      ],
+      reference: "Tobías 8:9",
     } satisfies BiblicalQuote,
     galleryInterludes: [
       {
@@ -169,15 +202,12 @@ export const weddingContent = {
       pending: false,
     } satisfies EditableText,
     locationReference: "Cerca de Viva Envigado",
-    description: [
-      "La liturgia se celebrará en la Parroquia El Portal de Jesús, ubicada en la Calle 33B Sur #46A-11, Envigado, Antioquia, cerca de Viva Envigado.",
-    ],
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Parroquia%20El%20Portal%20de%20Jes%C3%BAs%2C%20Calle%2033B%20Sur%20%2346A-11%2C%20Envigado%2C%20Antioquia",
     mapLabel: "Ver ubicación de la Parroquia El Portal de Jesús en Google Maps",
     arrivalNotes: {
       value:
-        "La liturgia comienza puntualmente a las 10:00 a. m. Te invitamos a llegar con anticipación para que puedas acompañarnos desde el inicio de la Misa.",
+        "La celebración dará inicio puntualmente a las 10:00 a. m. Te invitamos a llegar con anticipación para disponernos juntos a vivir la Santa Misa desde el comienzo.",
       pending: false,
     } satisfies EditableText,
   } satisfies EventDetailsContent,
@@ -215,10 +245,57 @@ export const weddingContent = {
     },
   } satisfies CelebrationDetailsContent,
   dressCode: {
-    title: "Código de vestuario pendiente",
-    description: "Publicaremos la guía de vestuario cuando esté confirmada.",
-    pending: true,
-  },
+    title: "Código de vestimenta",
+    style: "Cóctel clásico",
+    guidance: [
+      {
+        id: "women",
+        label: "Mujeres",
+        description:
+          "vestido midi o largo, o conjunto de pantalón de corte amplio.",
+      },
+      {
+        id: "men",
+        label: "Hombres",
+        description: "traje o blazer con pantalón de vestir.",
+      },
+    ],
+    decorum:
+      "Por respeto al carácter sagrado de la celebración, elige atuendos sin escotes.",
+    complianceNote:
+      "El código de vestimenta hace parte de los detalles que hemos elegido cuidadosamente para este día, por lo que apreciamos su cumplimiento.",
+    restrictedColorsLabel: "Evita los siguientes colores en el vestuario:",
+    restrictedColors: [
+      {
+        id: "tiger-orange",
+        name: "Naranja tigre",
+        swatch: "#E8752E",
+      },
+      {
+        id: "apricot",
+        name: "Albaricoque",
+        swatch: "#F2B27B",
+      },
+      {
+        id: "ice-blue",
+        name: "Azul hielo",
+        swatch: "#DDEBF2",
+      },
+      {
+        id: "baby-blue",
+        name: "Azul bebé",
+        swatch: "#AFCDE6",
+      },
+      {
+        id: "sky-blue",
+        name: "Azul cielo",
+        swatch: "#79BCE8",
+      },
+    ],
+    closingMessage:
+      "Gracias por acompañarnos y por respetar este deseo en una ocasión tan especial para nosotros.",
+    pending: false,
+  } satisfies DressCodeContent,
   story: {
     paragraphs: [
       "La historia de la pareja se agregará aquí cuando el texto esté listo.",
@@ -498,7 +575,7 @@ export const weddingContent = {
   sections: {
     ceremony: true,
     celebration: true,
-    dressCode: false,
+    dressCode: true,
     story: false,
     engagement: true,
     gallery: true,
