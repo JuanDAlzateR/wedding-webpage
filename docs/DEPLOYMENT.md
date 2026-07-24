@@ -41,4 +41,4 @@ Comprueba la URL final compartiéndola en WhatsApp. La imagen social solo se pub
 
 Ambas variantes declaran `noindex, nofollow`, `robots.txt` bloquea el rastreo completo y no se genera sitemap. La variante completa no está enlazada desde páginas públicas. Estas medidas reducen descubrimientos accidentales, pero una URL estática no es autenticación ni confidencialidad.
 
-La raíz `/` renderiza la variante de eucaristía. Las rutas reales se definen únicamente en `src/content/invitations.ts`; evita copiar la ruta completa en documentación o listados destinados a invitados.
+La raíz `/` renderiza la variante de Eucaristía. Las rutas reales se definen únicamente en `src/content/invitations.ts`; evita copiar la ruta completa en documentación o listados destinados a invitados.

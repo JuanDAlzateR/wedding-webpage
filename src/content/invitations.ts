@@ -7,6 +7,7 @@ export type InvitationSection =
   | "story"
   | "engagement"
   | "gallery"
+  | "gifts"
   | "additionalInfo";
 
 export type InvitationNavigationItem = {
@@ -36,9 +37,9 @@ export const invitationVariants = {
     path: invitationRoutes.massOnly,
     pageTitle: "Eucaristía de Juan David y Melisa | 12 de octubre de 2026",
     pageDescription:
-      "Acompaña a Juan David y Melisa en la eucaristía de su matrimonio el 12 de octubre de 2026 en la Parroquia El Portal de Jesús, en Envigado.",
+      "Acompaña a Juan David y Melisa en la Eucaristía de su matrimonio el 12 de octubre de 2026 en la Parroquia El Portal de Jesús, en Envigado.",
     heroMessage:
-      "Con mucha alegría, queremos invitarte a acompañarnos en la eucaristía de nuestro matrimonio.",
+      "Con mucha alegría, queremos invitarte a acompañarnos en la Eucaristía de nuestro matrimonio.",
     robots: "noindex, nofollow",
     sections: {
       ceremony: true,
@@ -47,6 +48,7 @@ export const invitationVariants = {
       story: true,
       engagement: true,
       gallery: true,
+      gifts: true,
       additionalInfo: false,
     },
     navigation: [
@@ -60,9 +62,9 @@ export const invitationVariants = {
     path: invitationRoutes.massAndCelebration,
     pageTitle: "Boda de Juan David y Melisa | 12 de octubre de 2026",
     pageDescription:
-      "Acompaña a Juan David y Melisa en la eucaristía de su matrimonio y en la celebración posterior el 12 de octubre de 2026.",
+      "Acompaña a Juan David y Melisa en la Eucaristía de su matrimonio y en la celebración posterior el 12 de octubre de 2026.",
     heroMessage:
-      "Con mucha alegría, queremos invitarte a acompañarnos en la eucaristía de nuestro matrimonio y a compartir la celebración posterior.",
+      "Con mucha alegría, queremos invitarte a acompañarnos en la Eucaristía de nuestro matrimonio y a compartir la celebración posterior.",
     robots: "noindex, nofollow",
     sections: {
       ceremony: true,
@@ -71,6 +73,7 @@ export const invitationVariants = {
       story: true,
       engagement: true,
       gallery: true,
+      gifts: true,
       additionalInfo: false,
     },
     navigation: [

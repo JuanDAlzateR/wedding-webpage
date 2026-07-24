@@ -9,6 +9,7 @@ const distDirectory = join(projectRoot, "dist");
 const invitationsDirectory = join(distDirectory, "invitacion");
 const massDirectory = join(invitationsDirectory, "misa");
 const rootHtmlPath = join(distDirectory, "index.html");
+const engagementHtmlPath = join(distDirectory, "compromiso", "index.html");
 
 assert.ok(
   existsSync(distDirectory),
@@ -16,7 +17,11 @@ assert.ok(
 );
 assert.ok(
   existsSync(join(massDirectory, "index.html")),
-  "No se generó la ruta pública de la eucaristía.",
+  "No se generó la ruta pública de la Eucaristía.",
+);
+assert.ok(
+  existsSync(engagementHtmlPath),
+  "No se generó la experiencia de compromiso.",
 );
 
 const generatedInvitationDirectories = readdirSync(invitationsDirectory, {
@@ -46,6 +51,7 @@ const completeHtml = readFileSync(
   join(invitationsDirectory, completeSlug, "index.html"),
   "utf8",
 );
+const engagementHtml = readFileSync(engagementHtmlPath, "utf8");
 
 const sharedCeremonyText = [
   "Juan David",
@@ -59,7 +65,7 @@ const sharedCeremonyText = [
 for (const text of sharedCeremonyText) {
   assert.ok(
     massHtml.includes(text),
-    `La invitación de eucaristía no contiene: ${text}`,
+    `La invitación de Eucaristía no contiene: ${text}`,
   );
   assert.ok(rootHtml.includes(text), `La raíz no contiene: ${text}`);
   assert.ok(
@@ -68,9 +74,32 @@ for (const text of sharedCeremonyText) {
   );
 }
 
+const sharedInvitationText = [
+  "Un detalle para nosotros",
+  "Su presencia y compañía son nuestro mejor regalo",
+  "lluvia de sobres",
+  "Descubrir nuestra historia",
+  'href="/compromiso/"',
+];
+
+for (const text of sharedInvitationText) {
+  assert.ok(
+    massHtml.includes(text),
+    `La invitación de Eucaristía no contiene el contenido compartido: ${text}`,
+  );
+  assert.ok(
+    rootHtml.includes(text),
+    `La raíz no contiene el contenido compartido: ${text}`,
+  );
+  assert.ok(
+    completeHtml.includes(text),
+    `La invitación completa no contiene el contenido compartido: ${text}`,
+  );
+}
+
 const completeOnlyText = [
   "Celebración posterior",
-  "Después de la eucaristía, celebraremos juntos",
+  "Después de la Eucaristía, celebraremos juntos",
   "12:30 p. m.",
   "6:00 p. m.",
   "2026-10-12T12:30:00-05:00",
@@ -80,14 +109,13 @@ const completeOnlyText = [
   "Cerca de la Parroquia San Felipe Apóstol",
   "Ver ubicación de la celebración en Google Maps",
   "Noviciado%20Hermanas%20Oblatas%20de%20San%20Francisco%20de%20Sales",
-  "Código de vestuario",
   'href="#encuentro"',
 ];
 
 for (const text of completeOnlyText) {
   assert.ok(
     !massHtml.includes(text),
-    `La invitación de eucaristía expone contenido exclusivo: ${text}`,
+    `La invitación de Eucaristía expone contenido exclusivo: ${text}`,
   );
   assert.ok(
     !rootHtml.includes(text),
@@ -96,6 +124,64 @@ for (const text of completeOnlyText) {
   assert.ok(
     completeHtml.includes(text),
     `La invitación completa no contiene: ${text}`,
+  );
+  assert.ok(
+    !engagementHtml.includes(text),
+    `La experiencia de compromiso expone contenido exclusivo: ${text}`,
+  );
+}
+
+const engagementText = [
+  "Cómo nos comprometimos",
+  "Durante tres domingos, un juego de pistas",
+  "El juego comienza",
+  "La aventura continúa",
+  "El destino final",
+  "Domingo de Resurrección · 5 de abril de 2026",
+  "Juan David le pidió que fuera su esposa",
+];
+
+for (const text of engagementText) {
+  assert.ok(
+    engagementHtml.includes(text),
+    `La experiencia de compromiso no contiene: ${text}`,
+  );
+}
+
+const engagementPhotoMarkers = [
+  "april05-photo1",
+  "april05-photo2",
+  "april05-photo3",
+  "april05-photo4",
+  "april05-photo5",
+  "april12-photo1",
+  "april12-photo2",
+  "april12-photo3",
+  "april12-photo4",
+  "april12-photo5",
+  "april12-photo6",
+  "april19-photo1",
+  "april19-photo2",
+  "april19-photo3",
+  "april19-photo4",
+  "april19-photo5",
+  "april19-photo6",
+  "april19-photo7",
+  "april19-photo8",
+];
+
+for (const marker of engagementPhotoMarkers) {
+  assert.ok(
+    engagementHtml.includes(marker),
+    `La experiencia de compromiso no contiene la foto: ${marker}`,
+  );
+  assert.ok(
+    !massHtml.includes(marker) && !rootHtml.includes(marker),
+    `La invitación de Eucaristía carga una foto de compromiso: ${marker}`,
+  );
+  assert.ok(
+    !completeHtml.includes(marker),
+    `La invitación completa carga una foto de compromiso: ${marker}`,
   );
 }
 
@@ -117,13 +203,17 @@ for (const text of removedCelebrationPlaceholders) {
 
 assert.ok(
   !massHtml.includes(completeSlug),
-  "La invitación de eucaristía expone la ruta completa.",
+  "La invitación de Eucaristía expone la ruta completa.",
 );
 assert.ok(!rootHtml.includes(completeSlug), "La raíz expone la ruta completa.");
+assert.ok(
+  !engagementHtml.includes(completeSlug),
+  "La experiencia de compromiso expone la ruta completa.",
+);
 assert.match(
   massHtml,
   /<meta name="robots" content="noindex, nofollow">/,
-  "Falta noindex, nofollow en la invitación de eucaristía.",
+  "Falta noindex, nofollow en la invitación de Eucaristía.",
 );
 assert.match(
   completeHtml,
@@ -135,12 +225,26 @@ assert.match(
   /<meta name="robots" content="noindex, nofollow">/,
   "Falta noindex, nofollow en la raíz.",
 );
+assert.match(
+  engagementHtml,
+  /<meta name="robots" content="noindex, nofollow">/,
+  "Falta noindex, nofollow en la experiencia de compromiso.",
+);
 
 const massHead = massHtml.match(/<head>([\s\S]*?)<\/head>/)?.[1] ?? "";
 for (const text of completeOnlyText) {
   assert.ok(
     !massHead.includes(text),
-    `Los metadatos de eucaristía exponen contenido exclusivo: ${text}`,
+    `Los metadatos de Eucaristía exponen contenido exclusivo: ${text}`,
+  );
+}
+
+const engagementHead =
+  engagementHtml.match(/<head>([\s\S]*?)<\/head>/)?.[1] ?? "";
+for (const text of completeOnlyText) {
+  assert.ok(
+    !engagementHead.includes(text),
+    `Los metadatos de compromiso exponen contenido exclusivo: ${text}`,
   );
 }
 
@@ -160,9 +264,35 @@ function assertHashLinksResolve(html, routeLabel) {
   }
 }
 
-assertHashLinksResolve(massHtml, "la invitación de eucaristía");
+assertHashLinksResolve(massHtml, "la invitación de Eucaristía");
 assertHashLinksResolve(rootHtml, "la raíz");
 assertHashLinksResolve(completeHtml, "la invitación completa");
+assertHashLinksResolve(engagementHtml, "la experiencia de compromiso");
+
+for (const [html, routeLabel] of [
+  [massHtml, "la invitación de Eucaristía"],
+  [rootHtml, "la raíz"],
+  [completeHtml, "la invitación completa"],
+  [engagementHtml, "la experiencia de compromiso"],
+]) {
+  assert.doesNotMatch(
+    html,
+    /\[Texto pendiente:/,
+    `Se publicó una nota editorial en ${routeLabel}.`,
+  );
+
+  for (const placeholder of [
+    "Historia pendiente",
+    "La historia de la pareja se agregará aquí cuando el texto esté listo.",
+    "Código de vestuario pendiente",
+    "Publicaremos la guía de vestuario cuando esté confirmada.",
+  ]) {
+    assert.ok(
+      !html.includes(placeholder),
+      `Se publicó un placeholder editorial en ${routeLabel}: ${placeholder}`,
+    );
+  }
+}
 
 assert.ok(
   !existsSync(join(distDirectory, "sitemap-index.xml")) &&
@@ -186,11 +316,11 @@ for (const assetPath of referencedTextAssets) {
   for (const text of completeOnlyText) {
     assert.ok(
       !asset.includes(text),
-      `Un asset cargado por la invitación de eucaristía expone: ${text}`,
+      `Un asset cargado por la invitación de Eucaristía expone: ${text}`,
     );
   }
 }
 
 log(
-  "Verificación de invitaciones superada: dos rutas, contenido aislado, metadatos privados y anclas válidas.",
+  "Verificación superada: invitaciones aisladas, contenido compartido, compromiso privado, fotos y anclas válidas.",
 );

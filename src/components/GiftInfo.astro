@@ -1,0 +1,25 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+import { weddingContent } from "../content/wedding";
+
+const { gifts } = weddingContent;
+---
+
+<section
+  class="section section--gifts"
+  id="regalos"
+  aria-labelledby="gifts-title"
+>
+  <div class="section__inner">
+    <SectionHeading
+      id="gifts-title"
+      eyebrow={gifts.eyebrow}
+      title={gifts.title}
+      align="center"
+    />
+    <div class="gift-card">
+      <span class="gift-card__mark" aria-hidden="true">✦</span>
+      <p>{gifts.body}</p>
+    </div>
+  </div>
+</section>
