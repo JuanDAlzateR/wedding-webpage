@@ -381,6 +381,11 @@ export const howWeMetPhotos = [
     alt: "La pareja se toma una selfie junto a una cruz al aire libre.",
   },
   {
+    id: "38c20537-3068-4835-b0d8-1c1e247411f3",
+    src: loadHowWeMetImage("38c20537-3068-4835-b0d8-1c1e247411f3.jpg"),
+    alt: "Cuatro personas posan sobre el césped junto a una cruz de madera bajo un cielo nublado.",
+  },
+  {
     id: "2bb7d1e6-1461-46f2-ba79-bd53f6b50d4b",
     src: loadHowWeMetImage("2bb7d1e6-1461-46f2-ba79-bd53f6b50d4b.jpg"),
     alt: "La pareja se toma una selfie afectuosa dentro de una iglesia.",
