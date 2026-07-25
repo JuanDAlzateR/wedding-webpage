@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import BiblicalQuote from "./BiblicalQuote.astro";
 import { featuredPhotos } from "../content/photos";
 import { weddingContent } from "../content/wedding";
 
@@ -9,7 +10,7 @@ interface Props {
 }
 
 const { message, detailsAnchor } = Astro.props;
-const { couple, hero, ceremony } = weddingContent;
+const { biblicalQuotes, couple, hero, ceremony } = weddingContent;
 ---
 
 <section class="hero" id="inicio" aria-labelledby="hero-title">
@@ -23,6 +24,8 @@ const { couple, hero, ceremony } = weddingContent;
       <span class="hero__ampersand" aria-hidden="true">&amp;</span>
       <span>{couple.partnerTwo}</span>
     </h1>
+
+    <BiblicalQuote quote={biblicalQuotes.hero} variant="hero" />
 
     <p class="hero__message">{message}</p>
 
@@ -59,7 +62,6 @@ const { couple, hero, ceremony } = weddingContent;
         style={`object-position: ${featuredPhotos.hero.position}`}
       />
     </div>
-    <figcaption>Una vida, una historia, un sí.</figcaption>
   </figure>
 
   <a

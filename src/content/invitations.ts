@@ -4,8 +4,7 @@ export type InvitationSection =
   | "ceremony"
   | "celebration"
   | "dressCode"
-  | "story"
-  | "engagement"
+  | "stories"
   | "gallery"
   | "gifts"
   | "additionalInfo";
@@ -15,6 +14,17 @@ export type InvitationNavigationItem = {
   label: string;
 };
 
+export type InvitationNavigationKey =
+  | "home"
+  | "ceremony"
+  | "celebration"
+  | "confirmation"
+  | "stories"
+  | "gallery"
+  | "dressCode"
+  | "gifts"
+  | "additionalInfo";
+
 export interface InvitationVariant {
   type: InvitationType;
   path: `/invitacion/${string}/`;
@@ -23,13 +33,25 @@ export interface InvitationVariant {
   heroMessage: string;
   robots: "noindex, nofollow";
   sections: Record<InvitationSection, boolean>;
-  navigation: readonly InvitationNavigationItem[];
+  navigationOrder: readonly InvitationNavigationKey[];
 }
 
 export const invitationRoutes = {
   massOnly: "/invitacion/misa/",
   massAndCelebration: "/invitacion/c7N4pQ2x/",
 } as const satisfies Record<string, InvitationVariant["path"]>;
+
+export const invitationNavigationItems = {
+  home: { href: "#inicio", label: "Inicio" },
+  ceremony: { href: "#eucaristia", label: "Celebración Litúrgica" },
+  celebration: { href: "#encuentro", label: "Celebración posterior" },
+  confirmation: { href: "#confirmacion", label: "Confirmación" },
+  stories: { href: "#historia", label: "Nuestra historia" },
+  gallery: { href: "#galeria", label: "Galería de nuestro amor" },
+  dressCode: { href: "#vestuario", label: "Código de vestimenta" },
+  gifts: { href: "#regalos", label: "Un detalle para nosotros" },
+  additionalInfo: { href: "#informacion", label: "Información adicional" },
+} as const satisfies Record<InvitationNavigationKey, InvitationNavigationItem>;
 
 export const invitationVariants = {
   mass_only: {
@@ -44,17 +66,19 @@ export const invitationVariants = {
     sections: {
       ceremony: true,
       celebration: false,
-      dressCode: false,
-      story: true,
-      engagement: true,
+      dressCode: true,
+      stories: true,
       gallery: true,
       gifts: true,
       additionalInfo: false,
     },
-    navigation: [
-      { href: "#eucaristia", label: "Eucaristía" },
-      { href: "#historia", label: "Historia" },
-      { href: "#fotos", label: "Fotos" },
+    navigationOrder: [
+      "home",
+      "ceremony",
+      "dressCode",
+      "gifts",
+      "stories",
+      "gallery",
     ],
   },
   mass_and_celebration: {
@@ -70,22 +94,45 @@ export const invitationVariants = {
       ceremony: true,
       celebration: true,
       dressCode: true,
-      story: true,
-      engagement: true,
+      stories: true,
       gallery: true,
       gifts: true,
       additionalInfo: false,
     },
-    navigation: [
-      { href: "#eucaristia", label: "Eucaristía" },
-      { href: "#encuentro", label: "Celebración" },
-      { href: "#fotos", label: "Fotos" },
+    navigationOrder: [
+      "home",
+      "ceremony",
+      "celebration",
+      "confirmation",
+      "dressCode",
+      "gifts",
+      "stories",
+      "gallery",
     ],
   },
 } as const satisfies Record<InvitationType, InvitationVariant>;
 
 export function getInvitationVariant(type: InvitationType): InvitationVariant {
   return invitationVariants[type];
+}
+
+export function getInvitationNavigation(
+  variant: InvitationVariant,
+  visibleSections: Record<InvitationSection, boolean>,
+): readonly InvitationNavigationItem[] {
+  return variant.navigationOrder
+    .filter((key) => {
+      if (key === "home") {
+        return true;
+      }
+
+      if (key === "confirmation") {
+        return visibleSections.celebration;
+      }
+
+      return visibleSections[key];
+    })
+    .map((key) => invitationNavigationItems[key]);
 }
 
 export function getInvitationSlug(variant: InvitationVariant): string {
