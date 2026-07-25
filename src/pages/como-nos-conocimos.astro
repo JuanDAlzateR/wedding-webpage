@@ -1,0 +1,187 @@
+---
+import { Image } from "astro:assets";
+import { howWeMetStoryChapters } from "../content/how-we-met";
+import { howWeMetFeaturedPhoto } from "../content/photos";
+import { weddingContent } from "../content/wedding";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const { couple, howWeMet } = weddingContent;
+const visibleChapters = howWeMetStoryChapters.filter(
+  (chapter) => chapter.visible,
+);
+const basePath = import.meta.env.BASE_URL;
+const homePath = basePath;
+---
+
+<BaseLayout
+  title={howWeMet.pageTitle}
+  description={howWeMet.pageDescription}
+  robots="noindex, nofollow"
+  socialImage={howWeMetFeaturedPhoto.src}
+  socialImageAlt={howWeMetFeaturedPhoto.alt}
+>
+  <header class="how-we-met-header">
+    <a
+      class="how-we-met-header__brand"
+      href={homePath}
+      aria-label={`Volver a la invitación de ${couple.partnerOne} y ${couple.partnerTwo}`}
+    >
+      {couple.initials}
+    </a>
+    <a class="how-we-met-header__back" href={homePath} data-return-link>
+      Volver a la invitación <span aria-hidden="true">←</span>
+    </a>
+  </header>
+
+  <main class="how-we-met-page" id="contenido">
+    <section
+      class="how-we-met-hero"
+      id="inicio"
+      aria-labelledby="how-we-met-title"
+    >
+      <div class="how-we-met-hero__copy">
+        <p class="eyebrow">{howWeMet.eyebrow}</p>
+        <h1 id="how-we-met-title">{howWeMet.title}</h1>
+        <p>{howWeMet.summary}</p>
+        <a class="button button--accent" href="#recorrido">
+          Recorrer nuestros recuerdos <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+
+      <figure class="how-we-met-hero__photo">
+        <span class="how-we-met-hero__tape" aria-hidden="true"></span>
+        <Image
+          src={howWeMetFeaturedPhoto.src}
+          alt={howWeMetFeaturedPhoto.alt}
+          width={1280}
+          widths={[480, 720, 960, 1280]}
+          sizes="(min-width: 960px) 48vw, 92vw"
+          format="webp"
+          quality={88}
+          loading="eager"
+          fetchpriority="high"
+        />
+        <figcaption>El comienzo de un capítulo</figcaption>
+      </figure>
+    </section>
+
+    <section
+      class="section how-we-met-story"
+      id="recorrido"
+      aria-labelledby="how-we-met-story-title"
+    >
+      <div class="section__inner">
+        <header class="how-we-met-story__introduction">
+          <p class="eyebrow">Recuerdos en construcción</p>
+          <h2 id="how-we-met-story-title">Una historia para completar</h2>
+          <p>
+            Las fotografías ya tienen su lugar. Los textos marcados como
+            provisionales podrán reemplazarse cuando el relato esté listo.
+          </p>
+        </header>
+
+        <ol class="how-we-met-chapters">
+          {
+            visibleChapters.map((chapter, chapterIndex) => {
+              const chapterNumber = String(chapterIndex + 1).padStart(2, "0");
+              const headingId = `how-we-met-chapter-${chapter.id}`;
+
+              return (
+                <li>
+                  <section
+                    class:list={[
+                      "how-we-met-chapter",
+                      {
+                        "how-we-met-chapter--reverse": chapterIndex % 2 === 1,
+                      },
+                    ]}
+                    aria-labelledby={headingId}
+                    data-story-chapter={chapter.id}
+                  >
+                    <header class="how-we-met-chapter__copy">
+                      <p class="how-we-met-chapter__number">
+                        Capítulo {chapterNumber}
+                      </p>
+                      <h3 id={headingId}>
+                        {chapter.title ?? `Un espacio para nuestra historia`}
+                      </h3>
+                      <p
+                        class:list={[
+                          "how-we-met-chapter__text",
+                          { "is-placeholder": chapter.text.pending },
+                        ]}
+                      >
+                        {chapter.text.value}
+                      </p>
+                      {chapter.text.pending && (
+                        <span class="how-we-met-chapter__pending">
+                          Texto provisional
+                        </span>
+                      )}
+                    </header>
+
+                    <div
+                      class="how-we-met-collage"
+                      aria-label={`Fotografías del capítulo ${chapterNumber}`}
+                    >
+                      {chapter.photos.map((photo, photoIndex) => (
+                        <figure
+                          class:list={[
+                            "how-we-met-photo",
+                            photo.src.width >= photo.src.height
+                              ? "how-we-met-photo--landscape"
+                              : "how-we-met-photo--portrait",
+                          ]}
+                          data-how-we-met-photo-id={photo.id}
+                          data-photo-position={photoIndex + 1}
+                        >
+                          <Image
+                            src={photo.src}
+                            alt={photo.alt}
+                            width={
+                              photo.src.width >= photo.src.height ? 1100 : 760
+                            }
+                            widths={[360, 520, 760, 1100]}
+                            sizes="(min-width: 1000px) 46vw, (min-width: 700px) 48vw, 92vw"
+                            format="webp"
+                            quality={84}
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        </figure>
+                      ))}
+                    </div>
+                  </section>
+                </li>
+              );
+            })
+          }
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <footer class="how-we-met-footer">
+    <p>{couple.partnerOne} &amp; {couple.partnerTwo}</p>
+    <a href={homePath} data-return-link>Volver a la invitación</a>
+  </footer>
+
+  <script is:inline define:vars={{ basePath }}>
+    const returnLinks = document.querySelectorAll("[data-return-link]");
+    const referrer = document.referrer ? new URL(document.referrer) : null;
+    const invitationPrefix = `${basePath}invitacion/`;
+    const canReturn =
+      referrer?.origin === window.location.origin &&
+      (referrer.pathname === basePath ||
+        referrer.pathname.startsWith(invitationPrefix));
+
+    if (canReturn) {
+      returnLinks.forEach((link) => {
+        link.addEventListener("click", (event) => {
+          event.preventDefault();
+          window.history.back();
+        });
+      });
+    }
+  </script>
+</BaseLayout>

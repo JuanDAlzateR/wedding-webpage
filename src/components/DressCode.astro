@@ -15,7 +15,7 @@ const { dressCode } = weddingContent;
       <SectionHeading
         id="dress-title"
         eyebrow="Para celebrar"
-        title="Código de vestuario"
+        title={dressCode.title}
       />
       <p class="dress-layout__aside" aria-hidden="true">
         Con estilo<br />y comodidad
@@ -24,17 +24,43 @@ const { dressCode } = weddingContent;
 
     <div class="dress-card">
       <span class="dress-card__label">La guía</span>
-      <h3 class:list={{ "is-placeholder": dressCode.pending }}>
-        {dressCode.title}
-      </h3>
-      <p class:list={{ "is-placeholder": dressCode.pending }}>
-        {dressCode.description}
-      </p>
-      {
-        dressCode.pending && (
-          <span class="pending-label">Contenido pendiente</span>
-        )
-      }
+      <h3>{dressCode.style}</h3>
+
+      <div class="dress-guidance">
+        {
+          dressCode.guidance.map((item) => (
+            <article class="dress-guidance__item">
+              <h4>{item.label}</h4>
+              <p>{item.description}</p>
+            </article>
+          ))
+        }
+      </div>
+
+      <div class="dress-card__notes">
+        <p>{dressCode.decorum}</p>
+        <p>{dressCode.complianceNote}</p>
+      </div>
+
+      <div class="dress-colors" aria-labelledby="dress-colors-title">
+        <h4 id="dress-colors-title">{dressCode.restrictedColorsLabel}</h4>
+        <ul>
+          {
+            dressCode.restrictedColors.map((color) => (
+              <li>
+                <span
+                  class="dress-colors__swatch"
+                  style={`--swatch-color: ${color.swatch}`}
+                  aria-hidden="true"
+                />
+                <span>{color.name}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <p class="dress-card__closing">{dressCode.closingMessage}</p>
     </div>
   </div>
 </section>

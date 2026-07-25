@@ -1,16 +1,41 @@
 ---
 import SectionHeading from "./SectionHeading.astro";
-import type { EventDetailsContent } from "../content/wedding";
+import BiblicalQuote from "./BiblicalQuote.astro";
+import type {
+  BiblicalQuote as BiblicalQuoteContent,
+  CelebrationDetailsContent,
+  EventDetailsContent,
+} from "../content/wedding";
 
-interface Props {
+type Introduction =
+  | {
+      description: readonly string[];
+      biblicalQuote?: never;
+    }
+  | {
+      description?: never;
+      biblicalQuote: BiblicalQuoteContent;
+    };
+
+type Props = Introduction & {
   id: string;
   eyebrow: string;
   title: string;
-  description: string;
   event: EventDetailsContent;
-}
+  confirmation?: CelebrationDetailsContent["confirmation"];
+  accessNotice?: CelebrationDetailsContent["accessNotice"];
+};
 
-const { id, eyebrow, title, description, event } = Astro.props;
+const {
+  id,
+  eyebrow,
+  title,
+  description,
+  biblicalQuote,
+  event,
+  confirmation,
+  accessNotice,
+} = Astro.props;
 const titleId = `${id}-title`;
 ---
 
@@ -22,14 +47,22 @@ const titleId = `${id}-title`;
       title={title}
       align="center"
     />
-    <p class="section-intro">
-      {description}
-    </p>
+    {
+      description ? (
+        <div class="section-intro section-intro--paragraphs">
+          {description.map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
+        </div>
+      ) : (
+        <BiblicalQuote quote={biblicalQuote} variant="section" />
+      )
+    }
 
     <div
       class:list={[
         "details-grid",
-        { "details-grid--two": !event.arrivalNotes },
+        { "details-grid--two": !event.arrivalNotes && !confirmation },
       ]}
     >
       <article class="detail-card">
@@ -126,6 +159,43 @@ const titleId = `${id}-title`;
           </article>
         )
       }
+
+      {
+        confirmation && (
+          <article
+            class="detail-card detail-card--confirmation"
+            id="confirmacion"
+          >
+            <span class="detail-card__number" aria-hidden="true">
+              03
+            </span>
+            <p class="detail-card__label">Tu respuesta</p>
+            <h3>{confirmation.title}</h3>
+            <p>{confirmation.body}</p>
+            <a
+              class="button button--primary detail-card__action"
+              href={confirmation.url}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`${confirmation.callToAction} en Google Forms (abre en una pestaña nueva)`}
+            >
+              {confirmation.callToAction}
+              <span aria-hidden="true">↗</span>
+            </a>
+            <p class="detail-card__deadline">{confirmation.deadline}</p>
+          </article>
+        )
+      }
     </div>
+
+    {
+      accessNotice && (
+        <aside class="editorial-notice" aria-label={accessNotice.label}>
+          <p>
+            <strong>{accessNotice.label}:</strong> {accessNotice.body}
+          </p>
+        </aside>
+      )
+    }
   </div>
 </section>

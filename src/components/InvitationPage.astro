@@ -1,16 +1,16 @@
 ---
 import AdditionalInfo from "./AdditionalInfo.astro";
 import DressCode from "./DressCode.astro";
-import Engagement from "./Engagement.astro";
 import EventDetails from "./EventDetails.astro";
 import Footer from "./Footer.astro";
 import Gallery from "./Gallery.astro";
 import GiftInfo from "./GiftInfo.astro";
 import Header from "./Header.astro";
 import Hero from "./Hero.astro";
-import Story from "./Story.astro";
+import Stories from "./Stories.astro";
 import { featuredPhotos } from "../content/photos";
 import {
+  getInvitationNavigation,
   getInvitationVariant,
   type InvitationType,
 } from "../content/invitations";
@@ -23,18 +23,24 @@ interface Props {
 
 const { type } = Astro.props;
 const variant = getInvitationVariant(type);
-const { ceremony, celebration, sections: contentSections } = weddingContent;
+const {
+  biblicalQuotes,
+  ceremony,
+  celebration,
+  sections: contentSections,
+} = weddingContent;
 const sections = {
   ceremony: variant.sections.ceremony && contentSections.ceremony,
   celebration: variant.sections.celebration && contentSections.celebration,
   dressCode: variant.sections.dressCode && contentSections.dressCode,
-  story: variant.sections.story && contentSections.story,
-  engagement: variant.sections.engagement && contentSections.engagement,
+  stories: variant.sections.stories && contentSections.stories,
   gallery: variant.sections.gallery && contentSections.gallery,
   gifts: variant.sections.gifts && contentSections.gifts,
   additionalInfo:
     variant.sections.additionalInfo && contentSections.additionalInfo,
 };
+const navigation = getInvitationNavigation(variant, sections);
+const { confirmation, accessNotice, ...celebrationEvent } = celebration;
 ---
 
 <BaseLayout
@@ -44,7 +50,7 @@ const sections = {
   socialImage={featuredPhotos.social}
   socialImageAlt="La pareja sonriendo al aire libre."
 >
-  <Header navigation={variant.navigation} />
+  <Header navigation={navigation} />
   <main id="contenido">
     <Hero message={variant.heroMessage} detailsAnchor="#eucaristia" />
     {
@@ -52,8 +58,8 @@ const sections = {
         <EventDetails
           id="eucaristia"
           eyebrow="Nuestro matrimonio"
-          title="La Eucaristía"
-          description={ceremony.description}
+          title="Celebración Litúrgica"
+          biblicalQuote={biblicalQuotes.ceremony}
           event={ceremony}
         />
       )
@@ -66,18 +72,19 @@ const sections = {
           title="Celebración posterior"
           description={celebration.description}
           event={{
-            ...celebration,
+            ...celebrationEvent,
             date: ceremony.date,
             dateIso: ceremony.dateIso,
           }}
+          confirmation={confirmation}
+          accessNotice={accessNotice}
         />
       )
     }
     {sections.dressCode && <DressCode />}
-    {sections.story && <Story />}
-    {sections.engagement && <Engagement />}
-    {sections.gallery && <Gallery />}
     {sections.gifts && <GiftInfo />}
+    {sections.stories && <Stories />}
+    {sections.gallery && <Gallery />}
     {sections.additionalInfo && <AdditionalInfo />}
   </main>
   <Footer />
