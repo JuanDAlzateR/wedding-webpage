@@ -9,6 +9,7 @@ interface Props {
 }
 
 const { navigation } = Astro.props;
+const desktopNavigationColumns = Math.ceil(navigation.length / 2);
 ---
 
 <header class="site-header">
@@ -23,6 +24,7 @@ const { navigation } = Astro.props;
   <nav
     class="site-header__nav site-header__nav--desktop"
     aria-label="Navegación principal"
+    style={`--navigation-items: ${navigation.length}; --navigation-columns: ${desktopNavigationColumns};`}
   >
     {navigation.map((item) => <a href={item.href}>{item.label}</a>)}
   </nav>

@@ -86,6 +86,7 @@ Este repositorio contiene un sitio web estático de boda, móvil primero y únic
 - No mezclar `photos/home/`, `photos/how-we-met/` ni `photos/engagement/`; sus manifiestos y experiencias son independientes.
 - Para añadir o retirar una foto de `home`, cambia el archivo y su entrada en `homeGalleryPhotos`; para reordenar, mueve la entrada completa y revisa los `afterPhotoId` de las citas.
 - Para añadir o retirar una foto de Cómo nos conocimos, cambia `howWeMetPhotos` y el `photoId` de su capítulo; para reordenar o moverla de capítulo, edita únicamente los arreglos `photoIds`.
+- La galería de `home` usa columnas adaptativas por tramo en escritorio: tres desde seis fotos, dos para tramos de dos a cinco y una para una foto. Mantener esta regla basada en cantidades y evitar excepciones por nombre de archivo.
 - Usar descripciones objetivas y no identificar personas o lugares sin confirmación.
 - Ajustar `position` antes de aceptar un recorte que pueda ocultar sujetos importantes.
 - No publicar HEIC directamente; convertirlo a un formato web compatible.

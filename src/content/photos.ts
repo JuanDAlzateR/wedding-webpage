@@ -332,11 +332,6 @@ export const homeGalleryPhotos = [
     alt: "La pareja sonríe junto a un juego de mesa.",
   },
   {
-    id: "38c20537-3068-4835-b0d8-1c1e247411f3",
-    src: loadHomeImage("38c20537-3068-4835-b0d8-1c1e247411f3.jpg"),
-    alt: "Cuatro personas posan al aire libre junto a una cruz.",
-  },
-  {
     id: "9363abd4-99b9-4e0d-a271-5db9c23aa80d",
     src: loadHomeImage("9363abd4-99b9-4e0d-a271-5db9c23aa80d.jpg"),
     alt: "La pareja comparte un beso junto a una ventana.",

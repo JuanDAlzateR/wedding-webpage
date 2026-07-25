@@ -223,7 +223,7 @@ const howWeMetChapterSizes = [
 );
 assert.deepEqual(
   howWeMetChapterSizes,
-  [8, 9, 9, 8, 9, 8, 9, 8],
+  [9, 9, 9, 8, 9, 8, 9, 8],
   "Cómo nos conocimos no conserva la distribución editorial de capítulos.",
 );
 assert.equal(

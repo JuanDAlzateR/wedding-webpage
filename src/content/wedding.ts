@@ -337,6 +337,7 @@ export const weddingContent = {
           "5588f2a1-6469-411b-94a6-70688f3f0728",
           "IMG_9332",
           "IMG_9371",
+          "38c20537-3068-4835-b0d8-1c1e247411f3",
           "2bb7d1e6-1461-46f2-ba79-bd53f6b50d4b",
           "5d10a1e1-f1ca-4c7c-9954-99742fd30bb8",
           "a7c192de-c45e-4ffe-be17-3ea6e2a57f40",
@@ -647,7 +648,7 @@ export const weddingContent = {
             photoId: "april19-photo5",
             description: {
               value:
-                "En el Ave María, con las Hijas del Fiat, llegamos al mismo lugar donde Melisa le había escrito una carta a San José dos años antes. Allí, Juan David le pidió que fuera su esposa.",
+                "En el Ave María, con las Hijas del Fiat, llegamos al mismo lugar donde Melisa le había escrito una carta a San José dos años antes. Allí, pedí a Melisa que fuera mi esposa.",
               pending: false,
             },
             visible: true,
@@ -657,7 +658,7 @@ export const weddingContent = {
             photoId: "april19-photo6",
             description: {
               value:
-                "El anillo no fue elegido por ser el más costoso ni el más lujoso, sino por haber sido escogido y entregado con mucho amor.",
+                "No conseguí el anillo más costoso ni el más lujoso, pero si busqué entregarlo con mucho amor.",
               pending: false,
             },
             visible: true,
@@ -667,7 +668,7 @@ export const weddingContent = {
             photoId: "april19-photo7",
             description: {
               value:
-                "Junto al anillo de compromiso estaban otros regalos llenos de significado: la manilla de nuestro primer aniversario y el anillo con los corazones de la Sagrada Familia, entregado en octubre de 2025 como promesa de una futura propuesta de matrimonio.",
+                "El anillo se añadió a otros regalos llenos de significado: la manilla de nuestro primer aniversario y el anillo con los corazones de la Sagrada Familia, entregado en octubre de 2025 como promesa de una futura propuesta de matrimonio.",
               pending: false,
             },
             visible: true,

@@ -6,6 +6,14 @@ import { weddingContent } from "../content/wedding";
 
 const segments = getHomeGallerySegments();
 const { galleryIntroduction } = weddingContent.biblicalQuotes;
+
+function getDesktopColumnCount(photoCount: number): number {
+  if (photoCount >= 6) {
+    return 3;
+  }
+
+  return Math.min(photoCount, 2);
+}
 ---
 
 <section
@@ -24,6 +32,7 @@ const { galleryIntroduction } = weddingContent.biblicalQuotes;
             <div
               class="gallery-masonry"
               aria-label={`Galería, tramo ${segmentIndex + 1} de ${segments.length}`}
+              style={`--gallery-desktop-columns: ${getDesktopColumnCount(segment.photos.length)};`}
             >
               {segment.photos.map((photo) => (
                 <figure
