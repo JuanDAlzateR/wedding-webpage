@@ -1,10 +1,10 @@
 ---
 import { Image } from "astro:assets";
 import BiblicalQuote from "./BiblicalQuote.astro";
-import { getGallerySegments } from "../content/gallery";
+import { getHomeGallerySegments } from "../content/home-gallery";
 import { weddingContent } from "../content/wedding";
 
-const segments = getGallerySegments();
+const segments = getHomeGallerySegments();
 const { galleryIntroduction } = weddingContent.biblicalQuotes;
 ---
 
@@ -26,7 +26,10 @@ const { galleryIntroduction } = weddingContent.biblicalQuotes;
               aria-label={`Galería, tramo ${segmentIndex + 1} de ${segments.length}`}
             >
               {segment.photos.map((photo) => (
-                <figure class="gallery-photo" data-gallery-photo-id={photo.id}>
+                <figure
+                  class="gallery-photo"
+                  data-home-gallery-photo-id={photo.id}
+                >
                   <Image
                     src={photo.src}
                     alt={photo.alt}

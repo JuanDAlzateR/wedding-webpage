@@ -1,14 +1,13 @@
 ---
 import AdditionalInfo from "./AdditionalInfo.astro";
 import DressCode from "./DressCode.astro";
-import Engagement from "./Engagement.astro";
 import EventDetails from "./EventDetails.astro";
 import Footer from "./Footer.astro";
 import Gallery from "./Gallery.astro";
 import GiftInfo from "./GiftInfo.astro";
 import Header from "./Header.astro";
 import Hero from "./Hero.astro";
-import Story from "./Story.astro";
+import Stories from "./Stories.astro";
 import { featuredPhotos } from "../content/photos";
 import {
   getInvitationNavigation,
@@ -34,8 +33,7 @@ const sections = {
   ceremony: variant.sections.ceremony && contentSections.ceremony,
   celebration: variant.sections.celebration && contentSections.celebration,
   dressCode: variant.sections.dressCode && contentSections.dressCode,
-  story: variant.sections.story && contentSections.story,
-  engagement: variant.sections.engagement && contentSections.engagement,
+  stories: variant.sections.stories && contentSections.stories,
   gallery: variant.sections.gallery && contentSections.gallery,
   gifts: variant.sections.gifts && contentSections.gifts,
   additionalInfo:
@@ -85,9 +83,8 @@ const { confirmation, accessNotice, ...celebrationEvent } = celebration;
     }
     {sections.dressCode && <DressCode />}
     {sections.gifts && <GiftInfo />}
-    {sections.engagement && <Engagement />}
+    {sections.stories && <Stories />}
     {sections.gallery && <Gallery />}
-    {sections.story && <Story />}
     {sections.additionalInfo && <AdditionalInfo />}
   </main>
   <Footer />

@@ -4,8 +4,7 @@ export type InvitationSection =
   | "ceremony"
   | "celebration"
   | "dressCode"
-  | "story"
-  | "engagement"
+  | "stories"
   | "gallery"
   | "gifts"
   | "additionalInfo";
@@ -20,7 +19,7 @@ export type InvitationNavigationKey =
   | "ceremony"
   | "celebration"
   | "confirmation"
-  | "engagement"
+  | "stories"
   | "gallery"
   | "dressCode"
   | "gifts"
@@ -47,7 +46,7 @@ export const invitationNavigationItems = {
   ceremony: { href: "#eucaristia", label: "Celebración Litúrgica" },
   celebration: { href: "#encuentro", label: "Celebración posterior" },
   confirmation: { href: "#confirmacion", label: "Confirmación" },
-  engagement: { href: "#historia", label: "Nuestra historia" },
+  stories: { href: "#historia", label: "Nuestra historia" },
   gallery: { href: "#galeria", label: "Galería de nuestro amor" },
   dressCode: { href: "#vestuario", label: "Código de vestimenta" },
   gifts: { href: "#regalos", label: "Un detalle para nosotros" },
@@ -68,8 +67,7 @@ export const invitationVariants = {
       ceremony: true,
       celebration: false,
       dressCode: true,
-      story: true,
-      engagement: true,
+      stories: true,
       gallery: true,
       gifts: true,
       additionalInfo: false,
@@ -79,7 +77,7 @@ export const invitationVariants = {
       "ceremony",
       "dressCode",
       "gifts",
-      "engagement",
+      "stories",
       "gallery",
     ],
   },
@@ -96,8 +94,7 @@ export const invitationVariants = {
       ceremony: true,
       celebration: true,
       dressCode: true,
-      story: true,
-      engagement: true,
+      stories: true,
       gallery: true,
       gifts: true,
       additionalInfo: false,
@@ -109,7 +106,7 @@ export const invitationVariants = {
       "confirmation",
       "dressCode",
       "gifts",
-      "engagement",
+      "stories",
       "gallery",
     ],
   },

@@ -911,67 +911,7 @@ p {
   line-height: 1.35;
 }
 
-.section--story {
-  background: var(--color-surface);
-}
-
-.story-layout {
-  display: grid;
-  gap: clamp(3rem, 8vw, 7rem);
-  align-items: center;
-}
-
-.story-layout__photo {
-  position: relative;
-  margin: 0;
-}
-
-.story-layout__photo::before {
-  position: absolute;
-  z-index: 0;
-  top: -1.2rem;
-  right: -1.2rem;
-  width: 45%;
-  height: 55%;
-  border: 1px solid var(--color-accent);
-  content: "";
-}
-
-.story-layout__photo img {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  box-shadow: var(--shadow-soft);
-}
-
-.story-layout__caption {
-  position: relative;
-  z-index: 2;
-  display: block;
-  width: fit-content;
-  margin: -1.5rem 1.25rem 0 auto;
-  padding: 0.7rem 1.1rem;
-  transform: rotate(-2deg);
-  background: var(--color-surface);
-  box-shadow: var(--shadow-soft);
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-style: italic;
-}
-
-.story-copy {
-  max-width: 38rem;
-  color: var(--color-text-muted);
-  font-size: 1.04rem;
-}
-
-.story-copy p:last-child {
-  margin-bottom: 0;
-}
-
-.section--engagement {
+.section--stories {
   position: relative;
   overflow: hidden;
   background:
@@ -984,28 +924,71 @@ p {
   color: var(--color-on-primary-muted);
 }
 
-.engagement-layout {
+.stories-layout {
   position: relative;
   z-index: 2;
   display: grid;
-  gap: 2rem;
+  gap: clamp(2.5rem, 7vw, 5rem);
 }
 
-.engagement-card {
-  max-width: 42rem;
-  padding: clamp(1.6rem, 5vw, 3rem);
+.stories-introduction > p {
+  max-width: 38rem;
+  margin-bottom: 0;
+}
+
+.stories-chapters {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stories-card {
+  position: relative;
+  height: 100%;
+  padding: clamp(1.6rem, 5vw, 2.6rem);
+  overflow: hidden;
   border: 1px solid var(--color-on-primary-border);
   background: var(--color-on-primary-wash);
 }
 
-.engagement-card p {
-  margin: 0 0 1.8rem;
-  font-family: var(--font-display);
-  font-size: clamp(1.55rem, 5vw, 2.3rem);
-  line-height: 1.22;
+.stories-card__number {
+  margin-bottom: 1.2rem;
+  color: var(--color-accent-soft);
+  font-size: 0.7rem;
+  font-weight: 750;
+  letter-spacing: 0.16em;
 }
 
-.engagement-ornament {
+.stories-card h3 {
+  margin-bottom: 1rem;
+  overflow-wrap: break-word;
+  color: var(--color-on-primary);
+  font-family: var(--font-display);
+  font-size: clamp(1.95rem, 3.2vw, 2.3rem);
+  font-weight: 520;
+  line-height: 0.98;
+}
+
+.stories-card > p:not(.stories-card__number) {
+  margin-bottom: 1.8rem;
+}
+
+.stories-card__link {
+  display: inline-flex;
+  gap: 0.6rem;
+  align-items: center;
+  color: var(--color-accent-soft);
+  font-size: 0.7rem;
+  font-weight: 750;
+  letter-spacing: 0.1em;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.35rem;
+  text-transform: uppercase;
+}
+
+.stories-ornament {
   position: absolute;
   right: -0.05em;
   bottom: -0.34em;
@@ -1320,6 +1303,281 @@ p {
   text-transform: uppercase;
 }
 
+.how-we-met-page {
+  background: var(--color-background);
+}
+
+.how-we-met-header {
+  position: absolute;
+  z-index: 20;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(calc(100% - 2rem), var(--content-width));
+  margin-inline: auto;
+  padding-block: 1.1rem;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-primary-dark);
+}
+
+.how-we-met-header a {
+  text-decoration: none;
+}
+
+.how-we-met-header__brand {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+}
+
+.how-we-met-header__back {
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.how-we-met-hero {
+  position: relative;
+  display: grid;
+  min-height: 100svh;
+  gap: 3.5rem;
+  align-items: center;
+  overflow: hidden;
+  padding: 8rem 1rem 5rem;
+  background:
+    linear-gradient(
+      115deg,
+      var(--color-accent-wash),
+      transparent 42%,
+      var(--color-primary-wash)
+    ),
+    var(--color-background);
+}
+
+.how-we-met-hero::before {
+  position: absolute;
+  top: 14%;
+  right: -8rem;
+  width: 18rem;
+  height: 18rem;
+  border: 1px solid var(--color-accent-border);
+  border-radius: 50%;
+  content: "";
+}
+
+.how-we-met-hero__copy,
+.how-we-met-hero__photo {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 38rem);
+  margin-inline: auto;
+}
+
+.how-we-met-hero__copy h1 {
+  max-width: 8ch;
+  margin-bottom: 1.5rem;
+  color: var(--color-primary-dark);
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 16vw, 8rem);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 0.82;
+}
+
+.how-we-met-hero__copy > p:not(.eyebrow) {
+  max-width: 32rem;
+  margin-bottom: 2rem;
+  color: var(--color-text-muted);
+}
+
+.how-we-met-hero__photo {
+  margin-block: 0;
+  padding: clamp(0.55rem, 2vw, 0.85rem);
+  transform: rotate(1.4deg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.how-we-met-hero__photo img {
+  width: 100%;
+  height: auto;
+}
+
+.how-we-met-hero__photo figcaption {
+  padding: 0.75rem 0.35rem 0.1rem;
+  color: var(--color-primary);
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-style: italic;
+  text-align: center;
+}
+
+.how-we-met-hero__tape {
+  position: absolute;
+  z-index: 2;
+  top: -1rem;
+  left: 50%;
+  width: 7.5rem;
+  height: 2.1rem;
+  transform: translateX(-50%) rotate(-3deg);
+  background: rgb(231 179 139 / 72%);
+  box-shadow: 0 2px 6px rgb(23 51 77 / 8%);
+}
+
+.how-we-met-story {
+  border-top: 1px solid var(--color-border);
+  background: var(--color-background-alt);
+}
+
+.how-we-met-story__introduction {
+  width: min(100%, 43rem);
+  margin: 0 auto clamp(5rem, 12vw, 9rem);
+  text-align: center;
+}
+
+.how-we-met-story__introduction h2 {
+  margin-bottom: 1.25rem;
+  color: var(--color-primary);
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 10vw, 5.5rem);
+  font-weight: 520;
+  letter-spacing: -0.035em;
+  line-height: 0.9;
+}
+
+.how-we-met-story__introduction > p:last-child {
+  margin-bottom: 0;
+  color: var(--color-text-muted);
+}
+
+.how-we-met-chapters {
+  display: grid;
+  gap: clamp(7rem, 16vw, 12rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.how-we-met-chapter {
+  min-width: 0;
+}
+
+.how-we-met-chapter__copy {
+  position: relative;
+  z-index: 2;
+  width: min(100% - 1rem, 36rem);
+  margin: 0 auto clamp(2.5rem, 7vw, 4.5rem);
+  padding: clamp(1.7rem, 5vw, 3rem);
+  border: 1px solid var(--color-accent-border);
+  background: var(--color-surface);
+  box-shadow: 0 18px 48px rgb(23 51 77 / 9%);
+}
+
+.how-we-met-chapter__copy::before {
+  position: absolute;
+  top: 0.8rem;
+  bottom: 0.8rem;
+  left: 0.8rem;
+  width: 1px;
+  background: var(--color-accent-border);
+  content: "";
+}
+
+.how-we-met-chapter__number {
+  margin-bottom: 0.9rem;
+  color: var(--color-accent);
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.how-we-met-chapter__copy h3 {
+  margin-bottom: 1.1rem;
+  color: var(--color-primary);
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 7vw, 3.7rem);
+  font-weight: 520;
+  letter-spacing: -0.025em;
+  line-height: 0.95;
+}
+
+.how-we-met-chapter__text {
+  margin-bottom: 1rem;
+  font-size: clamp(1rem, 2.5vw, 1.1rem);
+}
+
+.how-we-met-chapter__pending {
+  display: inline-block;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--color-accent-border);
+  color: var(--color-accent);
+  font-size: 0.62rem;
+  font-weight: 750;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.how-we-met-collage {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.how-we-met-photo {
+  width: min(100%, 38rem);
+  margin: 0 auto;
+  padding: 0.4rem;
+  background: var(--color-surface);
+  box-shadow: 0 18px 42px rgb(23 51 77 / 12%);
+}
+
+.how-we-met-photo:nth-child(3n + 1) {
+  transform: rotate(-0.6deg);
+}
+
+.how-we-met-photo:nth-child(3n + 2) {
+  transform: rotate(0.7deg);
+}
+
+.how-we-met-photo:nth-child(3n) {
+  transform: rotate(-0.25deg);
+}
+
+.how-we-met-photo img {
+  width: 100%;
+  height: auto;
+}
+
+.how-we-met-footer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 3rem 1rem;
+  background: var(--color-primary-dark);
+  color: var(--color-on-primary);
+  text-align: center;
+}
+
+.how-we-met-footer p {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 2rem;
+}
+
+.how-we-met-footer a {
+  text-underline-offset: 0.3rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
 .section--gallery {
   background: var(--color-background-alt);
 }
@@ -1455,13 +1713,13 @@ p {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .story-layout {
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  .stories-layout {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    align-items: center;
   }
 
-  .engagement-layout {
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-    align-items: center;
+  .stories-chapters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .engagement-page-header {
@@ -1489,6 +1747,46 @@ p {
   .engagement-story-moment:nth-child(even) .engagement-story-moment__copy {
     grid-column: 1;
     grid-row: 1;
+  }
+
+  .how-we-met-header {
+    width: min(calc(100% - 4rem), var(--content-width));
+  }
+
+  .how-we-met-hero {
+    padding-inline: 2rem;
+  }
+
+  .how-we-met-chapter__copy {
+    margin-left: 4%;
+  }
+
+  .how-we-met-chapter--reverse .how-we-met-chapter__copy {
+    margin-right: 4%;
+    margin-left: auto;
+  }
+
+  .how-we-met-collage {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: clamp(1rem, 2.5vw, 2rem);
+    align-items: start;
+  }
+
+  .how-we-met-photo {
+    width: 100%;
+    grid-column: span 6;
+  }
+
+  .how-we-met-photo--portrait {
+    grid-column: span 5;
+  }
+
+  .how-we-met-photo--landscape {
+    grid-column: span 7;
+  }
+
+  .how-we-met-photo:nth-child(3n) {
+    margin-top: clamp(1rem, 4vw, 3rem);
   }
 
   .gallery-masonry {
@@ -1563,6 +1861,21 @@ p {
 
   .engagement-page-hero__copy h1 {
     font-size: clamp(4.2rem, 7vw, 6.25rem);
+  }
+
+  .how-we-met-hero {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(3rem, 7vw, 7rem);
+    padding-inline: max(3rem, calc((100vw - var(--content-width)) / 2));
+  }
+
+  .how-we-met-hero__copy,
+  .how-we-met-hero__photo {
+    width: 100%;
+  }
+
+  .how-we-met-hero__copy h1 {
+    font-size: clamp(5rem, 7.8vw, 7.5rem);
   }
 }
 

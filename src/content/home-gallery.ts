@@ -1,31 +1,31 @@
 import {
-  galleryPhotos,
+  homeGalleryPhotos,
   type GalleryPhoto,
-  type GalleryPhotoId,
+  type HomeGalleryPhotoId,
 } from "./photos";
 import { weddingContent, type GalleryEditorialQuote } from "./wedding";
 
-export type GallerySegment = {
+export type HomeGallerySegment = {
   photos: readonly GalleryPhoto[];
   quote?: GalleryEditorialQuote;
 };
 
-function validateGallery(): void {
+function validateHomeGallery(): void {
   const photoIds = new Set<string>();
   const imageSources = new Set<string>();
 
-  for (const photo of galleryPhotos) {
+  for (const photo of homeGalleryPhotos) {
     if (photoIds.has(photo.id)) {
-      throw new Error(`La fotografía de galería "${photo.id}" está repetida.`);
+      throw new Error(`La fotografía de inicio "${photo.id}" está repetida.`);
     }
 
     if (!photo.alt.trim()) {
-      throw new Error(`La fotografía de galería "${photo.id}" no tiene alt.`);
+      throw new Error(`La fotografía de inicio "${photo.id}" no tiene alt.`);
     }
 
     if (imageSources.has(photo.src.src)) {
       throw new Error(
-        `La fotografía de galería "${photo.id}" repite un archivo activo.`,
+        `La fotografía de inicio "${photo.id}" repite un archivo activo.`,
       );
     }
 
@@ -49,7 +49,7 @@ function validateGallery(): void {
       throw new Error(`La cita editorial "${quote.id}" está incompleta.`);
     }
 
-    const photoIndex = galleryPhotos.findIndex(
+    const photoIndex = homeGalleryPhotos.findIndex(
       ({ id }) => id === quote.afterPhotoId,
     );
     const position = photoIndex + 1;
@@ -60,7 +60,10 @@ function validateGallery(): void {
       );
     }
 
-    if (position <= previousQuotePosition || position >= galleryPhotos.length) {
+    if (
+      position <= previousQuotePosition ||
+      position >= homeGalleryPhotos.length
+    ) {
       throw new Error(
         `La cita editorial "${quote.id}" no respeta el orden interno de la galería.`,
       );
@@ -78,31 +81,31 @@ function validateGallery(): void {
   });
 }
 
-validateGallery();
+validateHomeGallery();
 
-export function getGallerySegments(): readonly GallerySegment[] {
-  const quotesByPhotoId = new Map<GalleryPhotoId, GalleryEditorialQuote>(
+export function getHomeGallerySegments(): readonly HomeGallerySegment[] {
+  const quotesByPhotoId = new Map<HomeGalleryPhotoId, GalleryEditorialQuote>(
     weddingContent.biblicalQuotes.galleryInterludes.map((quote) => [
       quote.afterPhotoId,
       quote,
     ]),
   );
-  const segments: GallerySegment[] = [];
+  const segments: HomeGallerySegment[] = [];
   let startIndex = 0;
 
-  galleryPhotos.forEach((photo, index) => {
+  homeGalleryPhotos.forEach((photo, index) => {
     const quote = quotesByPhotoId.get(photo.id);
 
     if (quote) {
       segments.push({
-        photos: galleryPhotos.slice(startIndex, index + 1),
+        photos: homeGalleryPhotos.slice(startIndex, index + 1),
         quote,
       });
       startIndex = index + 1;
     }
   });
 
-  segments.push({ photos: galleryPhotos.slice(startIndex) });
+  segments.push({ photos: homeGalleryPhotos.slice(startIndex) });
 
   return segments;
 }

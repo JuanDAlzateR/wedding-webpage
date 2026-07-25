@@ -1,0 +1,62 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+import { weddingContent } from "../content/wedding";
+
+const { engagement, howWeMet, stories } = weddingContent;
+const basePath = import.meta.env.BASE_URL;
+const chapters = [
+  {
+    number: "01",
+    title: howWeMet.title,
+    summary: howWeMet.summary,
+    callToAction: howWeMet.callToAction,
+    href: `${basePath}como-nos-conocimos/`,
+  },
+  {
+    number: "02",
+    title: engagement.title,
+    summary: engagement.summary,
+    callToAction: engagement.callToAction,
+    href: `${basePath}compromiso/`,
+  },
+] as const;
+---
+
+<section
+  class="section section--stories"
+  id="historia"
+  aria-labelledby="stories-title"
+>
+  <div class="stories-ornament" aria-hidden="true">&amp;</div>
+  <div class="section__inner stories-layout">
+    <div class="stories-introduction">
+      <SectionHeading
+        id="stories-title"
+        eyebrow={stories.eyebrow}
+        title={stories.title}
+        light
+      />
+      <p>{stories.introduction}</p>
+    </div>
+
+    <ol class="stories-chapters">
+      {
+        chapters.map((chapter) => (
+          <li>
+            <article class="stories-card">
+              <p class="stories-card__number" aria-hidden="true">
+                {chapter.number}
+              </p>
+              <h3>{chapter.title}</h3>
+              <p>{chapter.summary}</p>
+              <a class="stories-card__link" href={chapter.href}>
+                {chapter.callToAction}
+                <span aria-hidden="true">→</span>
+              </a>
+            </article>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

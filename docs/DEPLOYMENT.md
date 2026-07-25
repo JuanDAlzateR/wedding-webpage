@@ -1,6 +1,6 @@
 # Despliegue
 
-El sitio genera archivos estáticos en `dist/`. No necesita servidor, base de datos ni credenciales en el navegador. Las dos variantes se generan como directorios con `index.html`, por lo que el acceso directo y la recarga funcionan en Cloudflare Pages.
+El sitio genera archivos estáticos en `dist/`. No necesita servidor, base de datos ni credenciales en el navegador. Las dos variantes y las páginas compartidas `/compromiso/` y `/como-nos-conocimos/` se generan como directorios con `index.html`, por lo que el acceso directo y la recarga funcionan en Cloudflare Pages.
 
 ## Cloudflare Pages — recomendado
 
@@ -35,7 +35,7 @@ pnpm validate
 pnpm preview
 ```
 
-Comprueba la URL final compartiéndola en WhatsApp. La imagen social solo se publica como URL absoluta cuando `SITE_URL` está configurada.
+Comprueba la URL final compartiéndola en WhatsApp. Abre y recarga directamente ambas invitaciones, `/compromiso/` y `/como-nos-conocimos/`. La imagen social solo se publica como URL absoluta cuando `SITE_URL` está configurada.
 
 ## Privacidad de las invitaciones
 

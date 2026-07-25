@@ -17,7 +17,9 @@ Este repositorio contiene un sitio web estático de boda, móvil primero y únic
 - `src/content/wedding.ts`: única fuente de información editable de la boda
 - `src/content/invitations.ts`: tipos, rutas, metadatos y visibilidad por variante
 - `src/content/photos.ts`: manifiestos, alt text y tratamiento de imágenes
-- `photos/`: originales de fotografías
+- `photos/home/`: originales de la invitación y su galería final
+- `photos/how-we-met/`: originales de Cómo nos conocimos
+- `photos/engagement/`: originales de Cómo nos comprometimos
 - `src/components/`: secciones visuales
 - `src/styles/global.css`: sistema visual y responsive
 - `docs/`: edición y despliegue
@@ -35,7 +37,8 @@ Este repositorio contiene un sitio web estático de boda, móvil primero y únic
 
 ## Navegación y citas
 
-- El recorrido compartido es: Inicio, Eucaristía, código de vestimenta, regalos, compromiso y galería; la invitación completa inserta la celebración posterior, incluida su confirmación, después de la Eucaristía.
+- El recorrido compartido es: Inicio, Eucaristía, código de vestimenta, regalos, Nuestra historia y galería; la invitación completa inserta la celebración posterior, incluida su confirmación, después de la Eucaristía.
+- `#historia` es un acceso compartido a dos experiencias independientes: `/como-nos-conocimos/` y `/compromiso/`.
 - Las etiquetas y el orden de navegación se mantienen en `src/content/invitations.ts`; la navegación final se filtra según las secciones realmente visibles.
 - `navigationOrder` debe reproducir el orden renderizado y nunca incluir destinos ocultos.
 - Todo enlace interno debe resolver a un ID existente. `Confirmación` y cualquier otro acceso relacionado con la celebración son exclusivos de `mass_and_celebration`.
@@ -57,18 +60,32 @@ Este repositorio contiene un sitio web estático de boda, móvil primero y únic
 - Para añadir una foto, registra primero su import, alt text, layout y position en `engagementPhotos`; después crea su entrada en el capítulo correcto.
 - Para editar, ocultar o reordenar, cambia únicamente los datos. Una entrada con `description.pending: true` debe usar `visible: false`; los placeholders nunca se muestran.
 - Para retirar un momento, elimina tanto la entrada como su elemento del manifiesto activo. Conserva el original cuando sea práctico.
-- Las fotos de compromiso viven en `photos/engagement/` y no deben duplicarse en `galleryPhotos`.
+- Las fotos de compromiso viven en `photos/engagement/` y no deben duplicarse en `homeGalleryPhotos` ni `howWeMetPhotos`.
 - `/compromiso/` es compartida y privada por `noindex`; no debe nombrar ni enlazar la ruta completa ni serializar información exclusiva de la celebración.
 - No inventar detalles personales ni inferir lugares o personas solo a partir de una imagen.
+
+## Cómo nos conocimos
+
+- La fuente canónica del relato es `weddingContent.howWeMet.storyChapters` en `src/content/wedding.ts`.
+- Cada capítulo tiene `id`, `text`, `photoIds` y `visible`; puede incluir `title`. El orden de capítulos y fotos es el orden visible.
+- Los placeholders `Texto historia N` se muestran con `pending: true` y la etiqueta `Texto provisional`. Para confirmar un texto, reemplaza `value` y cambia `pending` a `false`.
+- `photoIds` debe cubrir una sola vez todos los IDs de `howWeMetPhotos` en `src/content/photos.ts`. El build valida IDs, cobertura, orden, alt text y asociaciones.
+- La secuencia actual es provisional y no debe describirse como cronología confirmada.
+- Las fotos viven en `photos/how-we-met/`; los HEIC usan derivados homónimos en `photos/how-we-met/web-compatible/`. Los videos se conservan, pero no forman parte del manifiesto.
+- `/como-nos-conocimos/` es compartida y privada por `noindex`; no debe nombrar ni enlazar la ruta completa ni serializar información exclusiva de la celebración.
+- Su diseño es un scrapbook editorial por grupos; no copiar el patrón alternado de una foto y un texto usado en `/compromiso/`.
 
 ## Fotografías
 
 - Conservar originales cuando sea práctico.
 - Registrar rutas, alt text, captions y tratamiento visual únicamente en `src/content/photos.ts`; el orden del relato se mantiene en `storyChapters`.
-- La galería general usa exclusivamente los originales de `photos/gallery/` y el orden explícito de `galleryPhotos`.
-- Los HEIC de la galería conservan su original y usan un JPG homónimo desde `photos/gallery/web-compatible/`. Los videos no forman parte del manifiesto fotográfico.
+- La galería de la invitación usa exclusivamente `photos/home/` y el orden explícito de `homeGalleryPhotos`.
+- Los HEIC de `home` conservan su original y usan un JPG homónimo desde `photos/home/web-compatible/`.
 - Las posiciones de las citas intercaladas se cambian mediante `afterPhotoId` en `weddingContent.biblicalQuotes.galleryInterludes`.
-- No mezclar `photos/gallery/` con `photos/engagement/`; sus manifiestos y experiencias son independientes.
+- Cómo nos conocimos usa exclusivamente `photos/how-we-met/` y `howWeMetPhotos`; no reutilizarlo como galería de la invitación.
+- No mezclar `photos/home/`, `photos/how-we-met/` ni `photos/engagement/`; sus manifiestos y experiencias son independientes.
+- Para añadir o retirar una foto de `home`, cambia el archivo y su entrada en `homeGalleryPhotos`; para reordenar, mueve la entrada completa y revisa los `afterPhotoId` de las citas.
+- Para añadir o retirar una foto de Cómo nos conocimos, cambia `howWeMetPhotos` y el `photoId` de su capítulo; para reordenar o moverla de capítulo, edita únicamente los arreglos `photoIds`.
 - Usar descripciones objetivas y no identificar personas o lugares sin confirmación.
 - Ajustar `position` antes de aceptar un recorte que pueda ocultar sujetos importantes.
 - No publicar HEIC directamente; convertirlo a un formato web compatible.
@@ -108,6 +125,7 @@ Después de un cambio relevante:
 5. Ejecutar `pnpm verify:invitations`.
 6. Revisar ambas variantes en móvil y escritorio cuando cambie la interfaz.
 7. Verificar imágenes, enlaces, placeholders, foco y reduced motion.
+8. Después de mover fotos, confirmar cantidades, hashes, cobertura de manifiestos y ausencia de rutas antiguas.
 
 No afirmar que un comando pasó si no se ejecutó exitosamente.
 

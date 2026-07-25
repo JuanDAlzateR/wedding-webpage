@@ -1,4 +1,8 @@
-import type { EngagementPhotoId, GalleryPhotoId } from "./photos";
+import type {
+  EngagementPhotoId,
+  HomeGalleryPhotoId,
+  HowWeMetPhotoId,
+} from "./photos";
 
 export type EditableText = {
   value: string;
@@ -28,6 +32,14 @@ export type EngagementStoryChapter = {
   entries: EngagementStoryEntry[];
 };
 
+export type HowWeMetStoryChapter = {
+  id: string;
+  title?: string;
+  text: EditableText;
+  photoIds: readonly HowWeMetPhotoId[];
+  visible: boolean;
+};
+
 export type BiblicalQuoteLine = {
   speaker?: "Ella" | "Él";
   text: string;
@@ -40,7 +52,7 @@ export type BiblicalQuote = {
 };
 
 export type GalleryEditorialQuote = BiblicalQuote & {
-  afterPhotoId: GalleryPhotoId;
+  afterPhotoId: HomeGalleryPhotoId;
 };
 
 export type DressCodeGuidance = {
@@ -170,7 +182,7 @@ export const weddingContent = {
           },
         ],
         reference: "Cant 2:10–11",
-        afterPhotoId: "IMG_20240822_193157",
+        afterPhotoId: "IMG_20240804_155455",
       },
       {
         id: "song-heart",
@@ -296,11 +308,152 @@ export const weddingContent = {
       "Gracias por acompañarnos y por respetar este deseo en una ocasión tan especial para nosotros.",
     pending: false,
   } satisfies DressCodeContent,
-  story: {
-    paragraphs: [
-      "La historia de la pareja se agregará aquí cuando el texto esté listo.",
-    ],
-    pending: true,
+  stories: {
+    eyebrow: "Nuestra historia",
+    title: "Dos capítulos de nuestra historia",
+    introduction:
+      "Dos recorridos distintos para recordar cómo comenzó nuestro camino y cómo decidimos dar el siguiente paso.",
+    callToAction: "Leer este capítulo",
+  },
+  howWeMet: {
+    eyebrow: "Nuestra historia",
+    title: "Cómo nos conocimos",
+    summary:
+      "Una página preparada para contar, capítulo a capítulo, cómo comenzó nuestra historia.",
+    callToAction: "Conocer este capítulo",
+    pageTitle: "Cómo nos conocimos | Juan David y Melisa",
+    pageDescription:
+      "Un recorrido visual por el comienzo de la historia de Juan David y Melisa.",
+    /**
+     * El orden de los capítulos y de `photoIds` es la secuencia visible.
+     * Es una organización provisional y no afirma una cronología confirmada.
+     */
+    storyChapters: [
+      {
+        id: "story-01",
+        text: { value: "Texto historia 1", pending: true },
+        photoIds: [
+          "IMG_9996",
+          "5588f2a1-6469-411b-94a6-70688f3f0728",
+          "IMG_9332",
+          "IMG_9371",
+          "2bb7d1e6-1461-46f2-ba79-bd53f6b50d4b",
+          "5d10a1e1-f1ca-4c7c-9954-99742fd30bb8",
+          "a7c192de-c45e-4ffe-be17-3ea6e2a57f40",
+          "IMG_0029",
+        ],
+        visible: true,
+      },
+      {
+        id: "story-02",
+        text: { value: "Texto historia 2", pending: true },
+        photoIds: [
+          "IMG_20240331_152546",
+          "IMG_20240401_174155",
+          "IMG_20240512_072059",
+          "IMG_20240512_102640",
+          "IMG_20240512_131842",
+          "IMG_1396",
+          "49f3432f-d0e1-4960-966d-18bd72d04577",
+          "IMG_20240513_135421",
+          "IMG_20240513_140005",
+        ],
+        visible: true,
+      },
+      {
+        id: "story-03",
+        text: { value: "Texto historia 3", pending: true },
+        photoIds: [
+          "IMG_20240513_140552",
+          "d9637739-6758-4784-9aad-04845ed16c91",
+          "IMG_1421",
+          "9363abd4-99b9-4e0d-a271-5db9c23aa80d",
+          "IMG_1437",
+          "IMG_1487",
+          "IMG_1502",
+          "IMG_1503",
+          "IMG_20240603_084353",
+        ],
+        visible: true,
+      },
+      {
+        id: "story-04",
+        text: { value: "Texto historia 4", pending: true },
+        photoIds: [
+          "IMG_3104_Original",
+          "IMG_3201",
+          "IMG_3286",
+          "IMG_3327",
+          "IMG_3556",
+          "IMG_3673",
+          "IMG_3682",
+          "IMG_20240822_193157",
+        ],
+        visible: true,
+      },
+      {
+        id: "story-05",
+        text: { value: "Texto historia 5", pending: true },
+        photoIds: [
+          "bdf16d49-276f-45ec-aea9-417c2af45b21",
+          "7577fcc5-cabe-4dca-8c0d-cdd730712317",
+          "d945c198-686b-4a9e-bc10-ccbd1147c8dd",
+          "IMG_20240908_155243",
+          "IMG_20240916_025857",
+          "IMG_20240928_003343",
+          "IMG_4198",
+          "IMG_20241006_214437",
+          "IMG_20241010_141506",
+        ],
+        visible: true,
+      },
+      {
+        id: "story-06",
+        text: { value: "Texto historia 6", pending: true },
+        photoIds: [
+          "IMG_20241114_192336",
+          "IMG_20241117_152645",
+          "IMG_20241206_173739",
+          "IMG_20241206_195832",
+          "IMG_4780",
+          "IMG_5636",
+          "IMG_20250301_125321",
+          "IMG_6218",
+        ],
+        visible: true,
+      },
+      {
+        id: "story-07",
+        text: { value: "Texto historia 7", pending: true },
+        photoIds: [
+          "IMG_6220",
+          "IMG_6259",
+          "IMG_6722",
+          "IMG_20250814_171807",
+          "IMG_20250913_112648",
+          "IMG_20251004_193605",
+          "IMG_1130",
+          "IMG_20251013_124142",
+          "IMG_1710",
+        ],
+        visible: true,
+      },
+      {
+        id: "story-08",
+        text: { value: "Texto historia 8", pending: true },
+        photoIds: [
+          "IMG_20251225_000451",
+          "IMG_20251226_212606",
+          "IMG_20260105_224015",
+          "IMG_2223",
+          "IMG_20260503_112317",
+          "IMG_20260606_213322",
+          "IMG_20260615_214420",
+          "IMG_20260629_163753",
+        ],
+        visible: true,
+      },
+    ] satisfies readonly HowWeMetStoryChapter[],
   },
   engagement: {
     eyebrow: "Nuestra aventura",
@@ -576,8 +729,7 @@ export const weddingContent = {
     ceremony: true,
     celebration: true,
     dressCode: true,
-    story: false,
-    engagement: true,
+    stories: true,
     gallery: true,
     gifts: true,
     additionalInfo: false,
