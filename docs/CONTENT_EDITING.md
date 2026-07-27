@@ -28,9 +28,9 @@ Abre `src/content/wedding.ts`. Este archivo contiene nombres, datos compartidos 
 - `dressCode`: título, estilo, orientaciones, notas, colores restringidos y mensaje final compartidos.
 - `biblicalQuotes`: texto, referencia y posición editorial de todas las citas bíblicas.
 - `stories`: textos del acceso compartido a los dos capítulos.
-- `howWeMet`: resumen, metadatos, placeholders y capítulos de Cómo nos conocimos.
+- `howWeMet`: resumen, metadatos y momentos tipados de Cómo nos conocimos.
 - `engagement`: resumen, metadatos, relato y textos de la página de compromiso.
-- `gifts`: encabezado y mensaje compartido de lluvia de sobres.
+- `gifts`: encabezado, mensaje y llave compartidos para regalos.
 - `sections`: disponibilidad global de cada sección. La configuración de cada variante puede ocultarla adicionalmente.
 
 ## Convención editorial
@@ -75,7 +75,7 @@ Ambos bloques son exclusivos de la invitación completa. Si cambias alguno de su
 
 ## Lluvia de sobres
 
-El encabezado y el mensaje se editan únicamente en `weddingContent.gifts`. Esta sección aparece en las dos invitaciones y no debe contener cuentas, enlaces de pago, códigos QR financieros ni información exclusiva de la celebración.
+El encabezado y el mensaje se editan únicamente en `weddingContent.gifts`. `body` conserva la redacción y `key` contiene la llave numérica que se destaca visualmente en la tarjeta. Esta sección aparece en las dos invitaciones y no debe contener entidades financieras, tipos de cuenta, enlaces de pago, códigos QR ni información exclusiva de la celebración.
 
 Para ocultarla temporalmente, cambia `weddingContent.sections.gifts` a `false`. Si se modifica su visibilidad por variante, debe conservarse habilitada o deshabilitada de la misma forma en las dos invitaciones.
 
@@ -83,20 +83,38 @@ Para ocultarla temporalmente, cambia `weddingContent.sections.gifts` a `false`. 
 
 La invitación enlaza a `/como-nos-conocimos/` desde el bloque Nuestra historia. Esta experiencia es compartida, usa `noindex` y conserva el retorno contextual a la invitación desde la cual llegó el visitante.
 
-La fuente canónica es `weddingContent.howWeMet.storyChapters` en `src/content/wedding.ts`. Cada capítulo contiene:
+La fuente canónica es `weddingContent.howWeMet.storyEntries` en `src/content/wedding.ts`. `photos/history/description.md` fue el borrador de migración y ahora solo dirige a las fuentes canónicas. Cada entrada representa un momento y contiene:
 
 - `id`: identificador único y estable.
-- `title`: encabezado opcional.
-- `text.value`: relato o placeholder editable.
-- `text.pending`: `true` mientras el texto siga siendo provisional.
+- `description.value`: relato editable.
+- `description.pending`: indica que el texto sigue siendo un borrador.
 - `photoIds`: IDs de `howWeMetPhotos` en el orden visible.
-- `visible`: permite ocultar el capítulo completo.
+- `composition`: composición editorial tipada para una foto o un grupo.
+- `visible`: permite ocultar el momento completo.
+- `title` y `caption`: campos opcionales.
 
-Los ocho textos actuales son `Texto historia 1` a `Texto historia 8` y aparecen acompañados por la etiqueta `Texto provisional`. Para reemplazar uno, edita únicamente `text.value` y cambia `text.pending` a `false`. No es necesario modificar la página ni el componente visual.
+El orden de `storyEntries` y el orden interno de cada `photoIds` son la única secuencia visible. El manifiesto fotográfico funciona como biblioteca y no controla la narración. Las 19 fotos activas están asociadas una sola vez a diez momentos, incluidos los grupos intencionales de cuatro, dos y seis imágenes.
 
-El orden actual conserva la secuencia editorial que antes usaba la galería general, pero se considera provisional y no confirma cronología. Para reordenar una foto, mueve su ID dentro de `photoIds`; para cambiarla de capítulo, mueve el ID entre arreglos. El validador exige que todas las fotografías activas aparezcan exactamente una vez y en el mismo orden global de `howWeMetPhotos`.
+Ejemplo:
 
-La presentación es un scrapbook editorial con grupos de fotografías y un panel narrativo por capítulo. Es deliberadamente distinta del patrón de momentos individuales alternados de la página de compromiso.
+```ts
+{
+  id: "our-colors",
+  description: {
+    value: "Texto confirmado del momento.",
+    pending: false,
+  },
+  photoIds: ["history-10", "history-11"],
+  composition: "pair-below",
+  visible: true,
+}
+```
+
+Para editar un texto, cambia `description.value`. Para reordenar, mueve la entrada completa o los IDs de su grupo. Para conservar un borrador, usa `description.pending: true` junto con `visible: false`; una entrada visible nunca puede tener texto pendiente. Para cambiar una foto sin alterar su relato ni posición, conserva el ID y actualiza su archivo y alt text en el manifiesto.
+
+El resolutor falla si encuentra IDs duplicados, archivos ausentes, alt text vacío, referencias repetidas, entradas visibles sin texto terminado o fotografías sin asociación. No sustituyas una referencia faltante por una imagen parecida ni inventes descripciones.
+
+La presentación es un scrapbook editorial con composiciones agrupadas. Es deliberadamente distinta del patrón alternado de momentos individuales de la página de compromiso.
 
 ## Historia del compromiso
 
@@ -185,17 +203,17 @@ Para reordenar, mueve la entrada completa dentro de `homeGalleryPhotos`. Para re
 
 ### Fotografías de Cómo nos conocimos
 
-Los originales están en `photos/how-we-met/` y su manifiesto es `howWeMetPhotos` dentro de `src/content/photos.ts`. Los cinco archivos MOV/MP4 se conservan, pero no forman parte del manifiesto fotográfico. Los originales HEIC usan derivados JPG homónimos en `photos/how-we-met/web-compatible/`.
+Los 19 originales activos están en `photos/history/` y su manifiesto es `howWeMetPhotos` dentro de `src/content/photos.ts`. La colección anterior de 69 fotografías y cinco videos se conserva sin publicarse en `photos/archive/how-we-met-previous/`. Los originales HEIC usan copias JPG homónimas en `photos/history/web-compatible/`.
 
 Para añadir una foto:
 
-1. Copia el original en `photos/how-we-met/`.
-2. Crea su derivado JPG en `web-compatible/` si el original es HEIC.
+1. Copia el original en `photos/history/` con un ID estable `history-NN`.
+2. Crea su copia JPG homónima en `web-compatible/` si el original es HEIC.
 3. Agrega la entrada a `howWeMetPhotos` con ID y alt text objetivos.
-4. Agrega el mismo ID al arreglo `photoIds` del capítulo correspondiente.
+4. Agrega el mismo ID al arreglo `photoIds` de una entrada existente o crea un nuevo elemento en `storyEntries` con descripción confirmada.
 5. Ejecuta `pnpm validate` y comprueba `/como-nos-conocimos/` en móvil y escritorio.
 
-Para retirar una foto, elimina tanto su entrada del manifiesto como su ID del capítulo. Para reordenarla o cambiarla de capítulo, mueve el ID en `storyChapters` y mueve también la entrada de `howWeMetPhotos` para conservar el mismo orden global. No copies estas fotos a `homeGalleryPhotos` ni a `engagementPhotos`.
+Para retirar una foto, elimina tanto su entrada del manifiesto como su ID narrativo y conserva el original en el archivo si sigue siendo útil. Para reordenarla o cambiarla de grupo, mueve únicamente su ID dentro de `storyEntries`; no es necesario reordenar `howWeMetPhotos`. No copies estas fotos a `homeGalleryPhotos` ni a `engagementPhotos`.
 
 ### Fotografías del compromiso
 
@@ -215,7 +233,7 @@ El orden de `engagementPhotos` no controla la historia. El orden visible se mant
 
 ### Archivos HEIC
 
-Los navegadores no manejan HEIC de forma consistente. `home` y `how-we-met` conservan esos originales, pero sus manifiestos referencian derivados JPG en la carpeta `web-compatible/` de cada colección. Las fotos de otras secciones también deben convertirse a JPG, WebP o AVIF antes de publicarse.
+Los navegadores no manejan HEIC de forma consistente. `home` y `history` conservan esos originales, pero sus manifiestos referencian JPG homónimos en la carpeta `web-compatible/` de cada colección. Las fotos de otras secciones también deben convertirse a JPG, WebP o AVIF antes de publicarse.
 
 ## Textos alternativos y captions
 
@@ -226,7 +244,6 @@ Los navegadores no manejan HEIC de forma consistente. `home` y `how-we-met` cons
 
 ## Información pendiente antes de publicar
 
-- Textos definitivos de Cómo nos conocimos.
 - Transporte, política de niños y contacto, si aplican.
 - URL final en `SITE_URL`.
 - Favicon final.

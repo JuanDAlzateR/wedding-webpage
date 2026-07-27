@@ -19,7 +19,10 @@ const { gifts } = weddingContent;
     />
     <div class="gift-card">
       <span class="gift-card__mark" aria-hidden="true">✦</span>
-      <p>{gifts.body}</p>
+      <p>
+        {gifts.body}{" "}
+        <span class="gift-card__key">{gifts.key}</span>.
+      </p>
     </div>
   </div>
 </section>

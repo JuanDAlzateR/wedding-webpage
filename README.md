@@ -32,8 +32,8 @@ pnpm preview
 - Código de vestimenta y muestras de color: `weddingContent.dressCode` en `src/content/wedding.ts`
 - Galería de la invitación: originales en `photos/home/`, orden y alt text en `homeGalleryPhotos` dentro de `src/content/photos.ts`
 - Citas bíblicas y posiciones editoriales de galería: `weddingContent.biblicalQuotes` en `src/content/wedding.ts`
-- Capítulos, placeholders, orden y visibilidad de Cómo nos conocimos: `weddingContent.howWeMet.storyChapters` en `src/content/wedding.ts`
-- Fotografías y alt text de Cómo nos conocimos: `howWeMetPhotos` en `src/content/photos.ts`
+- Momentos, textos, asociaciones, orden y visibilidad de Cómo nos conocimos: `weddingContent.howWeMet.storyEntries` en `src/content/wedding.ts`
+- Fotografías activas y alt text de Cómo nos conocimos: originales en `photos/history/` y manifiesto `howWeMetPhotos` en `src/content/photos.ts`
 - Página generada de Cómo nos conocimos: `/como-nos-conocimos/`
 - Capítulos, texto, orden y visibilidad del compromiso: `weddingContent.engagement.storyChapters` en `src/content/wedding.ts`
 - Fotografías y alt text del compromiso: `engagementPhotos` en `src/content/photos.ts`
@@ -47,6 +47,6 @@ La información todavía no confirmada aparece como pendiente. No reemplaces eso
 
 ## Estado actual
 
-Los nombres, la fecha, los horarios, los lugares, las direcciones, las referencias de ubicación, los mapas, el código de vestimenta, la historia del compromiso y la información de regalos contienen la información confirmada. Los textos de Cómo nos conocimos siguen marcados como provisionales. También están pendientes la información adicional, la URL final y el favicon. Consulta `docs/CONTENT_EDITING.md` para la lista completa.
+Los nombres, la fecha, los horarios, los lugares, las direcciones, las referencias de ubicación, los mapas, el código de vestimenta, las dos historias y la información de regalos contienen la información confirmada. También están pendientes la información adicional, la URL final y el favicon. Consulta `docs/CONTENT_EDITING.md` para la lista completa.
 
 Ambas variantes usan `noindex, nofollow` y `robots.txt` bloquea el rastreo. La ruta no obvia reduce el descubrimiento accidental, pero no autentica a los invitados ni protege el contenido frente a quien conozca o adivine la URL.
