@@ -16,7 +16,13 @@ const howWeMetHtmlPath = join(
   "index.html",
 );
 const homeSourceDirectory = join(projectRoot, "photos", "home");
-const howWeMetSourceDirectory = join(projectRoot, "photos", "how-we-met");
+const howWeMetSourceDirectory = join(projectRoot, "photos", "history");
+const howWeMetArchiveDirectory = join(
+  projectRoot,
+  "photos",
+  "archive",
+  "how-we-met-previous",
+);
 
 assert.ok(
   existsSync(distDirectory),
@@ -33,6 +39,10 @@ assert.ok(
 assert.ok(
   existsSync(howWeMetHtmlPath),
   "No se generó la experiencia Cómo nos conocimos.",
+);
+assert.ok(
+  existsSync(howWeMetArchiveDirectory),
+  "No se conservó el archivo de la colección anterior de Cómo nos conocimos.",
 );
 
 const generatedInvitationDirectories = readdirSync(invitationsDirectory, {
@@ -188,7 +198,7 @@ const engagementText = [
   "La aventura continúa",
   "El destino final",
   "Domingo de Resurrección · 5 de abril de 2026",
-  "Juan David le pidió que fuera su esposa",
+  "pedí a Melisa que fuera mi esposa",
 ];
 
 for (const text of engagementText) {
@@ -200,11 +210,11 @@ for (const text of engagementText) {
 
 const howWeMetText = [
   "Cómo nos conocimos",
-  "Una página preparada para contar, capítulo a capítulo",
-  "Una historia para completar",
-  "Texto provisional",
-  "Texto historia 1",
-  "Texto historia 8",
+  "Un recorrido por los encuentros, las oraciones y los detalles",
+  "Un sí de confianza que nos trajo hasta aquí",
+  "24 de febrero de 2024",
+  "Solo confía.",
+  "sellamos nuestro compromiso con la bendición de Dios",
 ];
 
 for (const text of howWeMetText) {
@@ -214,22 +224,22 @@ for (const text of howWeMetText) {
   );
 }
 
-const howWeMetChapterSizes = [
+const howWeMetEntrySizes = [
   ...howWeMetHtml.matchAll(
-    /<section[^>]*data-story-chapter="[^"]+"[\s\S]*?<\/section>/g,
+    /<article[^>]*data-story-entry="[^"]+"[\s\S]*?<\/article>/g,
   ),
 ].map(
   (match) => [...match[0].matchAll(/data-how-we-met-photo-id="[^"]+"/g)].length,
 );
 assert.deepEqual(
-  howWeMetChapterSizes,
-  [9, 9, 9, 8, 9, 8, 9, 8],
-  "Cómo nos conocimos no conserva la distribución editorial de capítulos.",
+  howWeMetEntrySizes,
+  [1, 1, 1, 4, 1, 1, 2, 6, 1, 1],
+  "Cómo nos conocimos no conserva las asociaciones editoriales del relato.",
 );
-assert.equal(
-  [...howWeMetHtml.matchAll(/>Texto provisional</g)].length,
-  8,
-  "Cada capítulo provisional debe mostrar su etiqueta editorial.",
+assert.doesNotMatch(
+  howWeMetHtml,
+  /Texto provisional|Texto historia \d+/,
+  "Cómo nos conocimos expone placeholders editoriales.",
 );
 
 const engagementPhotoMarkers = [
@@ -358,6 +368,16 @@ function getExpectedPhotoIds(sourceDirectory) {
     .sort();
 }
 
+const archivedFileCount = readdirSync(howWeMetArchiveDirectory, {
+  withFileTypes: true,
+  recursive: true,
+}).filter((entry) => entry.isFile()).length;
+assert.equal(
+  archivedFileCount,
+  89,
+  "El archivo anterior de Cómo nos conocimos no conserva sus 89 archivos.",
+);
+
 function assertPhotoCoverage(html, routeLabel, sourceDirectory, dataAttribute) {
   const expectedPhotoIds = getExpectedPhotoIds(sourceDirectory);
   const attributePattern = new RegExp(`${dataAttribute}="([^"]+)"`, "g");
@@ -436,6 +456,23 @@ assertPhotoCoverage(
   "data-how-we-met-photo-id",
 );
 
+const archivedPhotoMarkers = getExpectedPhotoIds(howWeMetArchiveDirectory);
+assert.equal(
+  archivedPhotoMarkers.length,
+  69,
+  "El archivo anterior no conserva sus 69 fotografías fuente.",
+);
+for (const marker of archivedPhotoMarkers) {
+  assert.ok(
+    !howWeMetHtml.includes(marker),
+    `Cómo nos conocimos todavía carga una fotografía archivada: ${marker}`,
+  );
+}
+assert.ok(
+  !howWeMetHtml.includes("how-we-met-previous"),
+  "Cómo nos conocimos expone la ruta interna del archivo fotográfico.",
+);
+
 for (const [html, routeLabel] of [
   [massHtml, "la invitación de Eucaristía"],
   [rootHtml, "la raíz"],
@@ -509,6 +546,16 @@ assert.match(
   howWeMetHtml,
   /<meta name="robots" content="noindex, nofollow">/,
   "Falta noindex, nofollow en Cómo nos conocimos.",
+);
+assert.match(
+  howWeMetHtml,
+  /data-return-link/,
+  "Cómo nos conocimos no conserva los enlaces de retorno contextual.",
+);
+assert.match(
+  howWeMetHtml,
+  /window\.history\.back\(\)/,
+  "Cómo nos conocimos no conserva history.back() para volver a la invitación.",
 );
 
 const massHead = massHtml.match(/<head>([\s\S]*?)<\/head>/)?.[1] ?? "";

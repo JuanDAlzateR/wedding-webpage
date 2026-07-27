@@ -1,14 +1,25 @@
 ---
 import { Image } from "astro:assets";
-import { howWeMetStoryChapters } from "../content/how-we-met";
+import { howWeMetStoryEntries } from "../content/how-we-met";
 import { howWeMetFeaturedPhoto } from "../content/photos";
-import { weddingContent } from "../content/wedding";
+import {
+  weddingContent,
+  type HowWeMetStoryComposition,
+} from "../content/wedding";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const { couple, howWeMet } = weddingContent;
-const visibleChapters = howWeMetStoryChapters.filter(
-  (chapter) => chapter.visible,
+const visibleEntries = howWeMetStoryEntries.filter((entry) => entry.visible);
+const visiblePhotoCount = visibleEntries.reduce(
+  (total, entry) => total + entry.photos.length,
+  0,
 );
+const imageSizes: Record<HowWeMetStoryComposition, string> = {
+  single: "(min-width: 1000px) 56vw, (min-width: 700px) 70vw, 92vw",
+  "stack-left": "(min-width: 1000px) 27vw, (min-width: 700px) 44vw, 92vw",
+  "pair-below": "(min-width: 1000px) 38vw, (min-width: 700px) 46vw, 92vw",
+  "split-stacks": "(min-width: 1000px) 24vw, (min-width: 700px) 44vw, 92vw",
+};
 const basePath = import.meta.env.BASE_URL;
 const homePath = basePath;
 ---
@@ -39,30 +50,28 @@ const homePath = basePath;
       id="inicio"
       aria-labelledby="how-we-met-title"
     >
+      <div class="how-we-met-hero__ornament" aria-hidden="true">
+        <span>{couple.initials}</span>
+      </div>
+
       <div class="how-we-met-hero__copy">
         <p class="eyebrow">{howWeMet.eyebrow}</p>
         <h1 id="how-we-met-title">{howWeMet.title}</h1>
         <p>{howWeMet.summary}</p>
         <a class="button button--accent" href="#recorrido">
-          Recorrer nuestros recuerdos <span aria-hidden="true">↓</span>
+          Recorrer nuestra historia <span aria-hidden="true">↓</span>
         </a>
       </div>
 
-      <figure class="how-we-met-hero__photo">
-        <span class="how-we-met-hero__tape" aria-hidden="true"></span>
-        <Image
-          src={howWeMetFeaturedPhoto.src}
-          alt={howWeMetFeaturedPhoto.alt}
-          width={1280}
-          widths={[480, 720, 960, 1280]}
-          sizes="(min-width: 960px) 48vw, 92vw"
-          format="webp"
-          quality={88}
-          loading="eager"
-          fetchpriority="high"
-        />
-        <figcaption>El comienzo de un capítulo</figcaption>
-      </figure>
+      <p
+        class="how-we-met-hero__folio"
+        aria-label={`${visibleEntries.length} momentos y ${visiblePhotoCount} fotografías`}
+      >
+        <span>{String(visibleEntries.length).padStart(2, "0")}</span>
+        momentos
+        <span>{String(visiblePhotoCount).padStart(2, "0")}</span>
+        fotografías
+      </p>
     </section>
 
     <section
@@ -72,59 +81,46 @@ const homePath = basePath;
     >
       <div class="section__inner">
         <header class="how-we-met-story__introduction">
-          <p class="eyebrow">Recuerdos en construcción</p>
-          <h2 id="how-we-met-story-title">Una historia para completar</h2>
-          <p>
-            Las fotografías ya tienen su lugar. Los textos marcados como
-            provisionales podrán reemplazarse cuando el relato esté listo.
-          </p>
+          <p class="eyebrow">{howWeMet.storyEyebrow}</p>
+          <h2 id="how-we-met-story-title">{howWeMet.storyTitle}</h2>
         </header>
 
-        <ol class="how-we-met-chapters">
+        <ol class="how-we-met-entries">
           {
-            visibleChapters.map((chapter, chapterIndex) => {
-              const chapterNumber = String(chapterIndex + 1).padStart(2, "0");
-              const headingId = `how-we-met-chapter-${chapter.id}`;
+            visibleEntries.map((entry, entryIndex) => {
+              const entryNumber = String(entryIndex + 1).padStart(2, "0");
+              const headingId = `how-we-met-entry-${entry.id}`;
 
               return (
                 <li>
-                  <section
+                  <article
                     class:list={[
-                      "how-we-met-chapter",
-                      {
-                        "how-we-met-chapter--reverse": chapterIndex % 2 === 1,
-                      },
+                      "how-we-met-entry",
+                      `how-we-met-entry--${entry.composition}`,
                     ]}
                     aria-labelledby={headingId}
-                    data-story-chapter={chapter.id}
+                    data-story-entry={entry.id}
+                    data-story-composition={entry.composition}
                   >
-                    <header class="how-we-met-chapter__copy">
-                      <p class="how-we-met-chapter__number">
-                        Capítulo {chapterNumber}
+                    <div class="how-we-met-entry__copy">
+                      <p class="how-we-met-entry__number">
+                        Recuerdo {entryNumber}
                       </p>
-                      <h3 id={headingId}>
-                        {chapter.title ?? `Un espacio para nuestra historia`}
+                      <h3 class="visually-hidden" id={headingId}>
+                        Momento {entryNumber} de nuestra historia
                       </h3>
-                      <p
-                        class:list={[
-                          "how-we-met-chapter__text",
-                          { "is-placeholder": chapter.text.pending },
-                        ]}
-                      >
-                        {chapter.text.value}
-                      </p>
-                      {chapter.text.pending && (
-                        <span class="how-we-met-chapter__pending">
-                          Texto provisional
-                        </span>
+                      {entry.title && <h4>{entry.title}</h4>}
+                      <p>{entry.description.value}</p>
+                      {entry.caption && (
+                        <p class="how-we-met-entry__caption">{entry.caption}</p>
                       )}
-                    </header>
+                    </div>
 
                     <div
-                      class="how-we-met-collage"
-                      aria-label={`Fotografías del capítulo ${chapterNumber}`}
+                      class="how-we-met-entry__photos"
+                      aria-label={`Fotografías del recuerdo ${entryNumber}`}
                     >
-                      {chapter.photos.map((photo, photoIndex) => (
+                      {entry.photos.map((photo, photoIndex) => (
                         <figure
                           class:list={[
                             "how-we-met-photo",
@@ -139,19 +135,19 @@ const homePath = basePath;
                             src={photo.src}
                             alt={photo.alt}
                             width={
-                              photo.src.width >= photo.src.height ? 1100 : 760
+                              photo.src.width >= photo.src.height ? 1200 : 840
                             }
-                            widths={[360, 520, 760, 1100]}
-                            sizes="(min-width: 1000px) 46vw, (min-width: 700px) 48vw, 92vw"
+                            widths={[360, 520, 760, 960, 1200]}
+                            sizes={imageSizes[entry.composition]}
                             format="webp"
-                            quality={84}
+                            quality={86}
                             loading="lazy"
                             decoding="async"
                           />
                         </figure>
                       ))}
                     </div>
-                  </section>
+                  </article>
                 </li>
               );
             })

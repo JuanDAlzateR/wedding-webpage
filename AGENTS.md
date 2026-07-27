@@ -18,7 +18,8 @@ Este repositorio contiene un sitio web estático de boda, móvil primero y únic
 - `src/content/invitations.ts`: tipos, rutas, metadatos y visibilidad por variante
 - `src/content/photos.ts`: manifiestos, alt text y tratamiento de imágenes
 - `photos/home/`: originales de la invitación y su galería final
-- `photos/how-we-met/`: originales de Cómo nos conocimos
+- `photos/history/`: selección activa de Cómo nos conocimos
+- `photos/archive/how-we-met-previous/`: colección anterior preservada e inactiva
 - `photos/engagement/`: originales de Cómo nos comprometimos
 - `src/components/`: secciones visuales
 - `src/styles/global.css`: sistema visual y responsive
@@ -66,26 +67,27 @@ Este repositorio contiene un sitio web estático de boda, móvil primero y únic
 
 ## Cómo nos conocimos
 
-- La fuente canónica del relato es `weddingContent.howWeMet.storyChapters` en `src/content/wedding.ts`.
-- Cada capítulo tiene `id`, `text`, `photoIds` y `visible`; puede incluir `title`. El orden de capítulos y fotos es el orden visible.
-- Los placeholders `Texto historia N` se muestran con `pending: true` y la etiqueta `Texto provisional`. Para confirmar un texto, reemplaza `value` y cambia `pending` a `false`.
-- `photoIds` debe cubrir una sola vez todos los IDs de `howWeMetPhotos` en `src/content/photos.ts`. El build valida IDs, cobertura, orden, alt text y asociaciones.
-- La secuencia actual es provisional y no debe describirse como cronología confirmada.
-- Las fotos viven en `photos/how-we-met/`; los HEIC usan derivados homónimos en `photos/how-we-met/web-compatible/`. Los videos se conservan, pero no forman parte del manifiesto.
+- La fuente canónica del relato es `weddingContent.howWeMet.storyEntries` en `src/content/wedding.ts`; `photos/history/description.md` solo dirige a esa fuente.
+- Cada entrada usa `id`, `description`, `photoIds`, `composition` y `visible`; puede incluir `title` o `caption`. El orden del arreglo y de cada `photoIds` es el único orden visible.
+- `photoIds` debe cubrir una sola vez todos los IDs de `howWeMetPhotos` en `src/content/photos.ts`. El build valida IDs, archivos, cobertura, alt text, textos y asociaciones.
+- Una entrada visible requiere texto confirmado. Para conservar un borrador, usa `description.pending: true` y `visible: false`; nunca publiques placeholders.
+- Las fotos activas viven en `photos/history/`; los HEIC usan JPG homónimos en `photos/history/web-compatible/`. La colección archivada no se importa ni se publica.
+- Para añadir un momento, registra la foto y su alt text en `howWeMetPhotos` y crea la entrada asociada. Para reemplazar una foto sin alterar el relato, conserva su ID y cambia únicamente su archivo y alt text.
+- Para editar, ocultar o reordenar, modifica la entrada completa. Una referencia ausente, duplicada o sin descripción debe fallar durante el build, no sustituirse por otra foto.
 - `/como-nos-conocimos/` es compartida y privada por `noindex`; no debe nombrar ni enlazar la ruta completa ni serializar información exclusiva de la celebración.
 - Su diseño es un scrapbook editorial por grupos; no copiar el patrón alternado de una foto y un texto usado en `/compromiso/`.
 
 ## Fotografías
 
 - Conservar originales cuando sea práctico.
-- Registrar rutas, alt text, captions y tratamiento visual únicamente en `src/content/photos.ts`; el orden del relato se mantiene en `storyChapters`.
+- Registrar rutas, alt text, captions y tratamiento visual únicamente en `src/content/photos.ts`; el orden narrativo se mantiene en los datos de cada relato.
 - La galería de la invitación usa exclusivamente `photos/home/` y el orden explícito de `homeGalleryPhotos`.
 - Los HEIC de `home` conservan su original y usan un JPG homónimo desde `photos/home/web-compatible/`.
 - Las posiciones de las citas intercaladas se cambian mediante `afterPhotoId` en `weddingContent.biblicalQuotes.galleryInterludes`.
-- Cómo nos conocimos usa exclusivamente `photos/how-we-met/` y `howWeMetPhotos`; no reutilizarlo como galería de la invitación.
-- No mezclar `photos/home/`, `photos/how-we-met/` ni `photos/engagement/`; sus manifiestos y experiencias son independientes.
+- Cómo nos conocimos usa exclusivamente `photos/history/` y `howWeMetPhotos`; no reutilizarlo como galería de la invitación.
+- No mezclar `photos/home/`, `photos/history/` ni `photos/engagement/`; sus manifiestos y experiencias son independientes.
 - Para añadir o retirar una foto de `home`, cambia el archivo y su entrada en `homeGalleryPhotos`; para reordenar, mueve la entrada completa y revisa los `afterPhotoId` de las citas.
-- Para añadir o retirar una foto de Cómo nos conocimos, cambia `howWeMetPhotos` y el `photoId` de su capítulo; para reordenar o moverla de capítulo, edita únicamente los arreglos `photoIds`.
+- Para añadir o retirar una foto de Cómo nos conocimos, cambia `howWeMetPhotos` y el arreglo `photoIds` de su entrada; para reordenar, mueve la entrada o sus IDs sin reordenar el manifiesto.
 - La galería de `home` usa columnas adaptativas por tramo en escritorio: tres desde seis fotos, dos para tramos de dos a cinco y una para una foto. Mantener esta regla basada en cantidades y evitar excepciones por nombre de archivo.
 - Usar descripciones objetivas y no identificar personas o lugares sin confirmación.
 - Ajustar `position` antes de aceptar un recorte que pueda ocultar sujetos importantes.

@@ -1,16 +1,16 @@
 import { getHowWeMetPhoto, howWeMetPhotos, type GalleryPhoto } from "./photos";
-import { weddingContent, type HowWeMetStoryChapter } from "./wedding";
+import { weddingContent, type HowWeMetStoryEntry } from "./wedding";
 
-export type ResolvedHowWeMetStoryChapter = Omit<
-  HowWeMetStoryChapter,
+export type ResolvedHowWeMetStoryEntry = Omit<
+  HowWeMetStoryEntry,
   "photoIds"
 > & {
   photos: readonly GalleryPhoto[];
 };
 
 function resolveHowWeMetStory(
-  chapters: readonly HowWeMetStoryChapter[],
-): ResolvedHowWeMetStoryChapter[] {
+  entries: readonly HowWeMetStoryEntry[],
+): ResolvedHowWeMetStoryEntry[] {
   const manifestIds = new Set<string>();
   const manifestSources = new Set<string>();
 
@@ -35,60 +35,61 @@ function resolveHowWeMetStory(
     manifestSources.add(photo.src.src);
   }
 
-  const chapterIds = new Set<string>();
+  const entryIds = new Set<string>();
   const referencedPhotoIds = new Set<string>();
-  const referencedPhotoOrder: string[] = [];
 
-  const resolvedChapters = chapters.map((chapter, index) => {
-    if (!chapter.id.trim()) {
-      throw new Error("Un capítulo de Cómo nos conocimos no tiene id.");
+  const resolvedEntries = entries.map((entry) => {
+    if (!entry.id.trim()) {
+      throw new Error("Una entrada de Cómo nos conocimos no tiene id.");
     }
 
-    if (chapterIds.has(chapter.id)) {
-      throw new Error(`El capítulo "${chapter.id}" está repetido.`);
+    if (entryIds.has(entry.id)) {
+      throw new Error(`La entrada "${entry.id}" está repetida.`);
     }
 
-    if (chapter.title !== undefined && !chapter.title.trim()) {
-      throw new Error(`El capítulo "${chapter.id}" tiene un título vacío.`);
+    if (entry.title !== undefined && !entry.title.trim()) {
+      throw new Error(`La entrada "${entry.id}" tiene un título vacío.`);
     }
 
-    if (chapter.visible && !chapter.text.value.trim()) {
-      throw new Error(`El capítulo "${chapter.id}" necesita texto visible.`);
+    if (entry.caption !== undefined && !entry.caption.trim()) {
+      throw new Error(`La entrada "${entry.id}" tiene un caption vacío.`);
     }
 
-    if (
-      chapter.text.pending &&
-      chapter.text.value !== `Texto historia ${index + 1}`
-    ) {
+    if (entry.visible && entry.description.pending) {
       throw new Error(
-        `El placeholder del capítulo "${chapter.id}" no sigue la secuencia editorial.`,
+        `La entrada visible "${entry.id}" no puede tener texto pendiente.`,
       );
     }
 
-    if (chapter.photoIds.length === 0) {
-      throw new Error(`El capítulo "${chapter.id}" no contiene fotografías.`);
+    if (entry.visible && !entry.description.value.trim()) {
+      throw new Error(`La entrada "${entry.id}" necesita texto visible.`);
     }
 
-    chapterIds.add(chapter.id);
+    if (entry.photoIds.length === 0) {
+      throw new Error(`La entrada "${entry.id}" no contiene fotografías.`);
+    }
 
-    const photos = chapter.photoIds.map((photoId) => {
+    entryIds.add(entry.id);
+
+    const photos = entry.photoIds.map((photoId) => {
       if (referencedPhotoIds.has(photoId)) {
         throw new Error(
-          `La fotografía "${photoId}" está asociada a más de un capítulo.`,
+          `La fotografía "${photoId}" está asociada a más de una entrada.`,
         );
       }
 
       const photo = getHowWeMetPhoto(photoId);
       referencedPhotoIds.add(photoId);
-      referencedPhotoOrder.push(photoId);
       return photo;
     });
 
     return {
-      id: chapter.id,
-      ...(chapter.title ? { title: chapter.title } : {}),
-      text: chapter.text,
-      visible: chapter.visible,
+      id: entry.id,
+      ...(entry.title ? { title: entry.title } : {}),
+      description: entry.description,
+      composition: entry.composition,
+      ...(entry.caption ? { caption: entry.caption } : {}),
+      visible: entry.visible,
       photos,
     };
   });
@@ -99,24 +100,13 @@ function resolveHowWeMetStory(
 
   if (unreferencedPhotoIds.length > 0) {
     throw new Error(
-      `Las siguientes fotografías no tienen capítulo: ${unreferencedPhotoIds.join(", ")}.`,
+      `Las siguientes fotografías no tienen entrada: ${unreferencedPhotoIds.join(", ")}.`,
     );
   }
 
-  const manifestOrder = howWeMetPhotos.map(({ id }) => id);
-  const misplacedPhotoId = referencedPhotoOrder.find(
-    (photoId, index) => photoId !== manifestOrder[index],
-  );
-
-  if (misplacedPhotoId) {
-    throw new Error(
-      `La secuencia de capítulos no respeta el orden provisional en "${misplacedPhotoId}".`,
-    );
-  }
-
-  return resolvedChapters;
+  return resolvedEntries;
 }
 
-export const howWeMetStoryChapters = resolveHowWeMetStory(
-  weddingContent.howWeMet.storyChapters,
+export const howWeMetStoryEntries = resolveHowWeMetStory(
+  weddingContent.howWeMet.storyEntries,
 );
