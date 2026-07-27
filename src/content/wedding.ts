@@ -32,11 +32,16 @@ export type EngagementStoryChapter = {
   entries: EngagementStoryEntry[];
 };
 
-export type HowWeMetStoryChapter = {
+export type HowWeMetStoryComposition =
+  "single" | "stack-left" | "pair-below" | "split-stacks";
+
+export type HowWeMetStoryEntry = {
   id: string;
   title?: string;
-  text: EditableText;
+  description: EditableText;
   photoIds: readonly HowWeMetPhotoId[];
+  composition: HowWeMetStoryComposition;
+  caption?: string;
   visible: boolean;
 };
 
@@ -319,142 +324,136 @@ export const weddingContent = {
     eyebrow: "Nuestra historia",
     title: "Cómo nos conocimos",
     summary:
-      "Una página preparada para contar, capítulo a capítulo, cómo comenzó nuestra historia.",
+      "Un recorrido por los encuentros, las oraciones y los detalles con los que Dios fue tejiendo nuestra historia.",
     callToAction: "Conocer este capítulo",
     pageTitle: "Cómo nos conocimos | Juan David y Melisa",
     pageDescription:
-      "Un recorrido visual por el comienzo de la historia de Juan David y Melisa.",
+      "La historia de Juan David y Melisa, contada a través de los encuentros, detalles y fotografías que marcaron su noviazgo.",
+    storyEyebrow: "Nuestra historia, momento a momento",
+    storyTitle: "Un sí de confianza que nos trajo hasta aquí",
     /**
-     * El orden de los capítulos y de `photoIds` es la secuencia visible.
-     * Es una organización provisional y no afirma una cronología confirmada.
+     * El orden de `storyEntries` y de cada arreglo `photoIds` es el orden visible.
+     * El manifiesto fotográfico funciona únicamente como biblioteca.
      */
-    storyChapters: [
+    storyEntries: [
       {
-        id: "story-01",
-        text: { value: "Texto historia 1", pending: true },
-        photoIds: [
-          "IMG_9996",
-          "5588f2a1-6469-411b-94a6-70688f3f0728",
-          "IMG_9332",
-          "IMG_9371",
-          "38c20537-3068-4835-b0d8-1c1e247411f3",
-          "2bb7d1e6-1461-46f2-ba79-bd53f6b50d4b",
-          "5d10a1e1-f1ca-4c7c-9954-99742fd30bb8",
-          "a7c192de-c45e-4ffe-be17-3ea6e2a57f40",
-          "IMG_0029",
-        ],
+        id: "a-fiat-of-trust",
+        description: {
+          value:
+            "Si esta imagen puede considerarse el inicio de nuestra historia, habría que decir que comenzó hace más de diez años. Creo que, de alguna manera, las decisiones individuales de cada uno nos llevaron hasta aquel momento y, después, hasta aquí. Ya quedan solo unos meses para que Juan David y yo seamos esposos, y Dios ha estado presente desde el principio. Como ven en esta imagen, ese principio se remonta mucho más atrás que el 24 de febrero de 2024, el primer día en que nos vimos. Ese día me encontraba en Medellín dando una plática muy peculiar: en realidad, transmitía una reflexión que había tocado profundamente mi corazón solo unos días antes y que he tenido que recordarme constantemente desde entonces: debo confiar en Dios y en su plan, soltar los míos y perseverar con excelencia. Sí, esta historia comienza con un sí de confianza, después de años de guardarme para mí misma. Aún hoy sigo luchando por confiar, pero vuelvo la mirada y veo lo que el Señor ha hecho con uno solo de mis Fiat; no deja de sorprenderme mi pequeñez por no confiar más. Solo confía.",
+          pending: false,
+        },
+        photoIds: ["history-01"],
+        composition: "single",
         visible: true,
       },
       {
-        id: "story-02",
-        text: { value: "Texto historia 2", pending: true },
-        photoIds: [
-          "IMG_20240331_152546",
-          "IMG_20240401_174155",
-          "IMG_20240512_072059",
-          "IMG_20240512_102640",
-          "IMG_20240512_131842",
-          "IMG_1396",
-          "49f3432f-d0e1-4960-966d-18bd72d04577",
-          "IMG_20240513_135421",
-          "IMG_20240513_140005",
-        ],
+        id: "the-day-we-met",
+        description: {
+          value:
+            "Así es: nos conocimos el 24 de febrero en el CP, el Centro Pastoral del Sodalicio de Vida Cristiana, un día en que ninguno de los dos debía estar allí. Ese mismo día comimos perritos, que se convertirían en nuestro plato favorito, y fuimos al cine juntos. ¿Quién diría que dos años después estaríamos en una carrera por coleccionar visitas al cine? El 25 de febrero fuimos juntos al Ave María y, sí, spoiler alert: dos años después fue en ese lugar donde nos comprometimos. También es el lugar donde casi terminamos y el escenario de nuestra primera foto juntos: esa que ven a un lado, de los dos junto a la cruz. Una foto arriesgada, de dos incautos que sintieron el llamado a tomarse una foto con alguien que era prácticamente un desconocido. Pero Dios no se queda con nada: vivimos alegrías, tristezas, retos y triunfos en ese mismo lugar, y todo ha sido su amorosa respuesta a un pedido de amor.",
+          pending: false,
+        },
+        photoIds: ["history-02"],
+        composition: "single",
         visible: true,
       },
       {
-        id: "story-03",
-        text: { value: "Texto historia 3", pending: true },
-        photoIds: [
-          "IMG_20240513_140552",
-          "d9637739-6758-4784-9aad-04845ed16c91",
-          "IMG_1421",
-          "9363abd4-99b9-4e0d-a271-5db9c23aa80d",
-          "IMG_1437",
-          "IMG_1487",
-          "IMG_1502",
-          "IMG_1503",
-          "IMG_20240603_084353",
-        ],
+        id: "saint-joseph",
+        description: {
+          value:
+            "El Ave María es un convento en Guarne. Allí fui en 2021 buscando escuchar a Dios. Fueron tres semanas en el cielo; lloré por los hijos que no tenía porque estuve casi convencida de que Él me llamaba a ser su esposa en la tierra, pero, claro, tenía otros planes. Volví tres años después con una petición y, sin saberlo, con la respuesta a mi lado. Esta vez recurrí a un aliado infalible: el glorioso San José. Acudí a él, mi padre del cielo, para que intercediera por mí ante el mismísimo Padre de todos los hombres. ¿Cómo no oiría Dios a este varón prudente a quien Él mismo encargó a su Hijo, frágil e indefenso? Le hice una petición inocente y, lo admito, un tanto desesperada: «Oh, glorioso San José, si es voluntad de Dios que conozca a un varón que quiera ser santo…». Y no me quedé ahí; debo admitir, con un poco de vergüenza, que añadí: «P. D.: que sea pronto». Hermanos míos, tengan cuidado con lo que piden y con cómo disponen su corazón, porque cuando un cristiano se dispone y pide que se haga en su vida la voluntad del Padre, el Dios misericordioso no desoye esa súplica. Aquí estamos, entonces, a un par de meses de que este pobre abismo de nulidad, llamado Melisa, se una en matrimonio a un varón que de veras desea ser santo. ¡Cuán inmerecido don me ha dado Dios en mi novio! Oren por mí para que pueda acoger su corazón como él ha custodiado el mío.",
+          pending: false,
+        },
+        photoIds: ["history-03"],
+        composition: "single",
         visible: true,
       },
       {
-        id: "story-04",
-        text: { value: "Texto historia 4", pending: true },
-        photoIds: [
-          "IMG_3104_Original",
-          "IMG_3201",
-          "IMG_3286",
-          "IMG_3327",
-          "IMG_3556",
-          "IMG_3673",
-          "IMG_3682",
-          "IMG_20240822_193157",
-        ],
+        id: "flowers-and-details",
+        description: {
+          value:
+            "Estas florecitas que ven por todos lados fueron solo una de las ingeniosas formas en que cautivó mi corazón. Me envió flores un 8 de marzo y consiguió él mismo la dirección de mi casa después de que lo reté a hacerlo. Los lirios naranjas los envió a mi puerta el mismo día en que culminamos la novena a San José, once días después de las primeras flores. Pero, queridos lectores, no fueron solo flores: este muchacho ya se había ofrecido a llevarme al aeropuerto aquel fin de semana de febrero que estuve en Medellín; ofreció sus oraciones y el sacrificio de la Eucaristía por mí desde ese día, y me lo hizo saber. Durante el rezo de la novena me desveló hablándome de toda clase de temas interesantes, me escribió poemas y reflexiones cada mañana y, el día que no lo hizo, fue para decirme que quería recordarme que siempre estaría ahí para mí.",
+          pending: false,
+        },
+        photoIds: ["history-04", "history-05", "history-06", "history-07"],
+        composition: "stack-left",
         visible: true,
       },
       {
-        id: "story-05",
-        text: { value: "Texto historia 5", pending: true },
-        photoIds: [
-          "bdf16d49-276f-45ec-aea9-417c2af45b21",
-          "7577fcc5-cabe-4dca-8c0d-cdd730712317",
-          "d945c198-686b-4a9e-bc10-ccbd1147c8dd",
-          "IMG_20240908_155243",
-          "IMG_20240916_025857",
-          "IMG_20240928_003343",
-          "IMG_4198",
-          "IMG_20241006_214437",
-          "IMG_20241010_141506",
-        ],
+        id: "our-first-date",
+        description: {
+          value:
+            "Esta foto es de nuestra primera cita, el Domingo de Resurrección de 2024. Este varón de Dios me invitó a comer. Nos encontramos en Medellín después de no haber hablado durante una semana; cuando nos vimos, llevaba una enorme maleta. Debo confesar que tenía miedo: muchas dudas en el corazón se habían resuelto con la meditación de la primera estación del viacrucis de Hakuna, mientras otras iban y venían con las porras de mi querido Andrés Hernández durante el descenso hacia el Valle de Aburrá. Muchachos, en esa maleta había otro ramo y una carta por cada día que no habíamos hablado. Todas confirmaban un mensaje que me había mandado la primera vez que le dije «Te quiero»; me respondió: «Meli, yo te quiero, me gustas y me gustas para Dios». Más tarde, ese mismo día, no resistí abrazarlo mientras Laurita fue a su cuarto a traer algo. Esperábamos a más amigos para inaugurar una de nuestras actividades favoritas juntos: los juegos de mesa con amigos.",
+          pending: false,
+        },
+        photoIds: ["history-08"],
+        composition: "single",
         visible: true,
       },
       {
-        id: "story-06",
-        text: { value: "Texto historia 6", pending: true },
-        photoIds: [
-          "IMG_20241114_192336",
-          "IMG_20241117_152645",
-          "IMG_20241206_173739",
-          "IMG_20241206_195832",
-          "IMG_4780",
-          "IMG_5636",
-          "IMG_20250301_125321",
-          "IMG_6218",
-        ],
+        id: "we-became-a-couple",
+        description: {
+          value:
+            "Nos hicimos novios el 13 de mayo de 2024, tras completar la renovación de nuestra consagración a Jesús por María a la luz de las reflexiones que el buen Javi Lariguet enviaba cada día. Era de esperarse que sucediera en esa fecha; el misterio era cuándo. Una semana antes, mi buen novio me dijo que me preparara para la última semana soltera de mi vida. Aproveché el congreso de Somos Suyos para escribir frente al Santísimo una carta de respuesta, que le entregué justo cuando me hizo esa pregunta tan esperada. Esa semana también recibí otros obsequios: diferentes elementos del entonces beato Carlo Acutis, un rosario de medallas de San Benito, una estatuita de San José y algunos más que resultaron ser más de mi gusto que del suyo —stickers—, pero así pasa cuando apenas se está abriendo el corazón. Lo ignorábamos en ese momento, pero los lunes festivos se volverían especiales; San Carlo Acutis nos acogería en su día, y el 12 de octubre, fecha en que años atrás Juan David se consagró por primera vez a Jesús por medio de María, se convertiría en el día de nuestra boda. Que no se me olvide contarles: el 13 de mayo de 2024 resolví por primera vez un sudoku muy especial y, cuando desencripté su mensaje, pude entregar mi carta. Ese día también recibí un corazón de Jesús azul celeste y otros regalos, pero ese corazón anticipaba, además, una gran aventura.",
+          pending: false,
+        },
+        photoIds: ["history-09"],
+        composition: "single",
         visible: true,
       },
       {
-        id: "story-07",
-        text: { value: "Texto historia 7", pending: true },
-        photoIds: [
-          "IMG_6220",
-          "IMG_6259",
-          "IMG_6722",
-          "IMG_20250814_171807",
-          "IMG_20250913_112648",
-          "IMG_20251004_193605",
-          "IMG_1130",
-          "IMG_20251013_124142",
-          "IMG_1710",
-        ],
+        id: "our-colors",
+        description: {
+          value:
+            "El naranja y el azul celeste se convirtieron rápidamente en nuestros colores. Los encontrábamos en el cielo cuando tomábamos un avión para ir hacia el otro en la distancia: de Medellín a Bogotá y de Bogotá a Medellín. El cielo era una prueba de que la complementariedad de nuestros colores favoritos, inscrita por Dios en la creación, hablaba también de la complementariedad de nuestros corazones.",
+          pending: false,
+        },
+        photoIds: ["history-10", "history-11"],
+        composition: "pair-below",
         visible: true,
       },
       {
-        id: "story-08",
-        text: { value: "Texto historia 8", pending: true },
+        id: "shared-moments",
+        description: {
+          value:
+            "Los detalles no han parado, como este picnic que ni la lluvia arruinó; el servicio mano a mano en apostolados, como los retiros de Teología del Cuerpo; y la compañía en la enfermedad, cuando pensé que me estaban dando un cuarto VIP, pero en realidad me estaban aislando. Ese día me dije: «Si he de parir algún día, que sea de la mano de este hombre». Hemos pasado noches en vela jugando, días de lluvia varados en la moto y salidas con amigos para mostrarles la ciudad, como aquella foto en las luces de Navidad, cortesía de mi incondicional Rivera San. También hemos compartido caminatas por las montañas antioqueñas; días de sol, como el del cambuche que hicimos para ver el desfile de silleteros, siempre animados por nuestra gran amiga Laurita; y primeros sábados firmes junto a Santi en el rosario de Hombres. Hemos compartido mucho y nos hemos conocido en retiros, peleas, horas santas, debates, canciones, siestas, reflexiones, oración, perdón, charlas, proyectos, angustia, terapia, ansiedad y felicidad.",
+          pending: false,
+        },
         photoIds: [
-          "IMG_20251225_000451",
-          "IMG_20251226_212606",
-          "IMG_20260105_224015",
-          "IMG_2223",
-          "IMG_20260503_112317",
-          "IMG_20260606_213322",
-          "IMG_20260615_214420",
-          "IMG_20260629_163753",
+          "history-12",
+          "history-13",
+          "history-14",
+          "history-15",
+          "history-16",
+          "history-17",
         ],
+        composition: "split-stacks",
         visible: true,
       },
-    ] satisfies readonly HowWeMetStoryChapter[],
+      {
+        id: "marriage-retreat",
+        description: {
+          value:
+            "Hace un par de semanas, mientras despedíamos nuestro noviazgo, recibimos un regalo especial —uno de tantos y tan inmerecidos— de mis papás, quienes me recuerdan cada día cómo luce el amor incondicional. Nos uniformaron con la frase que marcó nuestro noviazgo: «El amor me lo explicó todo», del buen Juan Pablo II, otro de nuestros amigos del cielo. Era necesario casarnos en su mes. Salimos uniformados y llenos de amor del retiro de matrimonios de Lazos de Amor Mariano. Gracias a todos los que nos enviaron cartas y me hicieron llorar de alegría durante toda la noche. Ese retiro fue para nosotros una confirmación de la voluntad de Dios. Ahora oren por nosotros para que se haga en nuestra familia la obra de la Gracia y podamos responder con nuestra pequeñez a los dones tan grandes que hemos recibido. Gracias por hacer parte de nuestra historia.",
+          pending: false,
+        },
+        photoIds: ["history-18"],
+        composition: "single",
+        visible: true,
+      },
+      {
+        id: "engagement-blessing",
+        description: {
+          value:
+            "Los dejo con esta última foto del lunes festivo 13 de julio, en el que, con un abrazo filial de nuestro padre Domingo García, sellamos nuestro compromiso con la bendición de Dios.",
+          pending: false,
+        },
+        photoIds: ["history-19"],
+        composition: "single",
+        visible: true,
+      },
+    ] satisfies readonly HowWeMetStoryEntry[],
   },
   engagement: {
     eyebrow: "Nuestra aventura",
@@ -690,7 +689,8 @@ export const weddingContent = {
   gifts: {
     eyebrow: "Con cariño",
     title: "Un detalle para nosotros",
-    body: "Su presencia y compañía son nuestro mejor regalo. Si desean tener un detalle con nosotros, recibiremos con mucho cariño lluvia de sobres.",
+    body: "El mayor regalo para nosotros será contar con sus oraciones, en serio las necesitamos; otro excelente regalo es su presencia en este día tan especial. Si, además, desean tener un detalle con nosotros, recibiremos con mucho cariño su lluvia de sobres o, si les resulta más cómodo, podrán enviar su obsequio a nuestra llave",
+    key: "1032485387",
   },
   additionalInfo: {
     intro:

@@ -1064,6 +1064,22 @@ p {
   line-height: 1.35;
 }
 
+.gift-card__key {
+  display: inline-block;
+  padding: 0.08em 0.36em;
+  border: 1px solid var(--color-accent-border);
+  border-radius: 0.2em;
+  background: var(--color-accent-wash);
+  color: var(--color-primary-dark);
+  font-family: var(--font-body);
+  font-size: 0.74em;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  letter-spacing: 0.055em;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
 .engagement-page {
   background: var(--color-background);
 }
@@ -1345,88 +1361,118 @@ p {
   position: relative;
   display: grid;
   min-height: 100svh;
-  gap: 3.5rem;
-  align-items: center;
+  align-content: center;
   overflow: hidden;
-  padding: 8rem 1rem 5rem;
+  padding: 9rem 1rem 7rem;
   background:
     linear-gradient(
-      115deg,
-      var(--color-accent-wash),
-      transparent 42%,
-      var(--color-primary-wash)
+      135deg,
+      var(--color-accent-wash) 0 24%,
+      transparent 24% 64%,
+      var(--color-primary-wash) 64%
     ),
     var(--color-background);
 }
 
-.how-we-met-hero::before {
+.how-we-met-hero::before,
+.how-we-met-hero::after {
   position: absolute;
-  top: 14%;
-  right: -8rem;
-  width: 18rem;
-  height: 18rem;
-  border: 1px solid var(--color-accent-border);
   border-radius: 50%;
   content: "";
+  pointer-events: none;
 }
 
-.how-we-met-hero__copy,
-.how-we-met-hero__photo {
+.how-we-met-hero::before {
+  top: -8rem;
+  right: -11rem;
+  width: 24rem;
+  height: 24rem;
+  border: 1px solid var(--color-accent-border);
+}
+
+.how-we-met-hero::after {
+  bottom: -9rem;
+  left: -7rem;
+  width: 18rem;
+  height: 18rem;
+  background: var(--color-primary-wash);
+}
+
+.how-we-met-hero__copy {
   position: relative;
   z-index: 1;
-  width: min(100%, 38rem);
+  width: min(100%, 58rem);
   margin-inline: auto;
-}
-
-.how-we-met-hero__copy h1 {
-  max-width: 8ch;
-  margin-bottom: 1.5rem;
-  color: var(--color-primary-dark);
-  font-family: var(--font-display);
-  font-size: clamp(4rem, 16vw, 8rem);
-  font-weight: 500;
-  letter-spacing: -0.05em;
-  line-height: 0.82;
-}
-
-.how-we-met-hero__copy > p:not(.eyebrow) {
-  max-width: 32rem;
-  margin-bottom: 2rem;
-  color: var(--color-text-muted);
-}
-
-.how-we-met-hero__photo {
-  margin-block: 0;
-  padding: clamp(0.55rem, 2vw, 0.85rem);
-  transform: rotate(1.4deg);
-  background: var(--color-surface);
-  box-shadow: var(--shadow-soft);
-}
-
-.how-we-met-hero__photo img {
-  width: 100%;
-  height: auto;
-}
-
-.how-we-met-hero__photo figcaption {
-  padding: 0.75rem 0.35rem 0.1rem;
-  color: var(--color-primary);
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  font-style: italic;
   text-align: center;
 }
 
-.how-we-met-hero__tape {
+.how-we-met-hero__copy h1 {
+  max-width: 9ch;
+  margin: 0 auto 1.75rem;
+  color: var(--color-primary-dark);
+  font-family: var(--font-display);
+  font-size: clamp(4.2rem, 18vw, 9rem);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.8;
+}
+
+.how-we-met-hero__copy > p:not(.eyebrow) {
+  max-width: 42rem;
+  margin: 0 auto 2.2rem;
+  color: var(--color-text-muted);
+  font-size: clamp(1rem, 2.6vw, 1.16rem);
+}
+
+.how-we-met-hero__ornament {
   position: absolute;
-  z-index: 2;
-  top: -1rem;
-  left: 50%;
-  width: 7.5rem;
-  height: 2.1rem;
-  transform: translateX(-50%) rotate(-3deg);
-  background: rgb(231 179 139 / 72%);
-  box-shadow: 0 2px 6px rgb(23 51 77 / 8%);
+  top: 12%;
+  right: max(-3rem, calc((100vw - var(--content-width)) / 2));
+  display: grid;
+  width: clamp(9rem, 28vw, 18rem);
+  aspect-ratio: 1;
+  place-items: center;
+  transform: rotate(7deg);
+  border: 1px solid var(--color-accent-border);
+  border-radius: 50%;
+  color: rgb(36 74 107 / 10%);
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 13vw, 9rem);
+  line-height: 1;
+}
+
+.how-we-met-hero__ornament::before {
+  position: absolute;
+  inset: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: inherit;
+  content: "";
+}
+
+.how-we-met-hero__folio {
+  position: absolute;
+  z-index: 1;
+  right: 1rem;
+  bottom: 1.5rem;
+  left: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.how-we-met-hero__folio span {
+  color: var(--color-accent);
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 650;
+  letter-spacing: normal;
 }
 
 .how-we-met-story {
@@ -1435,7 +1481,7 @@ p {
 }
 
 .how-we-met-story__introduction {
-  width: min(100%, 43rem);
+  width: min(100%, 48rem);
   margin: 0 auto clamp(5rem, 12vw, 9rem);
   text-align: center;
 }
@@ -1450,45 +1496,57 @@ p {
   line-height: 0.9;
 }
 
-.how-we-met-story__introduction > p:last-child {
-  margin-bottom: 0;
-  color: var(--color-text-muted);
-}
-
-.how-we-met-chapters {
+.how-we-met-entries {
   display: grid;
-  gap: clamp(7rem, 16vw, 12rem);
+  gap: clamp(7rem, 17vw, 13rem);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.how-we-met-chapter {
+.how-we-met-entry {
+  position: relative;
+  display: grid;
+  gap: clamp(2rem, 7vw, 4rem);
   min-width: 0;
 }
 
-.how-we-met-chapter__copy {
-  position: relative;
-  z-index: 2;
-  width: min(100% - 1rem, 36rem);
-  margin: 0 auto clamp(2.5rem, 7vw, 4.5rem);
-  padding: clamp(1.7rem, 5vw, 3rem);
-  border: 1px solid var(--color-accent-border);
-  background: var(--color-surface);
-  box-shadow: 0 18px 48px rgb(23 51 77 / 9%);
+.how-we-met-entry::before {
+  position: absolute;
+  z-index: 0;
+  top: -2rem;
+  left: 50%;
+  color: rgb(36 74 107 / 6%);
+  content: "JM";
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 20vw, 12rem);
+  line-height: 1;
+  pointer-events: none;
 }
 
-.how-we-met-chapter__copy::before {
+.how-we-met-entry__copy {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 42rem);
+  margin-inline: auto;
+  padding: clamp(1.5rem, 5vw, 2.8rem) clamp(1rem, 4vw, 2.5rem);
+  border-top: 1px solid var(--color-accent-border);
+  border-bottom: 1px solid var(--color-border);
+  background: rgb(255 252 247 / 72%);
+  backdrop-filter: blur(4px);
+}
+
+.how-we-met-entry__copy::before {
   position: absolute;
-  top: 0.8rem;
-  bottom: 0.8rem;
-  left: 0.8rem;
-  width: 1px;
-  background: var(--color-accent-border);
+  top: -0.32rem;
+  left: clamp(1rem, 4vw, 2.5rem);
+  width: 3.2rem;
+  height: 0.6rem;
+  background: var(--color-accent-soft);
   content: "";
 }
 
-.how-we-met-chapter__number {
+.how-we-met-entry__number {
   margin-bottom: 0.9rem;
   color: var(--color-accent);
   font-size: 0.68rem;
@@ -1497,60 +1555,74 @@ p {
   text-transform: uppercase;
 }
 
-.how-we-met-chapter__copy h3 {
+.how-we-met-entry__copy h4 {
   margin-bottom: 1.1rem;
   color: var(--color-primary);
   font-family: var(--font-display);
-  font-size: clamp(2.2rem, 7vw, 3.7rem);
+  font-size: clamp(2rem, 6vw, 3.2rem);
   font-weight: 520;
   letter-spacing: -0.025em;
   line-height: 0.95;
 }
 
-.how-we-met-chapter__text {
-  margin-bottom: 1rem;
-  font-size: clamp(1rem, 2.5vw, 1.1rem);
+.how-we-met-entry__copy > p:last-child {
+  margin-bottom: 0;
 }
 
-.how-we-met-chapter__pending {
-  display: inline-block;
-  padding: 0.35rem 0.6rem;
-  border: 1px solid var(--color-accent-border);
-  color: var(--color-accent);
-  font-size: 0.62rem;
-  font-weight: 750;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+.how-we-met-entry__copy > p:not(.how-we-met-entry__number) {
+  font-family: var(--font-display);
+  font-size: clamp(1.18rem, 3vw, 1.4rem);
+  line-height: 1.62;
 }
 
-.how-we-met-collage {
+.how-we-met-entry__caption {
+  margin-top: 1.2rem;
+  color: var(--color-text-muted);
+  font-family: var(--font-body) !important;
+  font-size: 0.82rem !important;
+  font-style: italic;
+}
+
+.how-we-met-entry__photos {
+  position: relative;
+  z-index: 1;
   display: grid;
-  gap: 1.5rem;
+  gap: clamp(1rem, 4vw, 1.6rem);
+  min-width: 0;
 }
 
 .how-we-met-photo {
-  width: min(100%, 38rem);
+  width: min(100%, 42rem);
   margin: 0 auto;
-  padding: 0.4rem;
+  padding: clamp(0.35rem, 1vw, 0.55rem);
   background: var(--color-surface);
   box-shadow: 0 18px 42px rgb(23 51 77 / 12%);
 }
 
-.how-we-met-photo:nth-child(3n + 1) {
-  transform: rotate(-0.6deg);
+.how-we-met-photo:nth-child(4n + 1) {
+  transform: rotate(-0.45deg);
 }
 
-.how-we-met-photo:nth-child(3n + 2) {
-  transform: rotate(0.7deg);
+.how-we-met-photo:nth-child(4n + 2) {
+  transform: rotate(0.55deg);
 }
 
-.how-we-met-photo:nth-child(3n) {
-  transform: rotate(-0.25deg);
+.how-we-met-photo:nth-child(4n + 3) {
+  transform: rotate(-0.2deg);
+}
+
+.how-we-met-photo:nth-child(4n) {
+  transform: rotate(0.3deg);
 }
 
 .how-we-met-photo img {
   width: 100%;
   height: auto;
+}
+
+.how-we-met-entry--pair-below .how-we-met-entry__copy {
+  width: min(100%, 48rem);
+  text-align: center;
 }
 
 .how-we-met-footer {
@@ -1758,36 +1830,32 @@ p {
     padding-inline: 2rem;
   }
 
-  .how-we-met-chapter__copy {
-    margin-left: 4%;
+  .how-we-met-hero__folio {
+    right: 2rem;
+    left: 2rem;
   }
 
-  .how-we-met-chapter--reverse .how-we-met-chapter__copy {
-    margin-right: 4%;
-    margin-left: auto;
-  }
-
-  .how-we-met-collage {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: clamp(1rem, 2.5vw, 2rem);
+  .how-we-met-entry__photos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: start;
   }
 
-  .how-we-met-photo {
-    width: 100%;
-    grid-column: span 6;
+  .how-we-met-entry--single .how-we-met-entry__photos {
+    grid-template-columns: 1fr;
   }
 
-  .how-we-met-photo--portrait {
-    grid-column: span 5;
+  .how-we-met-entry--stack-left .how-we-met-entry__photos,
+  .how-we-met-entry--split-stacks .how-we-met-entry__photos {
+    gap: clamp(1rem, 2.5vw, 1.5rem);
   }
 
-  .how-we-met-photo--landscape {
-    grid-column: span 7;
+  .how-we-met-entry--stack-left .how-we-met-photo:nth-child(3),
+  .how-we-met-entry--split-stacks .how-we-met-photo:nth-child(3n) {
+    margin-top: clamp(1rem, 4vw, 2.5rem);
   }
 
-  .how-we-met-photo:nth-child(3n) {
-    margin-top: clamp(1rem, 4vw, 3rem);
+  .how-we-met-entry--pair-below .how-we-met-entry__photos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .gallery-masonry {
@@ -1865,18 +1933,162 @@ p {
   }
 
   .how-we-met-hero {
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-    gap: clamp(3rem, 7vw, 7rem);
     padding-inline: max(3rem, calc((100vw - var(--content-width)) / 2));
   }
 
-  .how-we-met-hero__copy,
-  .how-we-met-hero__photo {
-    width: 100%;
+  .how-we-met-hero__copy {
+    margin-left: 0;
+    text-align: left;
   }
 
   .how-we-met-hero__copy h1 {
-    font-size: clamp(5rem, 7.8vw, 7.5rem);
+    margin-left: 0;
+    font-size: clamp(6rem, 9vw, 9rem);
+  }
+
+  .how-we-met-hero__copy > p:not(.eyebrow) {
+    margin-left: 0;
+  }
+
+  .how-we-met-hero__folio {
+    right: max(3rem, calc((100vw - var(--content-width)) / 2));
+    left: max(3rem, calc((100vw - var(--content-width)) / 2));
+    justify-content: flex-start;
+  }
+
+  .how-we-met-entry--single {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: clamp(2rem, 4vw, 4.5rem);
+    align-items: center;
+  }
+
+  .how-we-met-entry--single .how-we-met-entry__copy {
+    grid-column: 1 / span 5;
+    grid-row: 1;
+  }
+
+  .how-we-met-entry--single .how-we-met-entry__photos {
+    grid-column: 6 / -1;
+    grid-row: 1;
+  }
+
+  .how-we-met-entries
+    > li:nth-child(4n + 2)
+    .how-we-met-entry--single
+    .how-we-met-entry__copy {
+    grid-column: 8 / -1;
+    align-self: end;
+    margin-bottom: 2.5rem;
+  }
+
+  .how-we-met-entries
+    > li:nth-child(4n + 2)
+    .how-we-met-entry--single
+    .how-we-met-entry__photos {
+    grid-column: 1 / span 8;
+  }
+
+  .how-we-met-entries
+    > li:nth-child(4n + 3)
+    .how-we-met-entry--single
+    .how-we-met-entry__copy {
+    grid-column: 2 / span 5;
+    align-self: start;
+    margin-top: 2rem;
+  }
+
+  .how-we-met-entries
+    > li:nth-child(4n + 3)
+    .how-we-met-entry--single
+    .how-we-met-entry__photos {
+    grid-column: 7 / -1;
+  }
+
+  .how-we-met-entry--stack-left {
+    grid-template-columns: minmax(15rem, 0.68fr) minmax(0, 1.32fr);
+    gap: clamp(3rem, 6vw, 6.5rem);
+    align-items: center;
+  }
+
+  .how-we-met-entry--stack-left .how-we-met-entry__copy {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .how-we-met-entry--stack-left .how-we-met-entry__photos {
+    grid-column: 1;
+    grid-row: 1;
+    grid-template-columns: 1fr;
+  }
+
+  .how-we-met-entry--stack-left .how-we-met-photo {
+    width: min(100%, 19rem);
+  }
+
+  .how-we-met-entry--stack-left .how-we-met-photo:nth-child(odd) {
+    margin-right: 0;
+  }
+
+  .how-we-met-entry--stack-left .how-we-met-photo:nth-child(even) {
+    margin-left: 0;
+  }
+
+  .how-we-met-entry--pair-below {
+    gap: clamp(2.5rem, 5vw, 4.5rem);
+  }
+
+  .how-we-met-entry--pair-below .how-we-met-entry__photos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.5rem, 3vw, 3rem);
+  }
+
+  .how-we-met-entry--pair-below .how-we-met-photo {
+    width: 100%;
+  }
+
+  .how-we-met-entry--split-stacks {
+    grid-template-columns:
+      minmax(11rem, 0.72fr) minmax(22rem, 1.2fr)
+      minmax(11rem, 0.72fr);
+    gap: clamp(1.25rem, 2.5vw, 2.5rem);
+    align-items: center;
+  }
+
+  .how-we-met-entry--split-stacks .how-we-met-entry__copy {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+  }
+
+  .how-we-met-entry--split-stacks .how-we-met-entry__photos {
+    display: contents;
+  }
+
+  .how-we-met-entry--split-stacks .how-we-met-photo {
+    width: 100%;
+    align-self: center;
+  }
+
+  .how-we-met-entry--split-stacks .how-we-met-photo:nth-child(-n + 3) {
+    grid-column: 1;
+  }
+
+  .how-we-met-entry--split-stacks .how-we-met-photo:nth-child(n + 4) {
+    grid-column: 3;
+  }
+
+  .how-we-met-entry--split-stacks .how-we-met-photo:nth-child(1),
+  .how-we-met-entry--split-stacks .how-we-met-photo:nth-child(4) {
+    grid-row: 1;
+  }
+
+  .how-we-met-entry--split-stacks .how-we-met-photo:nth-child(2),
+  .how-we-met-entry--split-stacks .how-we-met-photo:nth-child(5) {
+    grid-row: 2;
+  }
+
+  .how-we-met-entry--split-stacks .how-we-met-photo:nth-child(3),
+  .how-we-met-entry--split-stacks .how-we-met-photo:nth-child(6) {
+    grid-row: 3;
   }
 }
 

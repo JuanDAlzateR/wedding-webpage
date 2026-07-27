@@ -46,11 +46,11 @@ const homeImageModules = {
 
 const howWeMetImageModules = {
   ...import.meta.glob<{ default: ImageMetadata }>(
-    "../../photos/how-we-met/*.{jpg,JPG,png,PNG}",
+    "../../photos/history/*.{jpg,JPG,png,PNG}",
     { eager: true },
   ),
   ...import.meta.glob<{ default: ImageMetadata }>(
-    "../../photos/how-we-met/web-compatible/*.jpg",
+    "../../photos/history/web-compatible/*.jpg",
     { eager: true },
   ),
 };
@@ -68,12 +68,11 @@ function loadHomeImage(relativePath: string): ImageMetadata {
 }
 
 function loadHowWeMetImage(relativePath: string): ImageMetadata {
-  const module =
-    howWeMetImageModules[`../../photos/how-we-met/${relativePath}`];
+  const module = howWeMetImageModules[`../../photos/history/${relativePath}`];
 
   if (!module) {
     throw new Error(
-      `No existe la fotografía de nuestra historia "photos/how-we-met/${relativePath}".`,
+      `No existe la fotografía de nuestra historia "photos/history/${relativePath}".`,
     );
   }
 
@@ -356,354 +355,105 @@ export const homeGalleryPhotos = [
 export type HomeGalleryPhotoId = (typeof homeGalleryPhotos)[number]["id"];
 
 /**
- * Secuencia provisional de Cómo nos conocimos.
- * Los HEIC conservan su original y usan un derivado JPG en `web-compatible/`.
+ * Biblioteca fotográfica de Cómo nos conocimos.
+ * La secuencia narrativa se define en `weddingContent.howWeMet.storyEntries`.
+ * Los HEIC conservan su original y usan una copia JPG en `web-compatible/`.
  */
 export const howWeMetPhotos = [
   {
-    id: "IMG_9996",
-    src: loadHowWeMetImage("IMG_9996.PNG"),
-    alt: "Captura de pantalla de una coincidencia en una aplicación de citas.",
+    id: "history-01",
+    src: loadHowWeMetImage("history-01.jpg"),
+    alt: "Afiche ilustrado de una charla sobre la confianza en el plan de Dios.",
   },
   {
-    id: "5588f2a1-6469-411b-94a6-70688f3f0728",
-    src: loadHowWeMetImage("5588f2a1-6469-411b-94a6-70688f3f0728.jpg"),
-    alt: "Afiche ilustrado de una charla sobre la confianza en Dios.",
+    id: "history-02",
+    src: loadHowWeMetImage("history-02.jpg"),
+    alt: "La pareja se toma una selfie junto a una cruz de madera al aire libre.",
   },
   {
-    id: "IMG_9332",
-    src: loadHowWeMetImage("web-compatible/IMG_9332.jpg"),
-    alt: "Una mano sostiene un celular con una funda de figuras religiosas.",
+    id: "history-03",
+    src: loadHowWeMetImage("web-compatible/history-03.jpg"),
+    alt: "La pareja sonríe junto a varias figuras religiosas.",
   },
   {
-    id: "IMG_9371",
-    src: loadHowWeMetImage("IMG_9371.JPG"),
-    alt: "La pareja se toma una selfie junto a una cruz al aire libre.",
+    id: "history-04",
+    src: loadHowWeMetImage("web-compatible/history-04.jpg"),
+    alt: "Ramo de flores naranjas y azules visto de cerca.",
   },
   {
-    id: "38c20537-3068-4835-b0d8-1c1e247411f3",
-    src: loadHowWeMetImage("38c20537-3068-4835-b0d8-1c1e247411f3.jpg"),
-    alt: "Cuatro personas posan sobre el césped junto a una cruz de madera bajo un cielo nublado.",
+    id: "history-05",
+    src: loadHowWeMetImage("history-05.jpg"),
+    alt: "Una mano sostiene un ramo de rosas rosadas junto a un crucifijo.",
   },
   {
-    id: "2bb7d1e6-1461-46f2-ba79-bd53f6b50d4b",
-    src: loadHowWeMetImage("2bb7d1e6-1461-46f2-ba79-bd53f6b50d4b.jpg"),
-    alt: "La pareja se toma una selfie afectuosa dentro de una iglesia.",
+    id: "history-06",
+    src: loadHowWeMetImage("web-compatible/history-06.jpg"),
+    alt: "La pareja comparte un beso entre flores y regalos.",
   },
   {
-    id: "5d10a1e1-f1ca-4c7c-9954-99742fd30bb8",
-    src: loadHowWeMetImage("5d10a1e1-f1ca-4c7c-9954-99742fd30bb8.jpg"),
-    alt: "Las manos de la pareja unidas junto a un rosario y un estuche.",
+    id: "history-07",
+    src: loadHowWeMetImage("history-07.jpg"),
+    alt: "Un florero con lirios naranjas y varios objetos sobre una mesa.",
   },
   {
-    id: "a7c192de-c45e-4ffe-be17-3ea6e2a57f40",
-    src: loadHowWeMetImage("a7c192de-c45e-4ffe-be17-3ea6e2a57f40.jpg"),
-    alt: "La pareja sonríe vestida de blanco frente a una iglesia.",
+    id: "history-08",
+    src: loadHowWeMetImage("history-08.jpg"),
+    alt: "La pareja sonríe sentada junta en un espacio interior.",
   },
   {
-    id: "IMG_0029",
-    src: loadHowWeMetImage("web-compatible/IMG_0029.jpg"),
-    alt: "Atardecer naranja visto desde la ventana de un avión.",
-  },
-  {
-    id: "IMG_20240331_152546",
-    src: loadHowWeMetImage("IMG_20240331_152546.jpg"),
-    alt: "La pareja sonríe junta durante una visita en casa.",
-  },
-  {
-    id: "IMG_20240401_174155",
-    src: loadHowWeMetImage("IMG_20240401_174155.jpg"),
-    alt: "La pareja se toma una selfie al aire libre con chaquetas.",
-  },
-  {
-    id: "IMG_20240512_072059",
-    src: loadHowWeMetImage("IMG_20240512_072059.jpg"),
-    alt: "La pareja sonríe sentada dentro de un automóvil.",
-  },
-  {
-    id: "IMG_20240512_102640",
-    src: loadHowWeMetImage("IMG_20240512_102640.jpg"),
-    alt: "Nota escrita a mano con un mensaje de cariño para Juan David.",
-  },
-  {
-    id: "IMG_20240512_131842",
-    src: loadHowWeMetImage("IMG_20240512_131842.jpg"),
-    alt: "Ramo de flores naranjas y azules sobre una mesa.",
-  },
-  {
-    id: "IMG_1396",
-    src: loadHowWeMetImage("web-compatible/IMG_1396.jpg"),
-    alt: "Detalle de un ramo de flores naranjas y azules.",
-  },
-  {
-    id: "49f3432f-d0e1-4960-966d-18bd72d04577",
-    src: loadHowWeMetImage("49f3432f-d0e1-4960-966d-18bd72d04577.jpg"),
-    alt: "Las manos de la pareja sostienen un rosario frente a un altar.",
-  },
-  {
-    id: "IMG_20240513_135421",
-    src: loadHowWeMetImage("IMG_20240513_135421.jpg"),
-    alt: "La pareja se mira de pie en un parque arbolado.",
-  },
-  {
-    id: "IMG_20240513_140005",
-    src: loadHowWeMetImage("IMG_20240513_140005.jpg"),
-    alt: "La pareja comparte un beso en un parque.",
-  },
-  {
-    id: "IMG_20240513_140552",
-    src: loadHowWeMetImage("IMG_20240513_140552.jpg"),
+    id: "history-09",
+    src: loadHowWeMetImage("history-09.jpg"),
     alt: "La pareja conversa sentada sobre el césped.",
   },
   {
-    id: "d9637739-6758-4784-9aad-04845ed16c91",
-    src: loadHowWeMetImage("d9637739-6758-4784-9aad-04845ed16c91.jpg"),
-    alt: "La pareja se mira mientras descansa sobre el césped.",
+    id: "history-10",
+    src: loadHowWeMetImage("web-compatible/history-10.jpg"),
+    alt: "Atardecer naranja visto desde la ventana de un avión.",
   },
   {
-    id: "IMG_1421",
-    src: loadHowWeMetImage("IMG_1421.JPG"),
-    alt: "La pareja se acerca para besarse en un parque.",
+    id: "history-11",
+    src: loadHowWeMetImage("history-11.jpg"),
+    alt: "La pareja sonríe frente a un avión en una pista.",
   },
   {
-    id: "9363abd4-99b9-4e0d-a271-5db9c23aa80d",
-    src: loadHowWeMetImage("9363abd4-99b9-4e0d-a271-5db9c23aa80d.jpg"),
-    alt: "La pareja comparte un beso junto a una ventana.",
+    id: "history-12",
+    src: loadHowWeMetImage("history-12.jpg"),
+    alt: "La pareja comparte un picnic con flores y un mantel a cuadros.",
   },
   {
-    id: "IMG_1437",
-    src: loadHowWeMetImage("IMG_1437.JPG"),
-    alt: "Melisa sonríe mientras sostiene un pequeño objeto tejido.",
+    id: "history-13",
+    src: loadHowWeMetImage("history-13.jpg"),
+    alt: "La pareja posa junto a un cartel en un espacio interior.",
   },
   {
-    id: "IMG_1487",
-    src: loadHowWeMetImage("IMG_1487.PNG"),
-    alt: "Captura de pantalla de una videollamada de la pareja.",
+    id: "history-14",
+    src: loadHowWeMetImage("history-14.jpg"),
+    alt: "La pareja posa dentro de una habitación de atención médica.",
   },
   {
-    id: "IMG_1502",
-    src: loadHowWeMetImage("IMG_1502.PNG"),
-    alt: "Captura de pantalla de mensajes de cariño entre la pareja.",
+    id: "history-15",
+    src: loadHowWeMetImage("web-compatible/history-15.jpg"),
+    alt: "La pareja se toma una selfie junto a un juego de mesa.",
   },
   {
-    id: "IMG_1503",
-    src: loadHowWeMetImage("IMG_1503.PNG"),
-    alt: "Captura de pantalla de una conversación afectuosa de la pareja.",
+    id: "history-16",
+    src: loadHowWeMetImage("history-16.jpg"),
+    alt: "La pareja se abraza bajo una estructura iluminada en un parque.",
   },
   {
-    id: "IMG_20240603_084353",
-    src: loadHowWeMetImage("IMG_20240603_084353.jpg"),
-    alt: "La pareja se abraza durante una reunión en una iglesia.",
+    id: "history-17",
+    src: loadHowWeMetImage("web-compatible/history-17.jpg"),
+    alt: "La pareja conversa sentada bajo una cubierta de colores al aire libre.",
   },
   {
-    id: "IMG_3104_Original",
-    src: loadHowWeMetImage("IMG_3104_Original.JPG"),
-    alt: "La pareja posa en un mirador rodeado de montañas.",
-  },
-  {
-    id: "IMG_3201",
-    src: loadHowWeMetImage("web-compatible/IMG_3201.jpg"),
-    alt: "La pareja sostiene una imagen religiosa enmarcada.",
-  },
-  {
-    id: "IMG_3286",
-    src: loadHowWeMetImage("IMG_3286.JPG"),
-    alt: "La pareja comparte un beso mientras está sentada a una mesa.",
-  },
-  {
-    id: "IMG_3327",
-    src: loadHowWeMetImage("web-compatible/IMG_3327.jpg"),
-    alt: "La pareja se toma una selfie junto a figuras religiosas.",
-  },
-  {
-    id: "IMG_3556",
-    src: loadHowWeMetImage("web-compatible/IMG_3556.jpg"),
-    alt: "La pareja conversa sentada durante una actividad al aire libre.",
-  },
-  {
-    id: "IMG_3673",
-    src: loadHowWeMetImage("web-compatible/IMG_3673.jpg"),
-    alt: "La pareja posa de forma divertida durante una comida.",
-  },
-  {
-    id: "IMG_3682",
-    src: loadHowWeMetImage("web-compatible/IMG_3682.jpg"),
-    alt: "Juan David besa a Melisa mientras ella sostiene un ramo.",
-  },
-  {
-    id: "IMG_20240822_193157",
-    src: loadHowWeMetImage("IMG_20240822_193157.jpg"),
-    alt: "La pareja sonríe durante un encuentro con música en vivo.",
-  },
-  {
-    id: "bdf16d49-276f-45ec-aea9-417c2af45b21",
-    src: loadHowWeMetImage("bdf16d49-276f-45ec-aea9-417c2af45b21.jpg"),
-    alt: "La pareja se toma una selfie frente a una pantalla de concierto.",
-  },
-  {
-    id: "7577fcc5-cabe-4dca-8c0d-cdd730712317",
-    src: loadHowWeMetImage("7577fcc5-cabe-4dca-8c0d-cdd730712317.jpg"),
-    alt: "La pareja sonríe durante un evento nocturno al aire libre.",
-  },
-  {
-    id: "d945c198-686b-4a9e-bc10-ccbd1147c8dd",
-    src: loadHowWeMetImage("d945c198-686b-4a9e-bc10-ccbd1147c8dd.jpg"),
-    alt: "La pareja canta junta sobre un escenario.",
-  },
-  {
-    id: "IMG_20240908_155243",
-    src: loadHowWeMetImage("IMG_20240908_155243.jpg"),
-    alt: "La pareja sonríe durante un recorrido al aire libre.",
-  },
-  {
-    id: "IMG_20240916_025857",
-    src: loadHowWeMetImage("IMG_20240916_025857.jpg"),
-    alt: "La pareja posa durante una visita a un centro médico.",
-  },
-  {
-    id: "IMG_20240928_003343",
-    src: loadHowWeMetImage("IMG_20240928_003343.jpg"),
-    alt: "La pareja comparte un beso junto a una decoración de cumpleaños.",
-  },
-  {
-    id: "IMG_4198",
-    src: loadHowWeMetImage("web-compatible/IMG_4198.jpg"),
-    alt: "La pareja se toma una selfie en un paisaje montañoso.",
-  },
-  {
-    id: "IMG_20241006_214437",
-    src: loadHowWeMetImage("IMG_20241006_214437.jpg"),
-    alt: "La pareja comparte un beso mientras lee junta.",
-  },
-  {
-    id: "IMG_20241010_141506",
-    src: loadHowWeMetImage("IMG_20241010_141506.jpg"),
-    alt: "Marco de madera con varias fotografías de la pareja.",
-  },
-  {
-    id: "IMG_20241114_192336",
-    src: loadHowWeMetImage("IMG_20241114_192336.jpg"),
-    alt: "La pareja sonríe junto a un postre con velas.",
-  },
-  {
-    id: "IMG_20241117_152645",
-    src: loadHowWeMetImage("IMG_20241117_152645.jpg"),
-    alt: "La pareja comparte una celebración con flores y un mantel a cuadros.",
-  },
-  {
-    id: "IMG_20241206_173739",
-    src: loadHowWeMetImage("IMG_20241206_173739.jpg"),
-    alt: "La pareja se toma una selfie frente a luces navideñas.",
-  },
-  {
-    id: "IMG_20241206_195832",
-    src: loadHowWeMetImage("IMG_20241206_195832.jpg"),
-    alt: "La pareja enciende una vela durante una celebración nocturna.",
-  },
-  {
-    id: "IMG_4780",
-    src: loadHowWeMetImage("IMG_4780.JPG"),
-    alt: "La pareja sonríe durante una caminata en la montaña.",
-  },
-  {
-    id: "IMG_5636",
-    src: loadHowWeMetImage("IMG_5636.JPG"),
-    alt: "La pareja comparte un beso en una salida nocturna.",
-  },
-  {
-    id: "IMG_20250301_125321",
-    src: loadHowWeMetImage("IMG_20250301_125321.jpg"),
-    alt: "La pareja posa junto a un cartel durante una visita.",
-  },
-  {
-    id: "IMG_6218",
-    src: loadHowWeMetImage("web-compatible/IMG_6218.jpg"),
-    alt: "La pareja sonríe junto a un juego de mesa.",
-  },
-  {
-    id: "IMG_6220",
-    src: loadHowWeMetImage("web-compatible/IMG_6220.jpg"),
-    alt: "Juan David besa a Melisa junto a un juego de mesa.",
-  },
-  {
-    id: "IMG_6259",
-    src: loadHowWeMetImage("web-compatible/IMG_6259.jpg"),
-    alt: "Un computador muestra una videollamada junto a figuras religiosas.",
-  },
-  {
-    id: "IMG_6722",
-    src: loadHowWeMetImage("web-compatible/IMG_6722.jpg"),
-    alt: "Tarjeta de cumpleaños y recuerdos ilustrados sobre una mesa.",
-  },
-  {
-    id: "IMG_20250814_171807",
-    src: loadHowWeMetImage("IMG_20250814_171807.jpg"),
-    alt: "La pareja se toma una selfie frente a un avión.",
-  },
-  {
-    id: "IMG_20250913_112648",
-    src: loadHowWeMetImage("IMG_20250913_112648.jpg"),
-    alt: "La pareja sonríe en un mirador de montaña.",
-  },
-  {
-    id: "IMG_20251004_193605",
-    src: loadHowWeMetImage("IMG_20251004_193605.jpg"),
-    alt: "La pareja se toma una selfie con gorros festivos.",
-  },
-  {
-    id: "IMG_1130",
-    src: loadHowWeMetImage("IMG_1130.JPG"),
-    alt: "La pareja se toma una selfie mientras sostiene varias notas.",
-  },
-  {
-    id: "IMG_20251013_124142",
-    src: loadHowWeMetImage("IMG_20251013_124142.jpg"),
-    alt: "La pareja se abraza durante una caminata entre montañas.",
-  },
-  {
-    id: "IMG_1710",
-    src: loadHowWeMetImage("web-compatible/IMG_1710.jpg"),
-    alt: "La pareja sonríe junto a una figura decorativa.",
-  },
-  {
-    id: "IMG_20251225_000451",
-    src: loadHowWeMetImage("IMG_20251225_000451.jpg"),
-    alt: "La pareja sonríe con gorros navideños junto a una vela.",
-  },
-  {
-    id: "IMG_20251226_212606",
-    src: loadHowWeMetImage("IMG_20251226_212606.jpg"),
-    alt: "La pareja posa frente a luces navideñas.",
-  },
-  {
-    id: "IMG_20260105_224015",
-    src: loadHowWeMetImage("IMG_20260105_224015.jpg"),
-    alt: "La pareja se abraza bajo una estructura iluminada.",
-  },
-  {
-    id: "IMG_2223",
-    src: loadHowWeMetImage("web-compatible/IMG_2223.jpg"),
-    alt: "La pareja comparte bebidas de colores en un restaurante.",
-  },
-  {
-    id: "IMG_20260503_112317",
-    src: loadHowWeMetImage("IMG_20260503_112317.jpg"),
-    alt: "Juan David escribe una nota en un espacio de oración.",
-  },
-  {
-    id: "IMG_20260606_213322",
-    src: loadHowWeMetImage("IMG_20260606_213322.jpg"),
-    alt: "La pareja sonríe durante una reunión en casa.",
-  },
-  {
-    id: "IMG_20260615_214420",
-    src: loadHowWeMetImage("IMG_20260615_214420.jpg"),
-    alt: "La pareja hace gestos divertidos durante una salida nocturna.",
-  },
-  {
-    id: "IMG_20260629_163753",
-    src: loadHowWeMetImage("IMG_20260629_163753.jpg"),
+    id: "history-18",
+    src: loadHowWeMetImage("history-18.jpg"),
     alt: "La pareja sonríe junta durante una visita.",
+  },
+  {
+    id: "history-19",
+    src: loadHowWeMetImage("history-19.jpg"),
+    alt: "La pareja abraza a un hombre de cabello canoso en un espacio interior.",
   },
 ] as const satisfies readonly GalleryPhoto[];
 
@@ -719,4 +469,4 @@ export function getHowWeMetPhoto(id: HowWeMetPhotoId): GalleryPhoto {
   return photo;
 }
 
-export const howWeMetFeaturedPhoto = getHowWeMetPhoto("IMG_9371");
+export const howWeMetFeaturedPhoto = getHowWeMetPhoto("history-02");
