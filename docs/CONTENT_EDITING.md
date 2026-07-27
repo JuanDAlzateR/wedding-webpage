@@ -30,7 +30,7 @@ Abre `src/content/wedding.ts`. Este archivo contiene nombres, datos compartidos 
 - `stories`: textos del acceso compartido a los dos capítulos.
 - `howWeMet`: resumen, metadatos y momentos tipados de Cómo nos conocimos.
 - `engagement`: resumen, metadatos, relato y textos de la página de compromiso.
-- `gifts`: encabezado y mensaje compartido de lluvia de sobres.
+- `gifts`: encabezado, mensaje y llave compartidos para regalos.
 - `sections`: disponibilidad global de cada sección. La configuración de cada variante puede ocultarla adicionalmente.
 
 ## Convención editorial
@@ -75,7 +75,7 @@ Ambos bloques son exclusivos de la invitación completa. Si cambias alguno de su
 
 ## Lluvia de sobres
 
-El encabezado y el mensaje se editan únicamente en `weddingContent.gifts`. Esta sección aparece en las dos invitaciones y no debe contener cuentas, enlaces de pago, códigos QR financieros ni información exclusiva de la celebración.
+El encabezado y el mensaje se editan únicamente en `weddingContent.gifts`. `body` conserva la redacción y `key` contiene la llave numérica que se destaca visualmente en la tarjeta. Esta sección aparece en las dos invitaciones y no debe contener entidades financieras, tipos de cuenta, enlaces de pago, códigos QR ni información exclusiva de la celebración.
 
 Para ocultarla temporalmente, cambia `weddingContent.sections.gifts` a `false`. Si se modifica su visibilidad por variante, debe conservarse habilitada o deshabilitada de la misma forma en las dos invitaciones.
 

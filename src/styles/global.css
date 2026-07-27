@@ -1064,6 +1064,22 @@ p {
   line-height: 1.35;
 }
 
+.gift-card__key {
+  display: inline-block;
+  padding: 0.08em 0.36em;
+  border: 1px solid var(--color-accent-border);
+  border-radius: 0.2em;
+  background: var(--color-accent-wash);
+  color: var(--color-primary-dark);
+  font-family: var(--font-body);
+  font-size: 0.74em;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  letter-spacing: 0.055em;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
 .engagement-page {
   background: var(--color-background);
 }

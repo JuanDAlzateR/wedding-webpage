@@ -689,7 +689,8 @@ export const weddingContent = {
   gifts: {
     eyebrow: "Con cariño",
     title: "Un detalle para nosotros",
-    body: "Su presencia y compañía son nuestro mejor regalo. Si desean tener un detalle con nosotros, recibiremos con mucho cariño lluvia de sobres.",
+    body: "El mayor regalo para nosotros será contar con sus oraciones, en serio las necesitamos; otro excelente regalo es su presencia en este día tan especial. Si, además, desean tener un detalle con nosotros, recibiremos con mucho cariño su lluvia de sobres o, si les resulta más cómodo, podrán enviar su obsequio a nuestra llave",
+    key: "1032485387",
   },
   additionalInfo: {
     intro:
