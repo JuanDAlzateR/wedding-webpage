@@ -182,24 +182,24 @@ Los originales se separan por experiencia dentro de `photos/`. La página genera
 ### Reemplazar el hero
 
 1. Copia la nueva fotografía dentro de `photos/home/` en JPG, PNG, WebP o AVIF.
-2. En `src/content/photos.ts`, cambia la importación asignada a `heroImage`.
+2. En `src/content/photos.ts`, cambia la importación asignada a `featuredHeroImage`.
 3. Actualiza el `alt` y, si hace falta, `position` dentro de `featuredPhotos.hero`.
 
 ### Galería de la invitación
 
-La selección fuente vive en `photos/home/`. `homeGalleryPhotos`, dentro de `src/content/photos.ts`, es el único manifiesto activo y su orden es el orden editorial. Las imágenes se muestran con su proporción natural; por eso cada entrada necesita únicamente `id`, `src` y `alt`.
+La selección fuente vive exclusivamente en `photos/gallery/`. `homeGalleryPhotos`, dentro de `src/content/photos.ts`, es el único manifiesto activo y su orden es el orden editorial, no una cronología confirmada. Las imágenes se muestran con su proporción natural; por eso cada entrada necesita únicamente `id`, `src` y `alt`.
 
-`IMG_1017.HEIC` e `IMG_6218.HEIC` conservan su original y usan un JPG homónimo en `photos/home/web-compatible/`; nunca registres el original y su derivado como dos momentos.
+`photos/home/` conserva las imágenes destacadas y originales anteriores, pero no alimenta esta galería. No copies fotografías de `history` ni `engagement` dentro del manifiesto.
 
 Para añadir una fotografía:
 
-1. Copia el original en el nivel superior de `photos/home/`.
-2. Si es HEIC, crea su JPG homónimo en `photos/home/web-compatible/`.
-3. Agrega una entrada a `homeGalleryPhotos` en la posición deseada con ID estable, `loadHomeImage(...)` y alt text objetivo.
+1. Copia el original en el nivel superior de `photos/gallery/` en JPG, PNG, WebP o AVIF.
+2. Si el original es HEIC, consérvalo fuera de la selección publicada y crea primero una copia web compatible.
+3. Agrega una entrada a `homeGalleryPhotos` en la posición deseada con ID estable, `loadGalleryImage(...)` y alt text objetivo.
 4. Si una cita debe cambiar de lugar, actualiza su `afterPhotoId` en `weddingContent.biblicalQuotes.galleryInterludes`.
 5. Ejecuta `pnpm validate`; la verificación compara el manifiesto renderizado con todos los archivos fotográficos del nivel superior.
 
-Para reordenar, mueve la entrada completa dentro de `homeGalleryPhotos`. Para retirar una foto, elimina su entrada y saca el original del nivel superior de `photos/home/`; conserva una copia fuera de la selección activa si todavía puede ser útil. Revisa siempre las tres posiciones `afterPhotoId`: las citas deben quedar en orden y ninguna puede aparecer al final sin fotografías posteriores.
+Para reordenar, mueve la entrada completa dentro de `homeGalleryPhotos`. Para retirar una foto, elimina su entrada y saca el original del nivel superior de `photos/gallery/`; conserva una copia fuera de la selección activa si todavía puede ser útil. Revisa siempre las tres posiciones `afterPhotoId`: las citas deben quedar en orden y ninguna puede aparecer al final sin fotografías posteriores.
 
 ### Fotografías de Cómo nos conocimos
 
@@ -233,7 +233,7 @@ El orden de `engagementPhotos` no controla la historia. El orden visible se mant
 
 ### Archivos HEIC
 
-Los navegadores no manejan HEIC de forma consistente. `home` y `history` conservan esos originales, pero sus manifiestos referencian JPG homónimos en la carpeta `web-compatible/` de cada colección. Las fotos de otras secciones también deben convertirse a JPG, WebP o AVIF antes de publicarse.
+Los navegadores no manejan HEIC de forma consistente. `home` y `history` conservan originales HEIC cuando corresponde, pero los elementos publicados referencian copias JPG homónimas. Las fotos de `gallery` y de otras secciones deben convertirse a JPG, WebP o AVIF antes de publicarse.
 
 ## Textos alternativos y captions
 

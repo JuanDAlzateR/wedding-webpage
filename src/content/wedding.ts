@@ -177,7 +177,7 @@ export const weddingContent = {
           },
         ],
         reference: "Cant 1:2, 15–17",
-        afterPhotoId: "IMG_20240513_140005",
+        afterPhotoId: "9363abd4-99b9-4e0d-a271-5db9c23aa80d",
       },
       {
         id: "song-spring",
@@ -187,7 +187,7 @@ export const weddingContent = {
           },
         ],
         reference: "Cant 2:10–11",
-        afterPhotoId: "IMG_20240804_155455",
+        afterPhotoId: "IMG_20260518_154633",
       },
       {
         id: "song-heart",
@@ -197,7 +197,7 @@ export const weddingContent = {
           },
         ],
         reference: "Cant 4:9–10",
-        afterPhotoId: "IMG_6218",
+        afterPhotoId: "IMG_20251225_000451",
       },
     ] satisfies readonly GalleryEditorialQuote[],
   },

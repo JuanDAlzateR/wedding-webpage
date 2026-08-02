@@ -17,7 +17,8 @@ Este repositorio contiene un sitio web estático de boda, móvil primero y únic
 - `src/content/wedding.ts`: única fuente de información editable de la boda
 - `src/content/invitations.ts`: tipos, rutas, metadatos y visibilidad por variante
 - `src/content/photos.ts`: manifiestos, alt text y tratamiento de imágenes
-- `photos/home/`: originales de la invitación y su galería final
+- `photos/home/`: imágenes destacadas de la invitación y originales preservados
+- `photos/gallery/`: originales de la galería final de la invitación
 - `photos/history/`: selección activa de Cómo nos conocimos
 - `photos/archive/how-we-met-previous/`: colección anterior preservada e inactiva
 - `photos/engagement/`: originales de Cómo nos comprometimos
@@ -82,14 +83,14 @@ Este repositorio contiene un sitio web estático de boda, móvil primero y únic
 
 - Conservar originales cuando sea práctico.
 - Registrar rutas, alt text, captions y tratamiento visual únicamente en `src/content/photos.ts`; el orden narrativo se mantiene en los datos de cada relato.
-- La galería de la invitación usa exclusivamente `photos/home/` y el orden explícito de `homeGalleryPhotos`.
-- Los HEIC de `home` conservan su original y usan un JPG homónimo desde `photos/home/web-compatible/`.
+- La galería de la invitación usa exclusivamente `photos/gallery/` y el orden explícito de `homeGalleryPhotos`.
+- `photos/home/` se reserva para imágenes destacadas y originales preservados; no usarlo como fuente de la galería.
 - Las posiciones de las citas intercaladas se cambian mediante `afterPhotoId` en `weddingContent.biblicalQuotes.galleryInterludes`.
 - Cómo nos conocimos usa exclusivamente `photos/history/` y `howWeMetPhotos`; no reutilizarlo como galería de la invitación.
-- No mezclar `photos/home/`, `photos/history/` ni `photos/engagement/`; sus manifiestos y experiencias son independientes.
-- Para añadir o retirar una foto de `home`, cambia el archivo y su entrada en `homeGalleryPhotos`; para reordenar, mueve la entrada completa y revisa los `afterPhotoId` de las citas.
+- No mezclar `photos/gallery/`, `photos/home/`, `photos/history/` ni `photos/engagement/`; sus manifiestos y experiencias son independientes.
+- Para añadir o retirar una foto de la galería, cambia el archivo en `photos/gallery/` y su entrada en `homeGalleryPhotos`; para reordenar, mueve la entrada completa y revisa los `afterPhotoId` de las citas.
 - Para añadir o retirar una foto de Cómo nos conocimos, cambia `howWeMetPhotos` y el arreglo `photoIds` de su entrada; para reordenar, mueve la entrada o sus IDs sin reordenar el manifiesto.
-- La galería de `home` usa columnas adaptativas por tramo en escritorio: tres desde seis fotos, dos para tramos de dos a cinco y una para una foto. Mantener esta regla basada en cantidades y evitar excepciones por nombre de archivo.
+- La galería de la invitación usa columnas adaptativas por tramo en escritorio: tres desde seis fotos, dos para tramos de dos a cinco y una para una foto. Mantener esta regla basada en cantidades y evitar excepciones por nombre de archivo.
 - Usar descripciones objetivas y no identificar personas o lugares sin confirmación.
 - Ajustar `position` antes de aceptar un recorte que pueda ocultar sujetos importantes.
 - No publicar HEIC directamente; convertirlo a un formato web compatible.

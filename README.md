@@ -30,7 +30,8 @@ pnpm preview
 - Información de la boda: `src/content/wedding.ts`
 - Tipos de invitación, rutas, metadatos y secciones: `src/content/invitations.ts`
 - Código de vestimenta y muestras de color: `weddingContent.dressCode` en `src/content/wedding.ts`
-- Galería de la invitación: originales en `photos/home/`, orden y alt text en `homeGalleryPhotos` dentro de `src/content/photos.ts`
+- Galería de la invitación: originales en `photos/gallery/`, orden y alt text en `homeGalleryPhotos` dentro de `src/content/photos.ts`
+- Imágenes destacadas de la invitación y originales preservados: `photos/home/`
 - Citas bíblicas y posiciones editoriales de galería: `weddingContent.biblicalQuotes` en `src/content/wedding.ts`
 - Momentos, textos, asociaciones, orden y visibilidad de Cómo nos conocimos: `weddingContent.howWeMet.storyEntries` en `src/content/wedding.ts`
 - Fotografías activas y alt text de Cómo nos conocimos: originales en `photos/history/` y manifiesto `howWeMetPhotos` en `src/content/photos.ts`

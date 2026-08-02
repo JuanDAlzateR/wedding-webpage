@@ -15,7 +15,7 @@ const howWeMetHtmlPath = join(
   "como-nos-conocimos",
   "index.html",
 );
-const homeSourceDirectory = join(projectRoot, "photos", "home");
+const gallerySourceDirectory = join(projectRoot, "photos", "gallery");
 const howWeMetSourceDirectory = join(projectRoot, "photos", "history");
 const howWeMetArchiveDirectory = join(
   projectRoot,
@@ -125,7 +125,7 @@ const sharedInvitationText = [
   "Gracias por acompañarnos y por respetar este deseo en una ocasión tan especial para nosotros.",
   "La celebración dará inicio puntualmente a las 10:00 a. m. Te invitamos a llegar con anticipación para disponernos juntos a vivir la Santa Misa desde el comienzo.",
   "Un detalle para nosotros",
-  "El mayor regalo para nosotros será contar con su presencia en este día tan especial.",
+  "El mayor regalo para nosotros será contar con sus oraciones, en serio las necesitamos; otro excelente regalo es su presencia en este día tan especial.",
   "recibiremos con mucho cariño su lluvia de sobres",
   "podrán enviar su obsequio a nuestra llave",
   "1032485387",
@@ -437,19 +437,19 @@ function assertPhotoCoverage(html, routeLabel, sourceDirectory, dataAttribute) {
 assertPhotoCoverage(
   massHtml,
   "la galería de la invitación de Eucaristía",
-  homeSourceDirectory,
+  gallerySourceDirectory,
   "data-home-gallery-photo-id",
 );
 assertPhotoCoverage(
   rootHtml,
   "la galería de la raíz",
-  homeSourceDirectory,
+  gallerySourceDirectory,
   "data-home-gallery-photo-id",
 );
 assertPhotoCoverage(
   completeHtml,
   "la galería de la invitación completa",
-  homeSourceDirectory,
+  gallerySourceDirectory,
   "data-home-gallery-photo-id",
 );
 assertPhotoCoverage(
@@ -627,12 +627,19 @@ function assertOrderedMarkers(html, markers, routeLabel, markerKind) {
 
 const homeGalleryEditorialOrder = [
   'data-biblical-quote-id="song-belonging"',
-  'data-home-gallery-photo-id="IMG_20240513_140005"',
+  'data-home-gallery-photo-id="a7c192de-c45e-4ffe-be17-3ea6e2a57f40"',
+  'data-home-gallery-photo-id="IMG_4780"',
+  'data-home-gallery-photo-id="IMG_1421"',
+  'data-home-gallery-photo-id="9363abd4-99b9-4e0d-a271-5db9c23aa80d"',
   'data-biblical-quote-id="song-beauty"',
-  'data-home-gallery-photo-id="IMG_20240804_155455"',
+  'data-home-gallery-photo-id="IMG_20260517_215026"',
+  'data-home-gallery-photo-id="IMG_20260518_154633"',
   'data-biblical-quote-id="song-spring"',
-  'data-home-gallery-photo-id="IMG_6218"',
+  'data-home-gallery-photo-id="IMG_20240928_003343"',
+  'data-home-gallery-photo-id="IMG_20251225_000451"',
   'data-biblical-quote-id="song-heart"',
+  'data-home-gallery-photo-id="IMG_20251226_212606"',
+  'data-home-gallery-photo-id="IMG_3104_Original"',
 ];
 
 for (const [html, routeLabel] of [

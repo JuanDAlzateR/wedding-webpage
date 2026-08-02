@@ -1,5 +1,7 @@
 import type { ImageMetadata } from "astro";
 
+import featuredHeroImage from "../../photos/home/IMG_5961.JPG";
+import featuredSocialImage from "../../photos/home/IMG_20240804_155455.jpg";
 import engagementApril05Photo1 from "../../photos/engagement/april05-photo1.jpg";
 import engagementApril05Photo2 from "../../photos/engagement/april05-photo2.jpg";
 import engagementApril05Photo3 from "../../photos/engagement/april05-photo3.jpg";
@@ -33,16 +35,10 @@ export type WeddingPhoto = {
 
 export type GalleryPhoto = Pick<WeddingPhoto, "id" | "src" | "alt">;
 
-const homeImageModules = {
-  ...import.meta.glob<{ default: ImageMetadata }>(
-    "../../photos/home/*.{jpg,JPG,jpeg,JPEG,png,PNG}",
-    { eager: true },
-  ),
-  ...import.meta.glob<{ default: ImageMetadata }>(
-    "../../photos/home/web-compatible/*.jpg",
-    { eager: true },
-  ),
-};
+const galleryImageModules = import.meta.glob<{ default: ImageMetadata }>(
+  "../../photos/gallery/*.{jpg,JPG,jpeg,JPEG,png,PNG}",
+  { eager: true },
+);
 
 const howWeMetImageModules = {
   ...import.meta.glob<{ default: ImageMetadata }>(
@@ -55,12 +51,12 @@ const howWeMetImageModules = {
   ),
 };
 
-function loadHomeImage(relativePath: string): ImageMetadata {
-  const module = homeImageModules[`../../photos/home/${relativePath}`];
+function loadGalleryImage(fileName: string): ImageMetadata {
+  const module = galleryImageModules[`../../photos/gallery/${fileName}`];
 
   if (!module) {
     throw new Error(
-      `No existe la fotografía de inicio "photos/home/${relativePath}".`,
+      `No existe la fotografía de la galería "photos/gallery/${fileName}".`,
     );
   }
 
@@ -81,11 +77,11 @@ function loadHowWeMetImage(relativePath: string): ImageMetadata {
 
 export const featuredPhotos = {
   hero: {
-    src: loadHomeImage("IMG_5961.JPG"),
+    src: featuredHeroImage,
     alt: "La pareja sonriendo junta al aire libre.",
     position: "center 45%",
   },
-  social: loadHomeImage("IMG_20240804_155455.jpg"),
+  social: featuredSocialImage,
 } as const;
 
 export const engagementFeaturedPhoto = {
@@ -251,104 +247,54 @@ export function getEngagementPhoto(id: EngagementPhotoId): WeddingPhoto {
  */
 export const homeGalleryPhotos = [
   {
-    id: "IMG_20240331_152546",
-    src: loadHomeImage("IMG_20240331_152546.jpg"),
-    alt: "La pareja sonríe junta durante una visita en casa.",
+    id: "a7c192de-c45e-4ffe-be17-3ea6e2a57f40",
+    src: loadGalleryImage("a7c192de-c45e-4ffe-be17-3ea6e2a57f40.jpg"),
+    alt: "La pareja sonríe vestida de blanco frente a la entrada de una iglesia.",
   },
   {
-    id: "IMG_20240401_174155",
-    src: loadHomeImage("IMG_20240401_174155.jpg"),
-    alt: "La pareja se toma una selfie al aire libre con chaquetas.",
+    id: "IMG_4780",
+    src: loadGalleryImage("IMG_4780.JPG"),
+    alt: "La pareja sonríe en una selfie al aire libre; una de las personas sostiene un rosario.",
   },
   {
-    id: "IMG_20240512_131842",
-    src: loadHomeImage("IMG_20240512_131842.jpg"),
-    alt: "Ramo de flores naranjas y azules sobre una mesa.",
-  },
-  {
-    id: "IMG_20240513_135421",
-    src: loadHomeImage("IMG_20240513_135421.jpg"),
-    alt: "La pareja se mira de pie en un parque arbolado.",
-  },
-  {
-    id: "IMG_20240513_140111",
-    src: loadHomeImage("IMG_20240513_140111.jpg"),
-    alt: "La pareja sonríe durante una visita al parque.",
-  },
-  {
-    id: "IMG_20240513_140005",
-    src: loadHomeImage("IMG_20240513_140005.jpg"),
-    alt: "La pareja comparte un beso en un parque.",
-  },
-  {
-    id: "IMG_20240513_140533",
-    src: loadHomeImage("IMG_20240513_140533.jpg"),
-    alt: "La pareja posa sentada sobre el césped.",
-  },
-  {
-    id: "IMG_20240513_140734",
-    src: loadHomeImage("IMG_20240513_140734.jpg"),
-    alt: "La pareja comparte un beso sentada sobre el césped.",
-  },
-  {
-    id: "IMG_20240602_141151",
-    src: loadHomeImage("IMG_20240602_141151.jpg"),
-    alt: "La pareja se toma una selfie dentro de una iglesia.",
-  },
-  {
-    id: "IMG_20240603_084353",
-    src: loadHomeImage("IMG_20240603_084353.jpg"),
-    alt: "La pareja se abraza durante una reunión en una iglesia.",
-  },
-  {
-    id: "IMG_20240804_155455",
-    src: loadHomeImage("IMG_20240804_155455.jpg"),
-    alt: "La pareja sonríe junta al aire libre.",
-  },
-  {
-    id: "IMG_20241010_141503",
-    src: loadHomeImage("IMG_20241010_141503.jpg"),
-    alt: "Un marco contiene varias fotografías de recuerdos de la pareja.",
-  },
-  {
-    id: "IMG_20241117_152645",
-    src: loadHomeImage("IMG_20241117_152645.jpg"),
-    alt: "La pareja comparte una celebración con flores y un mantel a cuadros.",
-  },
-  {
-    id: "IMG_20251225_000451",
-    src: loadHomeImage("IMG_20251225_000451.jpg"),
-    alt: "La pareja sonríe con gorros navideños junto a una vela.",
-  },
-  {
-    id: "IMG_1017",
-    src: loadHomeImage("web-compatible/IMG_1017.jpg"),
-    alt: "La pareja sonríe junta en un espacio interior.",
-  },
-  {
-    id: "IMG_6218",
-    src: loadHomeImage("web-compatible/IMG_6218.jpg"),
-    alt: "La pareja sonríe junto a un juego de mesa.",
+    id: "IMG_1421",
+    src: loadGalleryImage("IMG_1421.JPG"),
+    alt: "La pareja se mira sentada sobre el césped en un parque.",
   },
   {
     id: "9363abd4-99b9-4e0d-a271-5db9c23aa80d",
-    src: loadHomeImage("9363abd4-99b9-4e0d-a271-5db9c23aa80d.jpg"),
-    alt: "La pareja comparte un beso junto a una ventana.",
+    src: loadGalleryImage("9363abd4-99b9-4e0d-a271-5db9c23aa80d.jpg"),
+    alt: "La pareja se abraza junto a una ventana.",
   },
   {
-    id: "a7c192de-c45e-4ffe-be17-3ea6e2a57f40",
-    src: loadHomeImage("a7c192de-c45e-4ffe-be17-3ea6e2a57f40.jpg"),
-    alt: "La pareja sonríe vestida de blanco frente a una iglesia.",
+    id: "IMG_20260517_215026",
+    src: loadGalleryImage("IMG_20260517_215026.jpg"),
+    alt: "La pareja se mira sentada frente a una fogata durante la noche.",
+  },
+  {
+    id: "IMG_20260518_154633",
+    src: loadGalleryImage("IMG_20260518_154633.jpg"),
+    alt: "La pareja baila sobre el césped, con montañas y vegetación al fondo.",
+  },
+  {
+    id: "IMG_20240928_003343",
+    src: loadGalleryImage("IMG_20240928_003343.jpg"),
+    alt: "La pareja se mira junto a una mesa con pastel y decoración de cumpleaños.",
+  },
+  {
+    id: "IMG_20251225_000451",
+    src: loadGalleryImage("IMG_20251225_000451.jpg"),
+    alt: "La pareja sonríe con gorros navideños y sostiene una vela y una figura tejida.",
+  },
+  {
+    id: "IMG_20251226_212606",
+    src: loadGalleryImage("IMG_20251226_212606.jpg"),
+    alt: "La pareja sonríe frente a árboles y luces navideñas.",
   },
   {
     id: "IMG_3104_Original",
-    src: loadHomeImage("IMG_3104_Original.JPG"),
-    alt: "La pareja posa en un mirador rodeado de montañas.",
-  },
-  {
-    id: "IMG_5961",
-    src: loadHomeImage("IMG_5961.JPG"),
-    alt: "La pareja sonríe junta al aire libre.",
+    src: loadGalleryImage("IMG_3104_Original.JPG"),
+    alt: "La pareja posa junto a una imagen de la Virgen, con montañas al fondo.",
   },
 ] as const satisfies readonly GalleryPhoto[];
 
