@@ -182,7 +182,13 @@ const sharedInvitationText = [
   "Nuestro regalo",
   "Lo más valioso para nosotros será contar con sus oraciones; de verdad, las necesitamos.",
   "Su presencia en este día tan especial es un don que agradecemos de corazón.",
-  "Si, además, desean tener un detalle con nosotros, recibiremos con mucho cariño su lluvia de sobres. Si les resulta más cómodo, también podrán enviar su obsequio a nuestra llave",
+  "Si, además, desean tener un detalle con nosotros, lo recibiremos con mucho cariño.",
+  "Puedes elegir la opción que te resulte más cómoda.",
+  "lluvia de sobres",
+  "Cuenta de Ahorros Bancolombia",
+  "331-561467-61",
+  "Si durante la transferencia aparece la opción de concepto o categoría, puedes seleccionar «Regalo».",
+  "Llave",
   "@Alzate6073",
   "Descubrir nuestra historia",
   'href="/compromiso/"',
@@ -274,7 +280,7 @@ const howWeMetText = [
   "Un sí de confianza que nos trajo hasta aquí",
   "24 de febrero de 2024",
   "Solo confía.",
-  "sellamos nuestro compromiso con la bendición de Dios",
+  "sellamos nuestro compromiso, con la bendición de Dios",
   "El 25 de febrero fuimos juntos al Ave María. También es el lugar donde casi terminamos",
 ];
 
@@ -386,6 +392,7 @@ const removedInvitationText = [
   "2026-10-12T18:00:00-05:00",
   "Un detalle para nosotros",
   "1032485387",
+  "Si, además, desean tener un detalle con nosotros, recibiremos con mucho cariño su lluvia de sobres. Si les resulta más cómodo, también podrán enviar su obsequio a nuestra llave",
   'href="#fotos"',
   ">Fotos<",
 ];
@@ -401,6 +408,66 @@ for (const [html, routeLabel] of [
       `Permanece texto reemplazado en ${routeLabel}: ${text}`,
     );
   }
+}
+
+const expectedGiftOptionMarkers = [
+  'data-gift-option-id="envelope"',
+  'data-gift-option-id="bank-account"',
+  'data-gift-option-id="key"',
+];
+
+for (const [html, routeLabel] of [
+  [massHtml, "la invitación de Eucaristía"],
+  [rootHtml, "la raíz"],
+  [completeHtml, "la invitación completa"],
+]) {
+  const giftSection =
+    html.match(/<section[^>]*\bid="regalos"[^>]*>[\s\S]*?<\/section>/)?.[0] ??
+    "";
+
+  assert.ok(giftSection, `No se encontró Nuestro regalo en ${routeLabel}.`);
+
+  const strongMatches = [
+    ...giftSection.matchAll(/<strong\b[^>]*>([\s\S]*?)<\/strong>/g),
+  ];
+  assert.equal(
+    strongMatches.length,
+    1,
+    `Nuestro regalo debe contener un único <strong> en ${routeLabel}.`,
+  );
+  assert.equal(
+    strongMatches[0]?.[1],
+    "lluvia de sobres",
+    `El énfasis de Nuestro regalo no contiene únicamente lluvia de sobres en ${routeLabel}.`,
+  );
+
+  let previousOptionIndex = -1;
+  for (const marker of expectedGiftOptionMarkers) {
+    const optionIndex = giftSection.indexOf(marker);
+    assert.ok(
+      optionIndex > previousOptionIndex,
+      `Las opciones de Nuestro regalo no conservan su orden en ${routeLabel}.`,
+    );
+    previousOptionIndex = optionIndex;
+  }
+
+  assert.equal(
+    [...giftSection.matchAll(/\sdata-gift-copy(?:=|\s|>)/g)].length,
+    2,
+    `Nuestro regalo no contiene exactamente dos controles de copiado en ${routeLabel}.`,
+  );
+  assert.ok(
+    giftSection.includes('data-copy-value="331-561467-61"'),
+    `La cuenta de Bancolombia no está asociada a su control de copiado en ${routeLabel}.`,
+  );
+  assert.ok(
+    giftSection.includes('data-copy-value="@Alzate6073"'),
+    `La llave no está asociada a su control de copiado en ${routeLabel}.`,
+  );
+  assert.ok(
+    giftSection.includes('aria-live="polite"'),
+    `Nuestro regalo no anuncia el resultado del copiado en ${routeLabel}.`,
+  );
 }
 
 const dressColorOrder = [

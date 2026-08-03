@@ -30,7 +30,7 @@ Abre `src/content/wedding.ts`. Este archivo contiene nombres, datos compartidos 
 - `stories`: textos del acceso compartido a los dos capítulos.
 - `howWeMet`: resumen, metadatos y momentos tipados de Cómo nos conocimos.
 - `engagement`: resumen, metadatos, relato y textos de la página de compromiso.
-- `gifts`: encabezado, párrafos y llave compartidos para regalos.
+- `gifts`: encabezado, párrafos y opciones compartidas para regalos.
 - `sections`: disponibilidad global de cada sección. La configuración de cada variante puede ocultarla adicionalmente.
 
 ## Convención editorial
@@ -73,9 +73,13 @@ La tarjeta de confirmación se edita en `weddingContent.celebration.confirmation
 
 Ambos bloques son exclusivos de la invitación completa. Si cambias alguno de sus textos, agrega o actualiza su marcador en `scripts/verify-invitations.mjs` para que una filtración en la invitación de Eucaristía falle durante la validación.
 
-## Lluvia de sobres
+## Nuestro regalo
 
-El encabezado y el mensaje se editan únicamente en `weddingContent.gifts`. `paragraphs` conserva los dos primeros párrafos, `keyParagraph` contiene el texto del tercero previo a la llave y `key` contiene la llave destacada visualmente en la tarjeta. Esta sección aparece en las dos invitaciones y no debe contener entidades financieras, tipos de cuenta, enlaces de pago, códigos QR ni información exclusiva de la Recepción.
+El encabezado y el mensaje se editan únicamente en `weddingContent.gifts`. `paragraphs` conserva los mensajes sobre las oraciones y la presencia; `optionalGiftMessage` aclara que cualquier detalle adicional es opcional; `choicePrompt` introduce las alternativas y `options` contiene las tres opciones visibles en su orden editorial.
+
+Cada opción tiene `id` y `label`; las opciones electrónicas también usan `value` y pueden incluir `note`. La cuenta `331-561467-61` y la llave `@Alzate6073` deben cambiarse solo en ese arreglo: el componente genera tanto el texto visible como el valor copiado desde la misma fuente. Mantén `lluvia de sobres` como la primera opción y con énfasis semántico exclusivo.
+
+Esta sección aparece en las dos invitaciones. No añadas titulares, identificaciones, correos, teléfonos, códigos QR, enlaces bancarios, instrucciones no confirmadas ni información exclusiva de la Recepción.
 
 Para ocultarla temporalmente, cambia `weddingContent.sections.gifts` a `false`. Si se modifica su visibilidad por variante, debe conservarse habilitada o deshabilitada de la misma forma en las dos invitaciones.
 
