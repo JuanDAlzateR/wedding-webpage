@@ -40,7 +40,14 @@ const sections = {
     variant.sections.additionalInfo && contentSections.additionalInfo,
 };
 const navigation = getInvitationNavigation(variant, sections);
-const { confirmation, accessNotice, ...celebrationEvent } = celebration;
+const {
+  eyebrow: celebrationEyebrow,
+  title: celebrationTitle,
+  description: celebrationDescription,
+  confirmation,
+  accessNotice,
+  ...celebrationEvent
+} = celebration;
 ---
 
 <BaseLayout
@@ -68,9 +75,9 @@ const { confirmation, accessNotice, ...celebrationEvent } = celebration;
       sections.celebration && (
         <EventDetails
           id="encuentro"
-          eyebrow="Después de la Eucaristía"
-          title="Celebración posterior"
-          description={celebration.description}
+          eyebrow={celebrationEyebrow}
+          title={celebrationTitle}
+          description={celebrationDescription}
           event={{
             ...celebrationEvent,
             date: ceremony.date,

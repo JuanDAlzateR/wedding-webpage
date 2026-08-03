@@ -17,7 +17,8 @@ Este repositorio contiene un sitio web estático de boda, móvil primero y únic
 - `src/content/wedding.ts`: única fuente de información editable de la boda
 - `src/content/invitations.ts`: tipos, rutas, metadatos y visibilidad por variante
 - `src/content/photos.ts`: manifiestos, alt text y tratamiento de imágenes
-- `photos/home/`: originales de la invitación y su galería final
+- `photos/home/`: imágenes destacadas de la invitación y originales preservados
+- `photos/gallery/`: originales de la galería final de la invitación
 - `photos/history/`: selección activa de Cómo nos conocimos
 - `photos/archive/how-we-met-previous/`: colección anterior preservada e inactiva
 - `photos/engagement/`: originales de Cómo nos comprometimos
@@ -28,29 +29,30 @@ Este repositorio contiene un sitio web estático de boda, móvil primero y únic
 ## Contenido
 
 - No inventar nombres, fechas, lugares, historias, políticas, contactos ni enlaces.
-- La invitación `mass_only` no puede incluir texto, metadatos, navegación, assets de texto ni referencias a la celebración posterior.
-- La ruta no obvia de `mass_and_celebration` no debe copiarse en menús, pies, sitemaps o documentación general.
+- La invitación `mass_only` no puede incluir texto, metadatos, navegación, assets de texto ni referencias a la Recepción.
+- `/recepcion` es un alias público de Cloudflare Pages que redirige a la ruta canónica de `mass_and_celebration`; no añadirlo a menús, pies, sitemaps, metadatos ni otros enlaces visibles salvo petición explícita.
 - Mantener placeholders centralizados y claramente marcados.
 - Las secciones opcionales sin información confirmada deben permanecer ocultas.
 - El sitio es solo en español; no añadir traducciones ni selector de idioma salvo petición explícita.
 - Mantener `Eucaristía`, `Misa` y `Santa Misa` con iniciales mayúsculas; usar `liturgia` cuando se hable específicamente del acto religioso.
 - El contenido confirmado del vestuario y sus muestras aproximadas se editan únicamente en `weddingContent.dressCode`; los nombres de los colores son la información autoritativa.
-- El mensaje compartido de regalos se edita en `weddingContent.gifts.body` y la llave en `weddingContent.gifts.key`; no añadir entidades financieras, tipos de cuenta, QR ni instrucciones de pago.
+- El mensaje compartido de regalos se edita en `weddingContent.gifts.paragraphs` y `weddingContent.gifts.keyParagraph`; la llave vive en `weddingContent.gifts.key`. No añadir entidades financieras, tipos de cuenta, QR ni instrucciones de pago.
 
 ## Navegación y citas
 
-- El recorrido compartido es: Inicio, Eucaristía, código de vestimenta, regalos, Nuestra historia y galería; la invitación completa inserta la celebración posterior, incluida su confirmación, después de la Eucaristía.
+- El recorrido compartido es: Inicio, Eucaristía, código de vestimenta, regalos, Nuestra historia y galería; la invitación completa inserta la Recepción, incluida su confirmación, después de la Eucaristía.
 - `#historia` es un acceso compartido a dos experiencias independientes: `/como-nos-conocimos/` y `/compromiso/`.
 - Las etiquetas y el orden de navegación se mantienen en `src/content/invitations.ts`; la navegación final se filtra según las secciones realmente visibles.
 - `navigationOrder` debe reproducir el orden renderizado y nunca incluir destinos ocultos.
-- Todo enlace interno debe resolver a un ID existente. `Confirmación` y cualquier otro acceso relacionado con la celebración son exclusivos de `mass_and_celebration`.
+- Todo enlace interno debe resolver a un ID existente. `Confirmación` y cualquier otro acceso relacionado con la Recepción son exclusivos de `mass_and_celebration`.
 - Los textos y referencias bíblicas se mantienen en `weddingContent.biblicalQuotes`; su marcado canónico es `BiblicalQuote.astro`.
 - Conservar literalmente la puntuación y referencia de una cita confirmada. Las referencias se muestran sin paréntesis.
 
-## Celebración posterior
+## Recepción
 
 - Introducción, aviso de acceso, URL de confirmación y fecha límite viven en `weddingContent.celebration`.
-- Estos datos solo pueden pasarse al bloque de celebración de `mass_and_celebration`; deben permanecer ausentes del HTML, metadatos y assets de texto de `mass_only`.
+- `accessNotice.body` conserva el texto normal y `accessNotice.emphasis` contiene únicamente la oración que debe renderizarse con énfasis semántico.
+- Estos datos solo pueden pasarse al bloque de Recepción de `mass_and_celebration`; deben permanecer ausentes del HTML, metadatos y assets de texto de `mass_only`.
 - La confirmación continúa siendo un enlace externo. No crear formularios, almacenamiento ni backend.
 
 ## Relato del compromiso
@@ -63,7 +65,7 @@ Este repositorio contiene un sitio web estático de boda, móvil primero y únic
 - Para editar, ocultar o reordenar, cambia únicamente los datos. Una entrada con `description.pending: true` debe usar `visible: false`; los placeholders nunca se muestran.
 - Para retirar un momento, elimina tanto la entrada como su elemento del manifiesto activo. Conserva el original cuando sea práctico.
 - Las fotos de compromiso viven en `photos/engagement/` y no deben duplicarse en `homeGalleryPhotos` ni `howWeMetPhotos`.
-- `/compromiso/` es compartida y privada por `noindex`; no debe nombrar ni enlazar la ruta completa ni serializar información exclusiva de la celebración.
+- `/compromiso/` es compartida y privada por `noindex`; no debe nombrar ni enlazar la ruta completa ni serializar información exclusiva de la Recepción.
 - No inventar detalles personales ni inferir lugares o personas solo a partir de una imagen.
 
 ## Cómo nos conocimos
@@ -75,21 +77,21 @@ Este repositorio contiene un sitio web estático de boda, móvil primero y únic
 - Las fotos activas viven en `photos/history/`; los HEIC usan JPG homónimos en `photos/history/web-compatible/`. La colección archivada no se importa ni se publica.
 - Para añadir un momento, registra la foto y su alt text en `howWeMetPhotos` y crea la entrada asociada. Para reemplazar una foto sin alterar el relato, conserva su ID y cambia únicamente su archivo y alt text.
 - Para editar, ocultar o reordenar, modifica la entrada completa. Una referencia ausente, duplicada o sin descripción debe fallar durante el build, no sustituirse por otra foto.
-- `/como-nos-conocimos/` es compartida y privada por `noindex`; no debe nombrar ni enlazar la ruta completa ni serializar información exclusiva de la celebración.
+- `/como-nos-conocimos/` es compartida y privada por `noindex`; no debe nombrar ni enlazar la ruta completa ni serializar información exclusiva de la Recepción.
 - Su diseño es un scrapbook editorial por grupos; no copiar el patrón alternado de una foto y un texto usado en `/compromiso/`.
 
 ## Fotografías
 
 - Conservar originales cuando sea práctico.
 - Registrar rutas, alt text, captions y tratamiento visual únicamente en `src/content/photos.ts`; el orden narrativo se mantiene en los datos de cada relato.
-- La galería de la invitación usa exclusivamente `photos/home/` y el orden explícito de `homeGalleryPhotos`.
-- Los HEIC de `home` conservan su original y usan un JPG homónimo desde `photos/home/web-compatible/`.
+- La galería de la invitación usa exclusivamente `photos/gallery/` y el orden explícito de `homeGalleryPhotos`.
+- `photos/home/` se reserva para imágenes destacadas y originales preservados; no usarlo como fuente de la galería.
 - Las posiciones de las citas intercaladas se cambian mediante `afterPhotoId` en `weddingContent.biblicalQuotes.galleryInterludes`.
 - Cómo nos conocimos usa exclusivamente `photos/history/` y `howWeMetPhotos`; no reutilizarlo como galería de la invitación.
-- No mezclar `photos/home/`, `photos/history/` ni `photos/engagement/`; sus manifiestos y experiencias son independientes.
-- Para añadir o retirar una foto de `home`, cambia el archivo y su entrada en `homeGalleryPhotos`; para reordenar, mueve la entrada completa y revisa los `afterPhotoId` de las citas.
+- No mezclar `photos/gallery/`, `photos/home/`, `photos/history/` ni `photos/engagement/`; sus manifiestos y experiencias son independientes.
+- Para añadir o retirar una foto de la galería, cambia el archivo en `photos/gallery/` y su entrada en `homeGalleryPhotos`; para reordenar, mueve la entrada completa y revisa los `afterPhotoId` de las citas.
 - Para añadir o retirar una foto de Cómo nos conocimos, cambia `howWeMetPhotos` y el arreglo `photoIds` de su entrada; para reordenar, mueve la entrada o sus IDs sin reordenar el manifiesto.
-- La galería de `home` usa columnas adaptativas por tramo en escritorio: tres desde seis fotos, dos para tramos de dos a cinco y una para una foto. Mantener esta regla basada en cantidades y evitar excepciones por nombre de archivo.
+- La galería de la invitación usa columnas adaptativas por tramo en escritorio: tres desde seis fotos, dos para tramos de dos a cinco y una para una foto. Mantener esta regla basada en cantidades y evitar excepciones por nombre de archivo.
 - Usar descripciones objetivas y no identificar personas o lugares sin confirmación.
 - Ajustar `position` antes de aceptar un recorte que pueda ocultar sujetos importantes.
 - No publicar HEIC directamente; convertirlo a un formato web compatible.
@@ -137,6 +139,7 @@ No afirmar que un comando pasó si no se ejecutó exitosamente.
 
 - Salida: `dist/`
 - Cloudflare Pages: opción principal
+- El alias `/recepcion` se define únicamente en `public/_redirects`; el build debe copiarlo a `dist/_redirects` sin generar una segunda página.
 - GitHub Pages: soportado mediante `SITE_URL` y `BASE_PATH`
 - No inventar la URL final; configurar `SITE_URL` solo cuando sea conocida
 - No incluir secretos en el repositorio ni en archivos públicos

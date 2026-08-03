@@ -19,10 +19,13 @@ const { gifts } = weddingContent;
     />
     <div class="gift-card">
       <span class="gift-card__mark" aria-hidden="true">✦</span>
-      <p>
-        {gifts.body}{" "}
-        <span class="gift-card__key">{gifts.key}</span>.
-      </p>
+      <div class="gift-card__copy">
+        {gifts.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        <p>
+          {gifts.keyParagraph}{" "}
+          <span class="gift-card__key">{gifts.key}</span>.
+        </p>
+      </div>
     </div>
   </div>
 </section>
