@@ -36,7 +36,7 @@ Este repositorio contiene un sitio web estático de boda, móvil primero y únic
 - El sitio es solo en español; no añadir traducciones ni selector de idioma salvo petición explícita.
 - Mantener `Eucaristía`, `Misa` y `Santa Misa` con iniciales mayúsculas; usar `liturgia` cuando se hable específicamente del acto religioso.
 - El contenido confirmado del vestuario y sus muestras aproximadas se editan únicamente en `weddingContent.dressCode`; los nombres de los colores son la información autoritativa.
-- El mensaje compartido de regalos se edita en `weddingContent.gifts.paragraphs` y `weddingContent.gifts.keyParagraph`; la llave vive en `weddingContent.gifts.key`. No añadir entidades financieras, tipos de cuenta, QR ni instrucciones de pago.
+- El mensaje compartido y las opciones de regalos se editan únicamente en `weddingContent.gifts`; la cuenta Bancolombia y la llave confirmadas viven en `gifts.options`. No añadir titulares, identificaciones, correos, teléfonos, QR, enlaces bancarios ni instrucciones no confirmadas.
 
 ## Navegación y citas
 

@@ -124,12 +124,24 @@ export type CelebrationDetailsContent = Omit<
   };
 };
 
+export type GiftOption = {
+  id: "envelope" | "bank-account" | "key";
+  label: string;
+  value?: string;
+  note?: string;
+};
+
 export type GiftContent = {
   eyebrow: string;
   title: string;
-  paragraphs: readonly [string, string];
-  keyParagraph: string;
-  key: string;
+  prayerMessage: {
+    emphasis: string;
+    remainder: string;
+  };
+  presenceMessage: string;
+  optionalGiftMessage: string;
+  transferIntroduction: string;
+  options: readonly GiftOption[];
 };
 
 /**
@@ -414,7 +426,7 @@ export const weddingContent = {
         id: "our-first-date",
         description: {
           value:
-            "Esta foto es de nuestra primera cita, el Domingo de Resurrección de 2024. Este varón de Dios me invitó a comer. Nos encontramos en Medellín después de no haber hablado durante una semana; cuando nos vimos, llevaba una enorme maleta. Debo confesar que tenía miedo: muchas dudas en el corazón se habían resuelto con la meditación de la primera estación del viacrucis de Hakuna, mientras otras iban y venían con las porras de mi querido Andrés Hernández durante el descenso hacia el Valle de Aburrá. Muchachos, en esa maleta había otro ramo y una carta por cada día que no habíamos hablado. Todas confirmaban un mensaje que me había mandado la primera vez que le dije «Te quiero»; me respondió: «Meli, yo te quiero, me gustas y me gustas para Dios». Más tarde, ese mismo día, no resistí abrazarlo mientras Laurita fue a su cuarto a traer algo. Esperábamos a más amigos para inaugurar una de nuestras actividades favoritas juntos: los juegos de mesa con amigos.",
+            "Esta foto es de nuestra primera cita, el Domingo de Resurrección de 2024. Este varón de Dios me invitó a comer. Nos encontramos en Medellín después de no haber hablado durante una semana; cuando nos vimos, llevaba una enorme maleta. Debo confesar que tenía miedo: muchas dudas en el corazón se habían resuelto con la meditación de la primera estación del viacrucis de Hakuna, mientras otras iban y venían con las porras de mi querido Andrés Hernández durante el descenso hacia el Valle de Aburrá. Muchachos, en esa maleta había otro ramo y una carta por cada día que no habíamos hablado. Todas confirmaban un mensaje que me había mandado la primera vez que le dije «Te quiero»; me respondió: «Meli, yo te quiero, me gustas y te quiero para Dios». Más tarde, ese mismo día, no resistí abrazarlo mientras Laurita fue a su cuarto a traer algo. Esperábamos a más amigos para inaugurar una de nuestras actividades favoritas juntos: los juegos de mesa con amigos.",
           pending: false,
         },
         photoIds: ["history-08"],
@@ -425,7 +437,7 @@ export const weddingContent = {
         id: "we-became-a-couple",
         description: {
           value:
-            "Nos hicimos novios el 13 de mayo de 2024, tras completar la renovación de nuestra consagración a Jesús por María a la luz de las reflexiones que el buen Javi Lariguet enviaba cada día. Era de esperarse que sucediera en esa fecha; el misterio era cuándo. Una semana antes, mi buen novio me dijo que me preparara para la última semana soltera de mi vida. Aproveché el congreso de Somos Suyos para escribir frente al Santísimo una carta de respuesta, que le entregué justo cuando me hizo esa pregunta tan esperada. Esa semana también recibí otros obsequios: diferentes elementos del entonces beato Carlo Acutis, un rosario de medallas de San Benito, una estatuita de San José y algunos más que resultaron ser más de mi gusto que del suyo —stickers—, pero así pasa cuando apenas se está abriendo el corazón. Lo ignorábamos en ese momento, pero los lunes festivos se volverían especiales; San Carlo Acutis nos acogería en su día, y el 12 de octubre, fecha en que años atrás Juan David se consagró por primera vez a Jesús por medio de María, se convertiría en el día de nuestra boda. Que no se me olvide contarles: el 13 de mayo de 2024 resolví por primera vez un sudoku muy especial y, cuando desencripté su mensaje, pude entregar mi carta. Ese día también recibí un corazón de Jesús azul celeste y otros regalos, pero ese corazón anticipaba, además, una gran aventura.",
+            "Nos hicimos novios el 13 de mayo de 2024, tras completar la renovación de nuestra consagración a Jesús por María a la luz de las reflexiones que el buen Javi Lariguet enviaba cada día. Era de esperarse que sucediera en esa fecha; el misterio era cuándo. Una semana antes, mi buen novio me dijo que me preparara para la última semana soltera de mi vida. Aproveché el congreso de Somos Suyos para escribir frente al Santísimo una carta de respuesta, que le entregué justo cuando me hizo esa pregunta tan esperada. Esa semana también preparé para él otros obsequios: diferentes elementos del entonces beato Carlo Acutis, un rosario de medallas de San Benito, una estatuita de San José y algunos más que resultaron ser más de mi gusto que del suyo —stickers—, pero así pasa cuando apenas se está abriendo el corazón. Lo ignorábamos en ese momento, pero los lunes festivos se volverían especiales; San Carlo Acutis nos acogería en su día, y el 12 de octubre, fecha en que años atrás Juan David se consagró por primera vez a Jesús por medio de María, se convertiría en el día de nuestra boda. Que no se me olvide contarles: el 13 de mayo de 2024 resolví por primera vez un sudoku muy especial y, cuando desencripté su mensaje, pude entregar mi carta. Ese día también recibí un corazón de Jesús azul celeste y otros regalos, pero ese corazón anticipaba, además, una gran aventura.",
           pending: false,
         },
         photoIds: ["history-09"],
@@ -476,7 +488,7 @@ export const weddingContent = {
         id: "engagement-blessing",
         description: {
           value:
-            "Los dejo con esta última foto del lunes festivo 13 de julio, en el que, con un abrazo filial de nuestro padre Domingo García, sellamos nuestro compromiso con la bendición de Dios.",
+            "Los dejo con esta última foto del lunes festivo 13 de julio, en el que, con un abrazo filial de nuestro padre Domingo García, sellamos nuestro compromiso, con la bendición de Dios.",
           pending: false,
         },
         photoIds: ["history-19"],
@@ -647,7 +659,7 @@ export const weddingContent = {
             photoId: "april19-photo2",
             description: {
               value:
-                "A medida que avanzábamos, los turnos se hacían más complejos y estratégicos. Cada uno consumía un punto de amor, así que la regla más importante era no permitir que ese recurso se agotara.",
+                "A medida que avanzábamos, los turnos se hacían más complejos y estratégicos. Cada uno consumía un punto de amor, así que la regla más importante era no permitir que 'el amor' se agotara.",
               pending: false,
             },
             visible: true,
@@ -687,7 +699,7 @@ export const weddingContent = {
             photoId: "april19-photo6",
             description: {
               value:
-                "No conseguí el anillo más costoso ni el más lujoso, pero si busqué entregarlo con mucho amor.",
+                "No conseguí el anillo más costoso ni el más lujoso, pero si busqué un anillo con un corazón rojo, que fuese lindo, del gusto de Melisa. Tambien procuré entregarlo con mucho amor.",
               pending: false,
             },
             visible: true,
@@ -719,13 +731,34 @@ export const weddingContent = {
   gifts: {
     eyebrow: "Con cariño",
     title: "Nuestro regalo",
-    paragraphs: [
-      "Lo más valioso para nosotros será contar con sus oraciones; de verdad, las necesitamos.",
+    prayerMessage: {
+      emphasis: "Lo más valioso para nosotros será contar con sus oraciones",
+      remainder: "; de verdad, las necesitamos.",
+    },
+    presenceMessage:
       "Su presencia en este día tan especial es un don que agradecemos de corazón.",
-    ],
-    keyParagraph:
-      "Si, además, desean tener un detalle con nosotros, recibiremos con mucho cariño su lluvia de sobres. Si les resulta más cómodo, también podrán enviar su obsequio a nuestra llave",
-    key: "@Alzate6073",
+    optionalGiftMessage:
+      "Si, además, desean tener un detalle con nosotros, recibiremos con mucho cariño",
+    transferIntroduction:
+      "Si les resulta más cómodo, pueden hacer uso de las siguientes opciones:",
+    options: [
+      {
+        id: "envelope",
+        label: "Lluvia de sobres",
+      },
+      {
+        id: "bank-account",
+        label: "Cuenta de Ahorros Bancolombia",
+        value: "331-561467-61",
+        note: "Si deseas puedes añadir una tarjeta y un lindo mensaje, usando la app Bancolombia: Transferencia -> Enviar Regalo.",
+      },
+      {
+        id: "key",
+        label: "Llave",
+        value: "@Alzate6073",
+        note: "Si deseas puedes enviar tu detalle usando una llave.",
+      },
+    ] satisfies readonly GiftOption[],
   } satisfies GiftContent,
   additionalInfo: {
     intro:

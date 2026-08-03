@@ -3,6 +3,10 @@ import SectionHeading from "./SectionHeading.astro";
 import { weddingContent } from "../content/wedding";
 
 const { gifts } = weddingContent;
+const envelopeOption = gifts.options.find((option) => option.id === "envelope");
+const electronicOptions = gifts.options.filter(
+  (option) => option.id !== "envelope",
+);
 ---
 
 <section
@@ -20,12 +24,115 @@ const { gifts } = weddingContent;
     <div class="gift-card">
       <span class="gift-card__mark" aria-hidden="true">✦</span>
       <div class="gift-card__copy">
-        {gifts.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
         <p>
-          {gifts.keyParagraph}{" "}
-          <span class="gift-card__key">{gifts.key}</span>.
+          <strong>{gifts.prayerMessage.emphasis}</strong>{
+            gifts.prayerMessage.remainder
+          }
         </p>
+        <p>{gifts.presenceMessage}</p>
+        <p>{gifts.optionalGiftMessage}</p>
+
+        {
+          envelopeOption && (
+            <ul
+              class="gift-options gift-options--envelope"
+              aria-label="Opción de lluvia de sobres"
+            >
+              <li
+                class="gift-option gift-option--envelope"
+                data-gift-option-id={envelopeOption.id}
+              >
+                <p class="gift-option__label">
+                  <strong>{envelopeOption.label}</strong>
+                </p>
+              </li>
+            </ul>
+          )
+        }
+
+        <div class="gift-card__electronic-options">
+          <p class="gift-card__transfer-introduction">
+            {gifts.transferIntroduction}
+          </p>
+
+          <ul
+            class="gift-options gift-options--electronic"
+            aria-label="Opciones de transferencia electrónica"
+          >
+            {
+              electronicOptions.map((option) => (
+                <li class="gift-option" data-gift-option-id={option.id}>
+                  <p class="gift-option__label">{option.label}</p>
+
+                  {option.value && (
+                    <div class="gift-option__value-row">
+                      <span class="gift-option__value">{option.value}</span>
+                      <button
+                        class="gift-option__copy-button"
+                        type="button"
+                        hidden
+                        data-gift-copy
+                        data-copy-label={option.label}
+                        data-copy-value={option.value}
+                        aria-label={`Copiar ${option.label}`}
+                      >
+                        Copiar
+                      </button>
+                    </div>
+                  )}
+
+                  {option.note && (
+                    <p class="gift-option__note">{option.note}</p>
+                  )}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <span class="visually-hidden" aria-live="polite" data-gift-copy-status
+        ></span>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  const copyButtons =
+    document.querySelectorAll<HTMLButtonElement>("[data-gift-copy]");
+  const copyStatus = document.querySelector<HTMLElement>(
+    "[data-gift-copy-status]",
+  );
+
+  if (navigator.clipboard?.writeText) {
+    copyButtons.forEach((button) => {
+      const value = button.dataset.copyValue;
+      const label = button.dataset.copyLabel;
+      let resetTimer: number | undefined;
+
+      if (!value || !label) return;
+
+      button.hidden = false;
+      button.addEventListener("click", async () => {
+        button.disabled = true;
+        window.clearTimeout(resetTimer);
+
+        try {
+          await navigator.clipboard.writeText(value);
+          button.textContent = "Copiado";
+          if (copyStatus) copyStatus.textContent = `${label}: copiado.`;
+        } catch {
+          button.textContent = "No se pudo copiar";
+          if (copyStatus) {
+            copyStatus.textContent = `No se pudo copiar ${label}. Selecciona el valor manualmente.`;
+          }
+        } finally {
+          button.disabled = false;
+          resetTimer = window.setTimeout(() => {
+            button.textContent = "Copiar";
+          }, 2500);
+        }
+      });
+    });
+  }
+</script>
