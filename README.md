@@ -31,7 +31,7 @@ pnpm preview
 - Tipos de invitación, rutas, metadatos y secciones: `src/content/invitations.ts`
 - Código de vestimenta y muestras de color: `weddingContent.dressCode` en `src/content/wedding.ts`
 - Recepción, confirmación y aviso de acceso: `weddingContent.celebration` en `src/content/wedding.ts`
-- Regalos, párrafos y llave destacada: `weddingContent.gifts` en `src/content/wedding.ts`
+- Regalos, cuenta Bancolombia, llave y opciones disponibles: `weddingContent.gifts` en `src/content/wedding.ts`
 - Galería de la invitación: originales en `photos/gallery/`, orden y alt text en `homeGalleryPhotos` dentro de `src/content/photos.ts`
 - Imágenes destacadas de la invitación y originales preservados: `photos/home/`
 - Citas bíblicas y posiciones editoriales de galería: `weddingContent.biblicalQuotes` en `src/content/wedding.ts`

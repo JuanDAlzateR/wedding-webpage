@@ -1055,7 +1055,7 @@ p {
   font-size: 1.15rem;
 }
 
-.gift-card p {
+.gift-card__copy > p {
   max-width: 34rem;
   margin: 0 auto;
   color: var(--color-text-muted);
@@ -1069,8 +1069,73 @@ p {
   gap: clamp(1rem, 2.5vw, 1.5rem);
 }
 
-.gift-card__key {
+.gift-card__electronic-options {
+  display: grid;
+  gap: 1rem;
+}
+
+.gift-card__transfer-introduction {
+  max-width: 34rem;
+  margin: 0 auto;
+  color: var(--color-text-muted);
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
+  line-height: 1.6;
+  text-align: center;
+}
+
+.gift-options {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.gift-option {
+  display: grid;
+  min-width: 0;
+  gap: 0.75rem;
+  align-content: start;
+  padding: clamp(1.15rem, 4vw, 1.5rem);
+  border: 1px solid var(--color-border);
+  border-radius: 0.35rem;
+  background: var(--color-background);
+}
+
+.gift-option__label,
+.gift-option__note {
+  margin: 0;
+}
+
+.gift-option__label {
+  color: var(--color-primary-dark);
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 4vw, 1.65rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.gift-option__label strong {
+  font-weight: 800;
+}
+
+.gift-option__note {
+  color: var(--color-text-muted);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.gift-option__value-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  align-items: center;
+}
+
+.gift-option__value {
   display: inline-block;
+  max-width: 100%;
   padding: 0.08em 0.36em;
   border: 1px solid var(--color-accent-border);
   border-radius: 0.2em;
@@ -1082,7 +1147,51 @@ p {
   font-weight: 800;
   letter-spacing: 0.055em;
   line-height: 1.25;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  user-select: text;
+}
+
+.gift-option__copy-button {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid var(--color-primary);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-primary-dark);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.gift-option__copy-button[hidden] {
+  display: none;
+}
+
+.gift-option__copy-button:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent-wash);
+}
+
+.gift-option__copy-button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+@media (min-width: 48rem) {
+  .gift-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .gift-option--envelope {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
 }
 
 .engagement-page {

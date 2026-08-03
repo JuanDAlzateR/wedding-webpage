@@ -180,10 +180,16 @@ const sharedInvitationText = [
   "Gracias por acompañarnos y por respetar este deseo en una ocasión tan especial para nosotros.",
   "La Celebración dará inicio puntualmente a las 10:00 a. m. Te invitamos a llegar con anticipación para disponernos juntos a vivir la Santa Misa desde el comienzo.",
   "Nuestro regalo",
-  "Lo más valioso para nosotros será contar con sus oraciones; de verdad, las necesitamos.",
   "Su presencia en este día tan especial es un don que agradecemos de corazón.",
-  "Si, además, desean tener un detalle con nosotros, recibiremos con mucho cariño su lluvia de sobres. Si les resulta más cómodo, también podrán enviar su obsequio a nuestra llave",
+  "Si, además, desean tener un detalle con nosotros, recibiremos con mucho cariño",
+  "1) Lluvia de sobres",
+  "Si les resulta más cómodo, pueden hacer uso de las siguientes opciones:",
+  "2) Cuenta de Ahorros Bancolombia",
+  "331-561467-61",
+  "Si deseas puedes añadir una tarjeta y un lindo mensaje, usando la app Bancolombia: Transferencia -&gt; Enviar Regalo.",
+  "3) Llave",
   "@Alzate6073",
+  "Si deseas puedes enviar tu detalle usando una llave.",
   "Descubrir nuestra historia",
   'href="/compromiso/"',
   'href="/como-nos-conocimos/"',
@@ -274,7 +280,7 @@ const howWeMetText = [
   "Un sí de confianza que nos trajo hasta aquí",
   "24 de febrero de 2024",
   "Solo confía.",
-  "sellamos nuestro compromiso con la bendición de Dios",
+  "sellamos nuestro compromiso, con la bendición de Dios",
   "El 25 de febrero fuimos juntos al Ave María. También es el lugar donde casi terminamos",
 ];
 
@@ -386,6 +392,7 @@ const removedInvitationText = [
   "2026-10-12T18:00:00-05:00",
   "Un detalle para nosotros",
   "1032485387",
+  "Si, además, desean tener un detalle con nosotros, recibiremos con mucho cariño su lluvia de sobres. Si les resulta más cómodo, también podrán enviar su obsequio a nuestra llave",
   'href="#fotos"',
   ">Fotos<",
 ];
@@ -401,6 +408,106 @@ for (const [html, routeLabel] of [
       `Permanece texto reemplazado en ${routeLabel}: ${text}`,
     );
   }
+}
+
+const expectedGiftOptionMarkers = [
+  'data-gift-option-id="envelope"',
+  'data-gift-option-id="bank-account"',
+  'data-gift-option-id="key"',
+];
+const prayerEmphasis =
+  "Lo más valioso para nosotros será contar con sus oraciones";
+const prayerRemainder = "; de verdad, las necesitamos.";
+const transferIntroduction =
+  "Si les resulta más cómodo, pueden hacer uso de las siguientes opciones:";
+
+for (const [html, routeLabel] of [
+  [massHtml, "la invitación de Eucaristía"],
+  [rootHtml, "la raíz"],
+  [completeHtml, "la invitación completa"],
+]) {
+  const giftSection =
+    html.match(/<section[^>]*\bid="regalos"[^>]*>[\s\S]*?<\/section>/)?.[0] ??
+    "";
+
+  assert.ok(giftSection, `No se encontró Nuestro regalo en ${routeLabel}.`);
+
+  const visibleGiftText = giftSection.replace(/<[^>]+>/g, "");
+  assert.ok(
+    visibleGiftText.includes(`${prayerEmphasis}${prayerRemainder}`),
+    `El mensaje de oración cambió su texto o puntuación en ${routeLabel}.`,
+  );
+
+  const strongMatches = [
+    ...giftSection.matchAll(/<strong\b[^>]*>([\s\S]*?)<\/strong>/g),
+  ];
+  assert.deepEqual(
+    strongMatches.map((match) => match[1]),
+    [prayerEmphasis, "1) Lluvia de sobres"],
+    `Nuestro regalo no conserva exactamente los dos énfasis requeridos en ${routeLabel}.`,
+  );
+  assert.ok(
+    giftSection.includes(
+      `<strong>${prayerEmphasis}</strong>${prayerRemainder}`,
+    ),
+    `El sufijo del mensaje de oración quedó incluido en el énfasis en ${routeLabel}.`,
+  );
+
+  let previousOptionIndex = -1;
+  for (const marker of expectedGiftOptionMarkers) {
+    const optionIndex = giftSection.indexOf(marker);
+    assert.ok(
+      optionIndex > previousOptionIndex,
+      `Las opciones de Nuestro regalo no conservan su orden en ${routeLabel}.`,
+    );
+    previousOptionIndex = optionIndex;
+  }
+
+  const envelopeIndex = giftSection.indexOf(expectedGiftOptionMarkers[0]);
+  const transferIntroductionIndex = giftSection.indexOf(transferIntroduction);
+  const bankAccountIndex = giftSection.indexOf(expectedGiftOptionMarkers[1]);
+  const keyIndex = giftSection.indexOf(expectedGiftOptionMarkers[2]);
+  assert.ok(
+    envelopeIndex < transferIntroductionIndex &&
+      transferIntroductionIndex < bankAccountIndex &&
+      bankAccountIndex < keyIndex,
+    `La introducción de transferencias no está entre sobres y las opciones electrónicas en ${routeLabel}.`,
+  );
+
+  const giftOptionCards = [
+    ...giftSection.matchAll(
+      /<li\b[^>]*data-gift-option-id="[^"]+"[^>]*>[\s\S]*?<\/li>/g,
+    ),
+  ];
+  assert.equal(
+    giftOptionCards.length,
+    3,
+    `Nuestro regalo no contiene exactamente tres tarjetas en ${routeLabel}.`,
+  );
+  for (const [optionCard] of giftOptionCards) {
+    assert.ok(
+      !optionCard.includes(transferIntroduction),
+      `La introducción de transferencias quedó dentro de una tarjeta en ${routeLabel}.`,
+    );
+  }
+
+  assert.equal(
+    [...giftSection.matchAll(/\sdata-gift-copy(?:=|\s|>)/g)].length,
+    2,
+    `Nuestro regalo no contiene exactamente dos controles de copiado en ${routeLabel}.`,
+  );
+  assert.ok(
+    giftSection.includes('data-copy-value="331-561467-61"'),
+    `La cuenta de Bancolombia no está asociada a su control de copiado en ${routeLabel}.`,
+  );
+  assert.ok(
+    giftSection.includes('data-copy-value="@Alzate6073"'),
+    `La llave no está asociada a su control de copiado en ${routeLabel}.`,
+  );
+  assert.ok(
+    giftSection.includes('aria-live="polite"'),
+    `Nuestro regalo no anuncia el resultado del copiado en ${routeLabel}.`,
+  );
 }
 
 const dressColorOrder = [
