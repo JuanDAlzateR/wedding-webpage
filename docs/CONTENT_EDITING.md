@@ -6,9 +6,9 @@ No es necesario modificar los componentes visuales para cambiar los datos de la 
 
 `src/content/invitations.ts` define los identificadores `mass_only` y `mass_and_celebration`, sus rutas, metadatos, texto de introducción, orden de navegación y secciones visibles. Las etiquetas de los enlaces viven una sola vez en `invitationNavigationItems`; `navigationOrder` establece el orden de cada variante y `getInvitationNavigation` retira automáticamente los destinos que no se renderizan.
 
-La variante de Eucaristía nunca renderiza la celebración posterior, su confirmación ni la información adicional. El código de vestimenta es contenido confirmado y compartido por ambas variantes. No añadas un selector ni enlaces entre variantes.
+La variante de Eucaristía nunca renderiza la Recepción, su confirmación ni la información adicional. El código de vestimenta es contenido confirmado y compartido por ambas variantes. No añadas un selector ni enlaces entre variantes.
 
-El orden visible compartido es Eucaristía, código de vestimenta, regalos, Nuestra historia y galería. La invitación completa inserta la celebración posterior, con su confirmación, después de la Eucaristía. `navigationOrder` debe mantener ese mismo recorrido y omitir automáticamente cualquier sección no renderizada. Nuestra historia enlaza dos páginas compartidas distintas: Cómo nos conocimos y Cómo nos comprometimos.
+El orden visible compartido es Eucaristía, código de vestimenta, regalos, Nuestra historia y galería. La invitación completa inserta la Recepción, con su confirmación, después de la Eucaristía. `navigationOrder` debe mantener ese mismo recorrido y omitir automáticamente cualquier sección no renderizada. Nuestra historia enlaza dos páginas compartidas distintas: Cómo nos conocimos y Cómo nos comprometimos.
 
 Para cambiar la ruta no obvia de la invitación completa:
 
@@ -21,16 +21,16 @@ No copies el slug en menús, pies de página o documentación general. Ocultarlo
 
 ## Información de la boda
 
-Abre `src/content/wedding.ts`. Este archivo contiene nombres, datos compartidos de la Eucaristía, datos exclusivos de la celebración posterior, dress code, historias, información adicional y visibilidad de secciones.
+Abre `src/content/wedding.ts`. Este archivo contiene nombres, datos compartidos de la Eucaristía, datos exclusivos de la Recepción, dress code, historias, información adicional y visibilidad de secciones.
 
 - `ceremony`: fecha, hora, lugar, dirección, mapa e indicaciones compartidos por ambas invitaciones.
-- `celebration`: horario, lugar, dirección, introducción, referencia, mapa, confirmación y aviso de acceso que solo puede renderizar la invitación completa.
+- `celebration`: identificador interno para el horario, lugar, dirección, introducción, referencia, mapa, confirmación y aviso de acceso de la Recepción, que solo puede renderizar la invitación completa.
 - `dressCode`: título, estilo, orientaciones, notas, colores restringidos y mensaje final compartidos.
 - `biblicalQuotes`: texto, referencia y posición editorial de todas las citas bíblicas.
 - `stories`: textos del acceso compartido a los dos capítulos.
 - `howWeMet`: resumen, metadatos y momentos tipados de Cómo nos conocimos.
 - `engagement`: resumen, metadatos, relato y textos de la página de compromiso.
-- `gifts`: encabezado, mensaje y llave compartidos para regalos.
+- `gifts`: encabezado, párrafos y llave compartidos para regalos.
 - `sections`: disponibilidad global de cada sección. La configuración de cada variante puede ocultarla adicionalmente.
 
 ## Convención editorial
@@ -67,15 +67,15 @@ Cada cita contiene `id`, `lines` y `reference`. Una línea puede añadir `speake
 
 Las referencias se escriben sin paréntesis y el texto confirmado se conserva literalmente.
 
-## Confirmación de la celebración
+## Confirmación de la Recepción
 
-La tarjeta de confirmación se edita en `weddingContent.celebration.confirmation`: `body`, `callToAction`, `url` y `deadline`. El aviso de la tarjeta naranja vive en `weddingContent.celebration.accessNotice`.
+La tarjeta de confirmación se edita en `weddingContent.celebration.confirmation`: `body`, `callToAction`, `url` y `deadline`. El aviso de la tarjeta naranja vive en `weddingContent.celebration.accessNotice`: `body` contiene la parte normal y `emphasis` únicamente la oración que recibe `<strong>`.
 
 Ambos bloques son exclusivos de la invitación completa. Si cambias alguno de sus textos, agrega o actualiza su marcador en `scripts/verify-invitations.mjs` para que una filtración en la invitación de Eucaristía falle durante la validación.
 
 ## Lluvia de sobres
 
-El encabezado y el mensaje se editan únicamente en `weddingContent.gifts`. `body` conserva la redacción y `key` contiene la llave numérica que se destaca visualmente en la tarjeta. Esta sección aparece en las dos invitaciones y no debe contener entidades financieras, tipos de cuenta, enlaces de pago, códigos QR ni información exclusiva de la celebración.
+El encabezado y el mensaje se editan únicamente en `weddingContent.gifts`. `paragraphs` conserva los dos primeros párrafos, `keyParagraph` contiene el texto del tercero previo a la llave y `key` contiene la llave destacada visualmente en la tarjeta. Esta sección aparece en las dos invitaciones y no debe contener entidades financieras, tipos de cuenta, enlaces de pago, códigos QR ni información exclusiva de la Recepción.
 
 Para ocultarla temporalmente, cambia `weddingContent.sections.gifts` a `false`. Si se modifica su visibilidad por variante, debe conservarse habilitada o deshabilitada de la misma forma en las dos invitaciones.
 

@@ -5,7 +5,7 @@ Sitio estático, móvil primero y exclusivamente en español. Está construido c
 El mismo diseño genera dos invitaciones independientes:
 
 - Eucaristía solamente.
-- Eucaristía y celebración posterior.
+- Eucaristía y Recepción.
 
 La raíz `/` muestra la variante de Eucaristía. Las rutas y la configuración de ambas variantes se mantienen en `src/content/invitations.ts`; la ruta no obvia de la invitación completa no se copia en esta documentación.
 
@@ -30,6 +30,8 @@ pnpm preview
 - Información de la boda: `src/content/wedding.ts`
 - Tipos de invitación, rutas, metadatos y secciones: `src/content/invitations.ts`
 - Código de vestimenta y muestras de color: `weddingContent.dressCode` en `src/content/wedding.ts`
+- Recepción, confirmación y aviso de acceso: `weddingContent.celebration` en `src/content/wedding.ts`
+- Regalos, párrafos y llave destacada: `weddingContent.gifts` en `src/content/wedding.ts`
 - Galería de la invitación: originales en `photos/gallery/`, orden y alt text en `homeGalleryPhotos` dentro de `src/content/photos.ts`
 - Imágenes destacadas de la invitación y originales preservados: `photos/home/`
 - Citas bíblicas y posiciones editoriales de galería: `weddingContent.biblicalQuotes` en `src/content/wedding.ts`

@@ -38,7 +38,10 @@ const { dressCode } = weddingContent;
       </div>
 
       <div class="dress-card__notes">
-        <p>{dressCode.decorum}</p>
+        <p>
+          {dressCode.decorum.body}
+          <strong>{dressCode.decorum.emphasis}</strong>
+        </p>
         <p>{dressCode.complianceNote}</p>
       </div>
 

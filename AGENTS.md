@@ -29,29 +29,30 @@ Este repositorio contiene un sitio web estático de boda, móvil primero y únic
 ## Contenido
 
 - No inventar nombres, fechas, lugares, historias, políticas, contactos ni enlaces.
-- La invitación `mass_only` no puede incluir texto, metadatos, navegación, assets de texto ni referencias a la celebración posterior.
+- La invitación `mass_only` no puede incluir texto, metadatos, navegación, assets de texto ni referencias a la Recepción.
 - La ruta no obvia de `mass_and_celebration` no debe copiarse en menús, pies, sitemaps o documentación general.
 - Mantener placeholders centralizados y claramente marcados.
 - Las secciones opcionales sin información confirmada deben permanecer ocultas.
 - El sitio es solo en español; no añadir traducciones ni selector de idioma salvo petición explícita.
 - Mantener `Eucaristía`, `Misa` y `Santa Misa` con iniciales mayúsculas; usar `liturgia` cuando se hable específicamente del acto religioso.
 - El contenido confirmado del vestuario y sus muestras aproximadas se editan únicamente en `weddingContent.dressCode`; los nombres de los colores son la información autoritativa.
-- El mensaje compartido de regalos se edita en `weddingContent.gifts.body` y la llave en `weddingContent.gifts.key`; no añadir entidades financieras, tipos de cuenta, QR ni instrucciones de pago.
+- El mensaje compartido de regalos se edita en `weddingContent.gifts.paragraphs` y `weddingContent.gifts.keyParagraph`; la llave vive en `weddingContent.gifts.key`. No añadir entidades financieras, tipos de cuenta, QR ni instrucciones de pago.
 
 ## Navegación y citas
 
-- El recorrido compartido es: Inicio, Eucaristía, código de vestimenta, regalos, Nuestra historia y galería; la invitación completa inserta la celebración posterior, incluida su confirmación, después de la Eucaristía.
+- El recorrido compartido es: Inicio, Eucaristía, código de vestimenta, regalos, Nuestra historia y galería; la invitación completa inserta la Recepción, incluida su confirmación, después de la Eucaristía.
 - `#historia` es un acceso compartido a dos experiencias independientes: `/como-nos-conocimos/` y `/compromiso/`.
 - Las etiquetas y el orden de navegación se mantienen en `src/content/invitations.ts`; la navegación final se filtra según las secciones realmente visibles.
 - `navigationOrder` debe reproducir el orden renderizado y nunca incluir destinos ocultos.
-- Todo enlace interno debe resolver a un ID existente. `Confirmación` y cualquier otro acceso relacionado con la celebración son exclusivos de `mass_and_celebration`.
+- Todo enlace interno debe resolver a un ID existente. `Confirmación` y cualquier otro acceso relacionado con la Recepción son exclusivos de `mass_and_celebration`.
 - Los textos y referencias bíblicas se mantienen en `weddingContent.biblicalQuotes`; su marcado canónico es `BiblicalQuote.astro`.
 - Conservar literalmente la puntuación y referencia de una cita confirmada. Las referencias se muestran sin paréntesis.
 
-## Celebración posterior
+## Recepción
 
 - Introducción, aviso de acceso, URL de confirmación y fecha límite viven en `weddingContent.celebration`.
-- Estos datos solo pueden pasarse al bloque de celebración de `mass_and_celebration`; deben permanecer ausentes del HTML, metadatos y assets de texto de `mass_only`.
+- `accessNotice.body` conserva el texto normal y `accessNotice.emphasis` contiene únicamente la oración que debe renderizarse con énfasis semántico.
+- Estos datos solo pueden pasarse al bloque de Recepción de `mass_and_celebration`; deben permanecer ausentes del HTML, metadatos y assets de texto de `mass_only`.
 - La confirmación continúa siendo un enlace externo. No crear formularios, almacenamiento ni backend.
 
 ## Relato del compromiso
@@ -64,7 +65,7 @@ Este repositorio contiene un sitio web estático de boda, móvil primero y únic
 - Para editar, ocultar o reordenar, cambia únicamente los datos. Una entrada con `description.pending: true` debe usar `visible: false`; los placeholders nunca se muestran.
 - Para retirar un momento, elimina tanto la entrada como su elemento del manifiesto activo. Conserva el original cuando sea práctico.
 - Las fotos de compromiso viven en `photos/engagement/` y no deben duplicarse en `homeGalleryPhotos` ni `howWeMetPhotos`.
-- `/compromiso/` es compartida y privada por `noindex`; no debe nombrar ni enlazar la ruta completa ni serializar información exclusiva de la celebración.
+- `/compromiso/` es compartida y privada por `noindex`; no debe nombrar ni enlazar la ruta completa ni serializar información exclusiva de la Recepción.
 - No inventar detalles personales ni inferir lugares o personas solo a partir de una imagen.
 
 ## Cómo nos conocimos
@@ -76,7 +77,7 @@ Este repositorio contiene un sitio web estático de boda, móvil primero y únic
 - Las fotos activas viven en `photos/history/`; los HEIC usan JPG homónimos en `photos/history/web-compatible/`. La colección archivada no se importa ni se publica.
 - Para añadir un momento, registra la foto y su alt text en `howWeMetPhotos` y crea la entrada asociada. Para reemplazar una foto sin alterar el relato, conserva su ID y cambia únicamente su archivo y alt text.
 - Para editar, ocultar o reordenar, modifica la entrada completa. Una referencia ausente, duplicada o sin descripción debe fallar durante el build, no sustituirse por otra foto.
-- `/como-nos-conocimos/` es compartida y privada por `noindex`; no debe nombrar ni enlazar la ruta completa ni serializar información exclusiva de la celebración.
+- `/como-nos-conocimos/` es compartida y privada por `noindex`; no debe nombrar ni enlazar la ruta completa ni serializar información exclusiva de la Recepción.
 - Su diseño es un scrapbook editorial por grupos; no copiar el patrón alternado de una foto y un texto usado en `/compromiso/`.
 
 ## Fotografías

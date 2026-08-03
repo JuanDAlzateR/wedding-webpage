@@ -76,7 +76,10 @@ export type DressCodeContent = {
   title: string;
   style: string;
   guidance: readonly DressCodeGuidance[];
-  decorum: string;
+  decorum: {
+    body: string;
+    emphasis: string;
+  };
   complianceNote: string;
   restrictedColorsLabel: string;
   restrictedColors: readonly DressCodeRestrictedColor[];
@@ -104,6 +107,8 @@ export type CelebrationDetailsContent = Omit<
   EventDetailsContent,
   "date" | "dateIso"
 > & {
+  eyebrow: string;
+  title: string;
   description: readonly string[];
   confirmation: {
     title: string;
@@ -115,7 +120,16 @@ export type CelebrationDetailsContent = Omit<
   accessNotice: {
     label: string;
     body: string;
+    emphasis: string;
   };
+};
+
+export type GiftContent = {
+  eyebrow: string;
+  title: string;
+  paragraphs: readonly [string, string];
+  keyParagraph: string;
+  key: string;
 };
 
 /**
@@ -224,15 +238,17 @@ export const weddingContent = {
     mapLabel: "Ver ubicación de la Parroquia El Portal de Jesús en Google Maps",
     arrivalNotes: {
       value:
-        "La celebración dará inicio puntualmente a las 10:00 a. m. Te invitamos a llegar con anticipación para disponernos juntos a vivir la Santa Misa desde el comienzo.",
+        "La Celebración dará inicio puntualmente a las 10:00 a. m. Te invitamos a llegar con anticipación para disponernos juntos a vivir la Santa Misa desde el comienzo.",
       pending: false,
     } satisfies EditableText,
   } satisfies EventDetailsContent,
   celebration: {
+    eyebrow: "Después de la Eucaristía",
+    title: "Recepción",
     time: { value: "12:30 p. m.", pending: false } satisfies EditableText,
     dateTimeIso: "2026-10-12T12:30:00-05:00",
-    endTime: { value: "6:00 p. m.", pending: false } satisfies EditableText,
-    endDateTimeIso: "2026-10-12T18:00:00-05:00",
+    endTime: { value: "6:30 p. m.", pending: false } satisfies EditableText,
+    endDateTimeIso: "2026-10-12T18:30:00-05:00",
     venue: {
       value: "Noviciado Hermanas Oblatas de San Francisco de Sales",
       pending: false,
@@ -243,22 +259,24 @@ export const weddingContent = {
     } satisfies EditableText,
     locationReference: "Cerca de la Parroquia San Felipe Apóstol",
     description: [
-      "Ocupas un lugar muy especial en nuestro corazón y en nuestra historia. Por eso, hemos reservado un lugar para que nos acompañes en la prolongación de la alegría de la celebración del sacramento.",
-      "Te invitamos a compartir con nosotros el almuerzo y a continuar la celebración con una tarde de juegos, música, alegría y fiesta.",
+      "Ocupas un lugar muy especial en nuestro corazón y en nuestra historia. Por eso, hemos reservado un lugar para que nos acompañes en la prolongación de la alegría de la Celebración del Sacramento.",
+      "Te invitamos a compartir con nosotros el almuerzo y a continuar la celebración con una tarde de juegos, música, fiesta y alegría.",
     ],
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Noviciado%20Hermanas%20Oblatas%20de%20San%20Francisco%20de%20Sales%2C%20Carrera%2032%20%2371%20Sur-240%2C%20Poblado%20del%20Sur%2C%20Sabaneta%2C%20Antioquia",
-    mapLabel: "Ver ubicación de la celebración en Google Maps",
+    mapLabel: "Ver ubicación de la Recepción en Google Maps",
     confirmation: {
       title: "Confirmación",
       body: "Agradeceremos tu pronta confirmación para preparar cada detalle con cariño y, en caso de que no puedas acompañarnos, brindar la oportunidad a otro ser querido de compartir este día con nosotros.",
       callToAction: "Confirmar asistencia",
       url: "https://forms.gle/ubKwM6ez5RWDWNKy8",
-      deadline: "Por favor, hazlo antes del 12 de septiembre.",
+      deadline: "Por favor, hazlo antes del 1 de septiembre.",
     },
     accessNotice: {
       label: "Importante",
-      body: "Recuerda llevar contigo la tarjeta de invitación color naranja con tu nombre. Tu puesto ha sido reservado especialmente para ti y el acceso se realizará conforme a la lista de invitados confirmados.",
+      body: "Recuerda llevar contigo la tarjeta de invitación color naranja con tu nombre. Tu puesto ha sido reservado especialmente para ti y",
+      emphasis:
+        "el acceso se realizará conforme a la lista de invitados confirmados. Favor confirmar la asistencia antes del 1 de septiembre.",
     },
   } satisfies CelebrationDetailsContent,
   dressCode: {
@@ -269,16 +287,18 @@ export const weddingContent = {
         id: "women",
         label: "Mujeres",
         description:
-          "vestido midi o largo, o conjunto de pantalón de corte amplio.",
+          "Vestido midi o largo, o conjunto de pantalón de corte amplio.",
       },
       {
         id: "men",
         label: "Hombres",
-        description: "traje o blazer con pantalón de vestir.",
+        description: "Traje o blazer con pantalón de vestir.",
       },
     ],
-    decorum:
-      "Por respeto al carácter sagrado de la celebración, elige atuendos sin escotes.",
+    decorum: {
+      body: "Por respeto al carácter sagrado de la celebración,",
+      emphasis: "elige atuendos sin escotes.",
+    },
     complianceNote:
       "El código de vestimenta hace parte de los detalles que hemos elegido cuidadosamente para este día, por lo que apreciamos su cumplimiento.",
     restrictedColorsLabel: "Evita los siguientes colores en el vestuario:",
@@ -307,6 +327,16 @@ export const weddingContent = {
         id: "sky-blue",
         name: "Azul cielo",
         swatch: "#79BCE8",
+      },
+      {
+        id: "marine-blue",
+        name: "Azul marino",
+        swatch: "#243B5A",
+      },
+      {
+        id: "navy-blue",
+        name: "Azul navy",
+        swatch: "#172554",
       },
     ],
     closingMessage:
@@ -351,7 +381,7 @@ export const weddingContent = {
         id: "the-day-we-met",
         description: {
           value:
-            "Así es: nos conocimos el 24 de febrero en el CP, el Centro Pastoral del Sodalicio de Vida Cristiana, un día en que ninguno de los dos debía estar allí. Ese mismo día comimos perritos, que se convertirían en nuestro plato favorito, y fuimos al cine juntos. ¿Quién diría que dos años después estaríamos en una carrera por coleccionar visitas al cine? El 25 de febrero fuimos juntos al Ave María y, sí, spoiler alert: dos años después fue en ese lugar donde nos comprometimos. También es el lugar donde casi terminamos y el escenario de nuestra primera foto juntos: esa que ven a un lado, de los dos junto a la cruz. Una foto arriesgada, de dos incautos que sintieron el llamado a tomarse una foto con alguien que era prácticamente un desconocido. Pero Dios no se queda con nada: vivimos alegrías, tristezas, retos y triunfos en ese mismo lugar, y todo ha sido su amorosa respuesta a un pedido de amor.",
+            "Así es: nos conocimos el 24 de febrero en el CP, el Centro Pastoral del Sodalicio de Vida Cristiana, un día en que ninguno de los dos debía estar allí. Ese mismo día comimos perritos, que se convertirían en nuestro plato favorito, y fuimos al cine juntos. ¿Quién diría que dos años después estaríamos en una carrera por coleccionar visitas al cine? El 25 de febrero fuimos juntos al Ave María. También es el lugar donde casi terminamos y el escenario de nuestra primera foto juntos: esa que ven a un lado, de los dos junto a la cruz. Una foto arriesgada, de dos incautos que sintieron el llamado a tomarse una foto con alguien que era prácticamente un desconocido. Pero Dios no se queda con nada: vivimos alegrías, tristezas, retos y triunfos en ese mismo lugar, y todo ha sido su amorosa respuesta a un pedido de amor.",
           pending: false,
         },
         photoIds: ["history-02"],
@@ -688,10 +718,15 @@ export const weddingContent = {
   },
   gifts: {
     eyebrow: "Con cariño",
-    title: "Un detalle para nosotros",
-    body: "El mayor regalo para nosotros será contar con sus oraciones, en serio las necesitamos; otro excelente regalo es su presencia en este día tan especial. Si, además, desean tener un detalle con nosotros, recibiremos con mucho cariño su lluvia de sobres o, si les resulta más cómodo, podrán enviar su obsequio a nuestra llave",
-    key: "1032485387",
-  },
+    title: "Nuestro regalo",
+    paragraphs: [
+      "Lo más valioso para nosotros será contar con sus oraciones; de verdad, las necesitamos.",
+      "Su presencia en este día tan especial es un don que agradecemos de corazón.",
+    ],
+    keyParagraph:
+      "Si, además, desean tener un detalle con nosotros, recibiremos con mucho cariño su lluvia de sobres. Si les resulta más cómodo, también podrán enviar su obsequio a nuestra llave",
+    key: "@Alzate6073",
+  } satisfies GiftContent,
   additionalInfo: {
     intro:
       "Aquí podremos publicar recomendaciones y respuestas útiles para los invitados.",

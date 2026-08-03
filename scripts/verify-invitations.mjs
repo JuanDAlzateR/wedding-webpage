@@ -113,22 +113,25 @@ const sharedInvitationText = [
   "Cómo nos comprometimos",
   "Código de vestimenta",
   "Cóctel clásico",
-  "vestido midi o largo, o conjunto de pantalón de corte amplio.",
-  "traje o blazer con pantalón de vestir.",
-  "Por respeto al carácter sagrado de la celebración, elige atuendos sin escotes.",
+  "Vestido midi o largo, o conjunto de pantalón de corte amplio.",
+  "Traje o blazer con pantalón de vestir.",
+  "Por respeto al carácter sagrado de la celebración,",
+  "<strong>elige atuendos sin escotes.</strong>",
   "El código de vestimenta hace parte de los detalles que hemos elegido cuidadosamente para este día, por lo que apreciamos su cumplimiento.",
   "Naranja tigre",
   "Albaricoque",
   "Azul hielo",
   "Azul bebé",
   "Azul cielo",
+  "Azul marino",
+  "Azul navy",
   "Gracias por acompañarnos y por respetar este deseo en una ocasión tan especial para nosotros.",
-  "La celebración dará inicio puntualmente a las 10:00 a. m. Te invitamos a llegar con anticipación para disponernos juntos a vivir la Santa Misa desde el comienzo.",
-  "Un detalle para nosotros",
-  "El mayor regalo para nosotros será contar con sus oraciones, en serio las necesitamos; otro excelente regalo es su presencia en este día tan especial.",
-  "recibiremos con mucho cariño su lluvia de sobres",
-  "podrán enviar su obsequio a nuestra llave",
-  "1032485387",
+  "La Celebración dará inicio puntualmente a las 10:00 a. m. Te invitamos a llegar con anticipación para disponernos juntos a vivir la Santa Misa desde el comienzo.",
+  "Nuestro regalo",
+  "Lo más valioso para nosotros será contar con sus oraciones; de verdad, las necesitamos.",
+  "Su presencia en este día tan especial es un don que agradecemos de corazón.",
+  "Si, además, desean tener un detalle con nosotros, recibiremos con mucho cariño su lluvia de sobres. Si les resulta más cómodo, también podrán enviar su obsequio a nuestra llave",
+  "@Alzate6073",
   "Descubrir nuestra historia",
   'href="/compromiso/"',
   'href="/como-nos-conocimos/"',
@@ -150,22 +153,25 @@ for (const text of sharedInvitationText) {
 }
 
 const completeOnlyText = [
-  "Celebración posterior",
+  "Recepción",
   "Ocupas un lugar muy especial en nuestro corazón y en nuestra historia.",
+  "Celebración del Sacramento",
   "Te invitamos a compartir con nosotros el almuerzo",
+  "una tarde de juegos, música, fiesta y alegría.",
   "12:30 p. m.",
-  "6:00 p. m.",
+  "6:30 p. m.",
   "2026-10-12T12:30:00-05:00",
-  "2026-10-12T18:00:00-05:00",
+  "2026-10-12T18:30:00-05:00",
   "Noviciado Hermanas Oblatas de San Francisco de Sales",
   "Carrera 32 #71 Sur-240, Poblado del Sur, Sabaneta, Antioquia",
   "Cerca de la Parroquia San Felipe Apóstol",
-  "Ver ubicación de la celebración en Google Maps",
+  "Ver ubicación de la Recepción en Google Maps",
   "Noviciado%20Hermanas%20Oblatas%20de%20San%20Francisco%20de%20Sales",
   "Agradeceremos tu pronta confirmación",
   "https://forms.gle/ubKwM6ez5RWDWNKy8",
-  "Por favor, hazlo antes del 12 de septiembre.",
+  "Por favor, hazlo antes del 1 de septiembre.",
   "Recuerda llevar contigo la tarjeta de invitación color naranja con tu nombre.",
+  "el acceso se realizará conforme a la lista de invitados confirmados.",
   'href="#encuentro"',
   'href="#confirmacion"',
 ];
@@ -217,6 +223,7 @@ const howWeMetText = [
   "24 de febrero de 2024",
   "Solo confía.",
   "sellamos nuestro compromiso con la bendición de Dios",
+  "El 25 de febrero fuimos juntos al Ave María. También es el lugar donde casi terminamos",
 ];
 
 for (const text of howWeMetText) {
@@ -242,6 +249,12 @@ assert.doesNotMatch(
   howWeMetHtml,
   /Texto provisional|Texto historia \d+/,
   "Cómo nos conocimos expone placeholders editoriales.",
+);
+assert.ok(
+  !howWeMetHtml.includes(
+    ", sí, spoiler alert: dos años después fue en ese lugar donde nos comprometimos.",
+  ),
+  "Cómo nos conocimos conserva la cláusula retirada del spoiler.",
 );
 
 const engagementPhotoMarkers = [
@@ -312,6 +325,15 @@ const removedInvitationText = [
   "Publicaremos la guía de vestuario cuando esté confirmada.",
   "Cóctel elegante",
   "Su presencia y compañía son nuestro mejor regalo. Si desean tener un detalle con nosotros, recibiremos con mucho cariño lluvia de sobres.",
+  "Celebración posterior",
+  "celebración posterior",
+  "celebración del sacramento",
+  "una tarde de juegos, música, alegría y fiesta.",
+  "Por favor, hazlo antes del 12 de septiembre.",
+  "6:00 p. m.",
+  "2026-10-12T18:00:00-05:00",
+  "Un detalle para nosotros",
+  "1032485387",
   'href="#fotos"',
   ">Fotos<",
 ];
@@ -328,6 +350,54 @@ for (const [html, routeLabel] of [
     );
   }
 }
+
+const dressColorOrder = [
+  "Naranja tigre",
+  "Albaricoque",
+  "Azul hielo",
+  "Azul bebé",
+  "Azul cielo",
+  "Azul marino",
+  "Azul navy",
+];
+
+for (const [html, routeLabel] of [
+  [massHtml, "la invitación de Eucaristía"],
+  [rootHtml, "la raíz"],
+  [completeHtml, "la invitación completa"],
+]) {
+  assertOrderedMarkers(
+    html,
+    dressColorOrder,
+    routeLabel,
+    "colores restringidos",
+  );
+  assert.equal(
+    [...html.matchAll(/class="dress-colors__swatch"/g)].length,
+    dressColorOrder.length,
+    `${routeLabel} no contiene exactamente siete muestras de color.`,
+  );
+}
+
+const accessNotice =
+  completeHtml.match(/<aside class="editorial-notice"[\s\S]*?<\/aside>/)?.[0] ??
+  "";
+const emphasizedAccessRequirement =
+  "el acceso se realizará conforme a la lista de invitados confirmados.";
+
+assert.ok(
+  accessNotice,
+  "La invitación completa no contiene el aviso de acceso.",
+);
+assert.equal(
+  [...accessNotice.matchAll(/<strong>/g)].length,
+  1,
+  "El aviso de acceso debe contener exactamente un énfasis semántico.",
+);
+assert.ok(
+  accessNotice.includes(`<strong>${emphasizedAccessRequirement}</strong>`),
+  "El aviso de acceso no enfatiza únicamente la oración requerida.",
+);
 
 const biblicalQuoteIds = [
   "ephesians-unity",
@@ -703,6 +773,21 @@ function assertDesktopNavigationOrder(html, expectedLinks, routeLabel) {
   );
 }
 
+function assertMobileNavigationOrder(html, expectedLinks, routeLabel) {
+  const navigation =
+    html.match(
+      /<details class="site-header__menu">[\s\S]*?<nav aria-label="Navegación principal en móvil">[\s\S]*?<\/nav>[\s\S]*?<\/details>/,
+    )?.[0] ?? "";
+
+  assert.ok(navigation, `Falta la navegación móvil en ${routeLabel}.`);
+  assertOrderedMarkers(
+    navigation,
+    expectedLinks.map((href) => `href="${href}"`),
+    routeLabel,
+    "enlaces de navegación móvil",
+  );
+}
+
 const sharedNavigationOrder = [
   "#inicio",
   "#eucaristia",
@@ -729,6 +814,17 @@ assertDesktopNavigationOrder(
 );
 assertDesktopNavigationOrder(rootHtml, sharedNavigationOrder, "la raíz");
 assertDesktopNavigationOrder(
+  completeHtml,
+  completeNavigationOrder,
+  "la invitación completa",
+);
+assertMobileNavigationOrder(
+  massHtml,
+  sharedNavigationOrder,
+  "la invitación de Eucaristía",
+);
+assertMobileNavigationOrder(rootHtml, sharedNavigationOrder, "la raíz");
+assertMobileNavigationOrder(
   completeHtml,
   completeNavigationOrder,
   "la invitación completa",

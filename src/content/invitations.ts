@@ -44,12 +44,12 @@ export const invitationRoutes = {
 export const invitationNavigationItems = {
   home: { href: "#inicio", label: "Inicio" },
   ceremony: { href: "#eucaristia", label: "Celebración Litúrgica" },
-  celebration: { href: "#encuentro", label: "Celebración posterior" },
+  celebration: { href: "#encuentro", label: "Recepción" },
   confirmation: { href: "#confirmacion", label: "Confirmación" },
   stories: { href: "#historia", label: "Nuestra historia" },
   gallery: { href: "#galeria", label: "Galería de nuestro amor" },
   dressCode: { href: "#vestuario", label: "Código de vestimenta" },
-  gifts: { href: "#regalos", label: "Un detalle para nosotros" },
+  gifts: { href: "#regalos", label: "Nuestro regalo" },
   additionalInfo: { href: "#informacion", label: "Información adicional" },
 } as const satisfies Record<InvitationNavigationKey, InvitationNavigationItem>;
 
@@ -86,9 +86,9 @@ export const invitationVariants = {
     path: invitationRoutes.massAndCelebration,
     pageTitle: "Boda de Juan David y Melisa | 12 de octubre de 2026",
     pageDescription:
-      "Acompaña a Juan David y Melisa en la Eucaristía de su matrimonio y en la celebración posterior el 12 de octubre de 2026.",
+      "Acompaña a Juan David y Melisa en la Eucaristía de su matrimonio y en la Recepción el 12 de octubre de 2026.",
     heroMessage:
-      "Con mucha alegría, queremos invitarte a acompañarnos en la Eucaristía de nuestro matrimonio y a compartir la celebración posterior.",
+      "Con mucha alegría, queremos invitarte a acompañarnos en la Eucaristía de nuestro matrimonio y a compartir la Recepción.",
     robots: "noindex, nofollow",
     sections: {
       ceremony: true,
