@@ -6,9 +6,9 @@ No es necesario modificar los componentes visuales para cambiar los datos de la 
 
 `src/content/invitations.ts` define los identificadores `mass_only` y `mass_and_celebration`, sus rutas, metadatos, texto de introducción, orden de navegación y secciones visibles. Las etiquetas de los enlaces viven una sola vez en `invitationNavigationItems`; `navigationOrder` establece el orden de cada variante y `getInvitationNavigation` retira automáticamente los destinos que no se renderizan.
 
-La variante de Eucaristía nunca renderiza la celebración posterior, su confirmación ni la información adicional. El código de vestimenta es contenido confirmado y compartido por ambas variantes. No añadas un selector ni enlaces entre variantes.
+La variante de Eucaristía nunca renderiza la Recepción, su confirmación ni la información adicional. El código de vestimenta es contenido confirmado y compartido por ambas variantes. No añadas un selector ni enlaces entre variantes.
 
-El orden visible compartido es Eucaristía, código de vestimenta, regalos, Nuestra historia y galería. La invitación completa inserta la celebración posterior, con su confirmación, después de la Eucaristía. `navigationOrder` debe mantener ese mismo recorrido y omitir automáticamente cualquier sección no renderizada. Nuestra historia enlaza dos páginas compartidas distintas: Cómo nos conocimos y Cómo nos comprometimos.
+El orden visible compartido es Eucaristía, código de vestimenta, regalos, Nuestra historia y galería. La invitación completa inserta la Recepción, con su confirmación, después de la Eucaristía. `navigationOrder` debe mantener ese mismo recorrido y omitir automáticamente cualquier sección no renderizada. Nuestra historia enlaza dos páginas compartidas distintas: Cómo nos conocimos y Cómo nos comprometimos.
 
 Para cambiar la ruta no obvia de la invitación completa:
 
@@ -21,16 +21,16 @@ No copies el slug en menús, pies de página o documentación general. Ocultarlo
 
 ## Información de la boda
 
-Abre `src/content/wedding.ts`. Este archivo contiene nombres, datos compartidos de la Eucaristía, datos exclusivos de la celebración posterior, dress code, historias, información adicional y visibilidad de secciones.
+Abre `src/content/wedding.ts`. Este archivo contiene nombres, datos compartidos de la Eucaristía, datos exclusivos de la Recepción, dress code, historias, información adicional y visibilidad de secciones.
 
 - `ceremony`: fecha, hora, lugar, dirección, mapa e indicaciones compartidos por ambas invitaciones.
-- `celebration`: horario, lugar, dirección, introducción, referencia, mapa, confirmación y aviso de acceso que solo puede renderizar la invitación completa.
+- `celebration`: identificador interno para el horario, lugar, dirección, introducción, referencia, mapa, confirmación y aviso de acceso de la Recepción, que solo puede renderizar la invitación completa.
 - `dressCode`: título, estilo, orientaciones, notas, colores restringidos y mensaje final compartidos.
 - `biblicalQuotes`: texto, referencia y posición editorial de todas las citas bíblicas.
 - `stories`: textos del acceso compartido a los dos capítulos.
 - `howWeMet`: resumen, metadatos y momentos tipados de Cómo nos conocimos.
 - `engagement`: resumen, metadatos, relato y textos de la página de compromiso.
-- `gifts`: encabezado, mensaje y llave compartidos para regalos.
+- `gifts`: encabezado, párrafos y llave compartidos para regalos.
 - `sections`: disponibilidad global de cada sección. La configuración de cada variante puede ocultarla adicionalmente.
 
 ## Convención editorial
@@ -67,15 +67,15 @@ Cada cita contiene `id`, `lines` y `reference`. Una línea puede añadir `speake
 
 Las referencias se escriben sin paréntesis y el texto confirmado se conserva literalmente.
 
-## Confirmación de la celebración
+## Confirmación de la Recepción
 
-La tarjeta de confirmación se edita en `weddingContent.celebration.confirmation`: `body`, `callToAction`, `url` y `deadline`. El aviso de la tarjeta naranja vive en `weddingContent.celebration.accessNotice`.
+La tarjeta de confirmación se edita en `weddingContent.celebration.confirmation`: `body`, `callToAction`, `url` y `deadline`. El aviso de la tarjeta naranja vive en `weddingContent.celebration.accessNotice`: `body` contiene la parte normal y `emphasis` únicamente la oración que recibe `<strong>`.
 
 Ambos bloques son exclusivos de la invitación completa. Si cambias alguno de sus textos, agrega o actualiza su marcador en `scripts/verify-invitations.mjs` para que una filtración en la invitación de Eucaristía falle durante la validación.
 
 ## Lluvia de sobres
 
-El encabezado y el mensaje se editan únicamente en `weddingContent.gifts`. `body` conserva la redacción y `key` contiene la llave numérica que se destaca visualmente en la tarjeta. Esta sección aparece en las dos invitaciones y no debe contener entidades financieras, tipos de cuenta, enlaces de pago, códigos QR ni información exclusiva de la celebración.
+El encabezado y el mensaje se editan únicamente en `weddingContent.gifts`. `paragraphs` conserva los dos primeros párrafos, `keyParagraph` contiene el texto del tercero previo a la llave y `key` contiene la llave destacada visualmente en la tarjeta. Esta sección aparece en las dos invitaciones y no debe contener entidades financieras, tipos de cuenta, enlaces de pago, códigos QR ni información exclusiva de la Recepción.
 
 Para ocultarla temporalmente, cambia `weddingContent.sections.gifts` a `false`. Si se modifica su visibilidad por variante, debe conservarse habilitada o deshabilitada de la misma forma en las dos invitaciones.
 
@@ -182,24 +182,24 @@ Los originales se separan por experiencia dentro de `photos/`. La página genera
 ### Reemplazar el hero
 
 1. Copia la nueva fotografía dentro de `photos/home/` en JPG, PNG, WebP o AVIF.
-2. En `src/content/photos.ts`, cambia la importación asignada a `heroImage`.
+2. En `src/content/photos.ts`, cambia la importación asignada a `featuredHeroImage`.
 3. Actualiza el `alt` y, si hace falta, `position` dentro de `featuredPhotos.hero`.
 
 ### Galería de la invitación
 
-La selección fuente vive en `photos/home/`. `homeGalleryPhotos`, dentro de `src/content/photos.ts`, es el único manifiesto activo y su orden es el orden editorial. Las imágenes se muestran con su proporción natural; por eso cada entrada necesita únicamente `id`, `src` y `alt`.
+La selección fuente vive exclusivamente en `photos/gallery/`. `homeGalleryPhotos`, dentro de `src/content/photos.ts`, es el único manifiesto activo y su orden es el orden editorial, no una cronología confirmada. Las imágenes se muestran con su proporción natural; por eso cada entrada necesita únicamente `id`, `src` y `alt`.
 
-`IMG_1017.HEIC` e `IMG_6218.HEIC` conservan su original y usan un JPG homónimo en `photos/home/web-compatible/`; nunca registres el original y su derivado como dos momentos.
+`photos/home/` conserva las imágenes destacadas y originales anteriores, pero no alimenta esta galería. No copies fotografías de `history` ni `engagement` dentro del manifiesto.
 
 Para añadir una fotografía:
 
-1. Copia el original en el nivel superior de `photos/home/`.
-2. Si es HEIC, crea su JPG homónimo en `photos/home/web-compatible/`.
-3. Agrega una entrada a `homeGalleryPhotos` en la posición deseada con ID estable, `loadHomeImage(...)` y alt text objetivo.
+1. Copia el original en el nivel superior de `photos/gallery/` en JPG, PNG, WebP o AVIF.
+2. Si el original es HEIC, consérvalo fuera de la selección publicada y crea primero una copia web compatible.
+3. Agrega una entrada a `homeGalleryPhotos` en la posición deseada con ID estable, `loadGalleryImage(...)` y alt text objetivo.
 4. Si una cita debe cambiar de lugar, actualiza su `afterPhotoId` en `weddingContent.biblicalQuotes.galleryInterludes`.
 5. Ejecuta `pnpm validate`; la verificación compara el manifiesto renderizado con todos los archivos fotográficos del nivel superior.
 
-Para reordenar, mueve la entrada completa dentro de `homeGalleryPhotos`. Para retirar una foto, elimina su entrada y saca el original del nivel superior de `photos/home/`; conserva una copia fuera de la selección activa si todavía puede ser útil. Revisa siempre las tres posiciones `afterPhotoId`: las citas deben quedar en orden y ninguna puede aparecer al final sin fotografías posteriores.
+Para reordenar, mueve la entrada completa dentro de `homeGalleryPhotos`. Para retirar una foto, elimina su entrada y saca el original del nivel superior de `photos/gallery/`; conserva una copia fuera de la selección activa si todavía puede ser útil. Revisa siempre las tres posiciones `afterPhotoId`: las citas deben quedar en orden y ninguna puede aparecer al final sin fotografías posteriores.
 
 ### Fotografías de Cómo nos conocimos
 
@@ -233,7 +233,7 @@ El orden de `engagementPhotos` no controla la historia. El orden visible se mant
 
 ### Archivos HEIC
 
-Los navegadores no manejan HEIC de forma consistente. `home` y `history` conservan esos originales, pero sus manifiestos referencian JPG homónimos en la carpeta `web-compatible/` de cada colección. Las fotos de otras secciones también deben convertirse a JPG, WebP o AVIF antes de publicarse.
+Los navegadores no manejan HEIC de forma consistente. `home` y `history` conservan originales HEIC cuando corresponde, pero los elementos publicados referencian copias JPG homónimas. Las fotos de `gallery` y de otras secciones deben convertirse a JPG, WebP o AVIF antes de publicarse.
 
 ## Textos alternativos y captions
 

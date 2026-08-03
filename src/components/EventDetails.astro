@@ -192,7 +192,8 @@ const titleId = `${id}-title`;
       accessNotice && (
         <aside class="editorial-notice" aria-label={accessNotice.label}>
           <p>
-            <strong>{accessNotice.label}:</strong> {accessNotice.body}
+            <span class="editorial-notice__label">{accessNotice.label}:</span>{" "}
+            {accessNotice.body} <strong>{accessNotice.emphasis}</strong>
           </p>
         </aside>
       )
