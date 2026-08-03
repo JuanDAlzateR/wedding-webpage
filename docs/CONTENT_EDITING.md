@@ -75,7 +75,9 @@ Ambos bloques son exclusivos de la invitación completa. Si cambias alguno de su
 
 ## Nuestro regalo
 
-El encabezado y el mensaje se editan únicamente en `weddingContent.gifts`. `paragraphs` conserva los mensajes sobre las oraciones y la presencia; `optionalGiftMessage` aclara que cualquier detalle adicional es opcional; `choicePrompt` introduce las alternativas y `options` contiene las tres opciones visibles en su orden editorial.
+El encabezado y el mensaje se editan únicamente en `weddingContent.gifts`. `prayerMessage.emphasis` contiene solo el fragmento que recibe `<strong>` y `prayerMessage.remainder` conserva el final normal de la oración; `presenceMessage` y `optionalGiftMessage` contienen los otros mensajes introductorios.
+
+`transferIntroduction` se muestra fuera de las tarjetas, después de la opción de sobres y antes de las dos transferencias electrónicas. `options` contiene las tres opciones visibles en su orden editorial; no muevas la introducción a `options.envelope.note`.
 
 Cada opción tiene `id` y `label`; las opciones electrónicas también usan `value` y pueden incluir `note`. La cuenta `331-561467-61` y la llave `@Alzate6073` deben cambiarse solo en ese arreglo: el componente genera tanto el texto visible como el valor copiado desde la misma fuente. Mantén `lluvia de sobres` como la primera opción y con énfasis semántico exclusivo.
 

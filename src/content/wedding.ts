@@ -134,9 +134,13 @@ export type GiftOption = {
 export type GiftContent = {
   eyebrow: string;
   title: string;
-  paragraphs: readonly [string, string];
+  prayerMessage: {
+    emphasis: string;
+    remainder: string;
+  };
+  presenceMessage: string;
   optionalGiftMessage: string;
-  choicePrompt: string;
+  transferIntroduction: string;
   options: readonly GiftOption[];
 };
 
@@ -727,28 +731,30 @@ export const weddingContent = {
   gifts: {
     eyebrow: "Con cariño",
     title: "Nuestro regalo",
-    paragraphs: [
-      "Lo más valioso para nosotros será contar con sus oraciones; de verdad, las necesitamos.",
+    prayerMessage: {
+      emphasis: "Lo más valioso para nosotros será contar con sus oraciones",
+      remainder: "; de verdad, las necesitamos.",
+    },
+    presenceMessage:
       "Su presencia en este día tan especial es un don que agradecemos de corazón.",
-    ],
     optionalGiftMessage:
       "Si, además, desean tener un detalle con nosotros, recibiremos con mucho cariño",
-
+    transferIntroduction:
+      "Si les resulta más cómodo, pueden hacer uso de las siguientes opciones:",
     options: [
       {
         id: "envelope",
-        label: "1) Lluvia de sobres",
-        note: "Si les resulta más cómodo, pueden hacer uso de las siguientes opciones:",
-      },      
+        label: "Lluvia de sobres",
+      },
       {
         id: "bank-account",
-        label: "2) Cuenta de Ahorros Bancolombia",
+        label: "Cuenta de Ahorros Bancolombia",
         value: "331-561467-61",
         note: "Si deseas puedes añadir una tarjeta y un lindo mensaje, usando la app Bancolombia: Transferencia -> Enviar Regalo.",
       },
       {
         id: "key",
-        label: "3) Llave",
+        label: "Llave",
         value: "@Alzate6073",
         note: "Si deseas puedes enviar tu detalle usando una llave.",
       },

@@ -3,6 +3,10 @@ import SectionHeading from "./SectionHeading.astro";
 import { weddingContent } from "../content/wedding";
 
 const { gifts } = weddingContent;
+const envelopeOption = gifts.options.find((option) => option.id === "envelope");
+const electronicOptions = gifts.options.filter(
+  (option) => option.id !== "envelope",
+);
 ---
 
 <section
@@ -20,50 +24,71 @@ const { gifts } = weddingContent;
     <div class="gift-card">
       <span class="gift-card__mark" aria-hidden="true">✦</span>
       <div class="gift-card__copy">
-        {gifts.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        <p>
+          <strong>{gifts.prayerMessage.emphasis}</strong>{
+            gifts.prayerMessage.remainder
+          }
+        </p>
+        <p>{gifts.presenceMessage}</p>
         <p>{gifts.optionalGiftMessage}</p>
-        <p class="gift-card__choice">{gifts.choicePrompt}</p>
 
-        <ul class="gift-options" aria-label="Opciones para un regalo adicional">
-          {
-            gifts.options.map((option) => (
+        {
+          envelopeOption && (
+            <ul
+              class="gift-options gift-options--envelope"
+              aria-label="Opción de lluvia de sobres"
+            >
               <li
-                class:list={[
-                  "gift-option",
-                  { "gift-option--envelope": option.id === "envelope" },
-                ]}
-                data-gift-option-id={option.id}
+                class="gift-option gift-option--envelope"
+                data-gift-option-id={envelopeOption.id}
               >
                 <p class="gift-option__label">
-                  {option.id === "envelope" ? (
-                    <strong>{option.label}</strong>
-                  ) : (
-                    option.label
-                  )}
+                  <strong>{envelopeOption.label}</strong>
                 </p>
-
-                {option.value && (
-                  <div class="gift-option__value-row">
-                    <span class="gift-option__value">{option.value}</span>
-                    <button
-                      class="gift-option__copy-button"
-                      type="button"
-                      hidden
-                      data-gift-copy
-                      data-copy-label={option.label}
-                      data-copy-value={option.value}
-                      aria-label={`Copiar ${option.label}`}
-                    >
-                      Copiar
-                    </button>
-                  </div>
-                )}
-
-                {option.note && <p class="gift-option__note">{option.note}</p>}
               </li>
-            ))
-          }
-        </ul>
+            </ul>
+          )
+        }
+
+        <div class="gift-card__electronic-options">
+          <p class="gift-card__transfer-introduction">
+            {gifts.transferIntroduction}
+          </p>
+
+          <ul
+            class="gift-options gift-options--electronic"
+            aria-label="Opciones de transferencia electrónica"
+          >
+            {
+              electronicOptions.map((option) => (
+                <li class="gift-option" data-gift-option-id={option.id}>
+                  <p class="gift-option__label">{option.label}</p>
+
+                  {option.value && (
+                    <div class="gift-option__value-row">
+                      <span class="gift-option__value">{option.value}</span>
+                      <button
+                        class="gift-option__copy-button"
+                        type="button"
+                        hidden
+                        data-gift-copy
+                        data-copy-label={option.label}
+                        data-copy-value={option.value}
+                        aria-label={`Copiar ${option.label}`}
+                      >
+                        Copiar
+                      </button>
+                    </div>
+                  )}
+
+                  {option.note && (
+                    <p class="gift-option__note">{option.note}</p>
+                  )}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
 
         <span class="visually-hidden" aria-live="polite" data-gift-copy-status
         ></span>

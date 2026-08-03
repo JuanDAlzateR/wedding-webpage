@@ -180,16 +180,16 @@ const sharedInvitationText = [
   "Gracias por acompañarnos y por respetar este deseo en una ocasión tan especial para nosotros.",
   "La Celebración dará inicio puntualmente a las 10:00 a. m. Te invitamos a llegar con anticipación para disponernos juntos a vivir la Santa Misa desde el comienzo.",
   "Nuestro regalo",
-  "Lo más valioso para nosotros será contar con sus oraciones; de verdad, las necesitamos.",
   "Su presencia en este día tan especial es un don que agradecemos de corazón.",
-  "Si, además, desean tener un detalle con nosotros, lo recibiremos con mucho cariño.",
-  "Puedes elegir la opción que te resulte más cómoda.",
-  "lluvia de sobres",
-  "Cuenta de Ahorros Bancolombia",
+  "Si, además, desean tener un detalle con nosotros, recibiremos con mucho cariño",
+  "1) Lluvia de sobres",
+  "Si les resulta más cómodo, pueden hacer uso de las siguientes opciones:",
+  "2) Cuenta de Ahorros Bancolombia",
   "331-561467-61",
-  "Si durante la transferencia aparece la opción de concepto o categoría, puedes seleccionar «Regalo».",
-  "Llave",
+  "Si deseas puedes añadir una tarjeta y un lindo mensaje, usando la app Bancolombia: Transferencia -&gt; Enviar Regalo.",
+  "3) Llave",
   "@Alzate6073",
+  "Si deseas puedes enviar tu detalle usando una llave.",
   "Descubrir nuestra historia",
   'href="/compromiso/"',
   'href="/como-nos-conocimos/"',
@@ -415,6 +415,11 @@ const expectedGiftOptionMarkers = [
   'data-gift-option-id="bank-account"',
   'data-gift-option-id="key"',
 ];
+const prayerEmphasis =
+  "Lo más valioso para nosotros será contar con sus oraciones";
+const prayerRemainder = "; de verdad, las necesitamos.";
+const transferIntroduction =
+  "Si les resulta más cómodo, pueden hacer uso de las siguientes opciones:";
 
 for (const [html, routeLabel] of [
   [massHtml, "la invitación de Eucaristía"],
@@ -427,18 +432,25 @@ for (const [html, routeLabel] of [
 
   assert.ok(giftSection, `No se encontró Nuestro regalo en ${routeLabel}.`);
 
+  const visibleGiftText = giftSection.replace(/<[^>]+>/g, "");
+  assert.ok(
+    visibleGiftText.includes(`${prayerEmphasis}${prayerRemainder}`),
+    `El mensaje de oración cambió su texto o puntuación en ${routeLabel}.`,
+  );
+
   const strongMatches = [
     ...giftSection.matchAll(/<strong\b[^>]*>([\s\S]*?)<\/strong>/g),
   ];
-  assert.equal(
-    strongMatches.length,
-    1,
-    `Nuestro regalo debe contener un único <strong> en ${routeLabel}.`,
+  assert.deepEqual(
+    strongMatches.map((match) => match[1]),
+    [prayerEmphasis, "1) Lluvia de sobres"],
+    `Nuestro regalo no conserva exactamente los dos énfasis requeridos en ${routeLabel}.`,
   );
-  assert.equal(
-    strongMatches[0]?.[1],
-    "lluvia de sobres",
-    `El énfasis de Nuestro regalo no contiene únicamente lluvia de sobres en ${routeLabel}.`,
+  assert.ok(
+    giftSection.includes(
+      `<strong>${prayerEmphasis}</strong>${prayerRemainder}`,
+    ),
+    `El sufijo del mensaje de oración quedó incluido en el énfasis en ${routeLabel}.`,
   );
 
   let previousOptionIndex = -1;
@@ -449,6 +461,34 @@ for (const [html, routeLabel] of [
       `Las opciones de Nuestro regalo no conservan su orden en ${routeLabel}.`,
     );
     previousOptionIndex = optionIndex;
+  }
+
+  const envelopeIndex = giftSection.indexOf(expectedGiftOptionMarkers[0]);
+  const transferIntroductionIndex = giftSection.indexOf(transferIntroduction);
+  const bankAccountIndex = giftSection.indexOf(expectedGiftOptionMarkers[1]);
+  const keyIndex = giftSection.indexOf(expectedGiftOptionMarkers[2]);
+  assert.ok(
+    envelopeIndex < transferIntroductionIndex &&
+      transferIntroductionIndex < bankAccountIndex &&
+      bankAccountIndex < keyIndex,
+    `La introducción de transferencias no está entre sobres y las opciones electrónicas en ${routeLabel}.`,
+  );
+
+  const giftOptionCards = [
+    ...giftSection.matchAll(
+      /<li\b[^>]*data-gift-option-id="[^"]+"[^>]*>[\s\S]*?<\/li>/g,
+    ),
+  ];
+  assert.equal(
+    giftOptionCards.length,
+    3,
+    `Nuestro regalo no contiene exactamente tres tarjetas en ${routeLabel}.`,
+  );
+  for (const [optionCard] of giftOptionCards) {
+    assert.ok(
+      !optionCard.includes(transferIntroduction),
+      `La introducción de transferencias quedó dentro de una tarjeta en ${routeLabel}.`,
+    );
   }
 
   assert.equal(
