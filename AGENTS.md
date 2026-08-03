@@ -30,7 +30,7 @@ Este repositorio contiene un sitio web estático de boda, móvil primero y únic
 
 - No inventar nombres, fechas, lugares, historias, políticas, contactos ni enlaces.
 - La invitación `mass_only` no puede incluir texto, metadatos, navegación, assets de texto ni referencias a la Recepción.
-- La ruta no obvia de `mass_and_celebration` no debe copiarse en menús, pies, sitemaps o documentación general.
+- `/recepcion` es un alias público de Cloudflare Pages que redirige a la ruta canónica de `mass_and_celebration`; no añadirlo a menús, pies, sitemaps, metadatos ni otros enlaces visibles salvo petición explícita.
 - Mantener placeholders centralizados y claramente marcados.
 - Las secciones opcionales sin información confirmada deben permanecer ocultas.
 - El sitio es solo en español; no añadir traducciones ni selector de idioma salvo petición explícita.
@@ -139,6 +139,7 @@ No afirmar que un comando pasó si no se ejecutó exitosamente.
 
 - Salida: `dist/`
 - Cloudflare Pages: opción principal
+- El alias `/recepcion` se define únicamente en `public/_redirects`; el build debe copiarlo a `dist/_redirects` sin generar una segunda página.
 - GitHub Pages: soportado mediante `SITE_URL` y `BASE_PATH`
 - No inventar la URL final; configurar `SITE_URL` solo cuando sea conocida
 - No incluir secretos en el repositorio ni en archivos públicos

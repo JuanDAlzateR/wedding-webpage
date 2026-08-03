@@ -9,6 +9,8 @@ const distDirectory = join(projectRoot, "dist");
 const invitationsDirectory = join(distDirectory, "invitacion");
 const massDirectory = join(invitationsDirectory, "misa");
 const rootHtmlPath = join(distDirectory, "index.html");
+const redirectsSourcePath = join(projectRoot, "public", "_redirects");
+const redirectsBuildPath = join(distDirectory, "_redirects");
 const engagementHtmlPath = join(distDirectory, "compromiso", "index.html");
 const howWeMetHtmlPath = join(
   distDirectory,
@@ -27,6 +29,14 @@ const howWeMetArchiveDirectory = join(
 assert.ok(
   existsSync(distDirectory),
   "Falta dist/. Ejecuta pnpm build primero.",
+);
+assert.ok(
+  existsSync(redirectsSourcePath),
+  "Falta public/_redirects con el alias público de la Recepción.",
+);
+assert.ok(
+  existsSync(redirectsBuildPath),
+  "El build no copió public/_redirects a dist/.",
 );
 assert.ok(
   existsSync(join(massDirectory, "index.html")),
@@ -66,6 +76,34 @@ const completeSlug = generatedInvitationDirectories.find(
 );
 assert.ok(completeSlug, "No se generó la invitación completa.");
 
+const completeInvitationDestination = `/invitacion/${completeSlug}/`;
+const expectedReceptionRedirects = [
+  `/recepcion ${completeInvitationDestination} 302`,
+  `/recepcion/ ${completeInvitationDestination} 302`,
+];
+
+function getRedirectRules(filePath) {
+  return readFileSync(filePath, "utf8")
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter((line) => line && !line.startsWith("#"));
+}
+
+assert.deepEqual(
+  getRedirectRules(redirectsSourcePath),
+  expectedReceptionRedirects,
+  "public/_redirects no define exactamente el alias público esperado.",
+);
+assert.deepEqual(
+  getRedirectRules(redirectsBuildPath),
+  expectedReceptionRedirects,
+  "dist/_redirects no conserva el destino y estado del alias público.",
+);
+assert.ok(
+  !existsSync(join(distDirectory, "recepcion")),
+  "El build generó una página duplicada en /recepcion en lugar de un alias.",
+);
+
 const massHtml = readFileSync(join(massDirectory, "index.html"), "utf8");
 const rootHtml = readFileSync(rootHtmlPath, "utf8");
 const completeHtml = readFileSync(
@@ -74,6 +112,20 @@ const completeHtml = readFileSync(
 );
 const engagementHtml = readFileSync(engagementHtmlPath, "utf8");
 const howWeMetHtml = readFileSync(howWeMetHtmlPath, "utf8");
+
+for (const [html, routeLabel] of [
+  [massHtml, "la invitación de Eucaristía"],
+  [rootHtml, "la raíz"],
+  [completeHtml, "la invitación completa"],
+  [engagementHtml, "la experiencia de compromiso"],
+  [howWeMetHtml, "Cómo nos conocimos"],
+]) {
+  assert.doesNotMatch(
+    html,
+    /href=["']\/recepcion\/?(?:["'#?])/,
+    `${routeLabel} enlaza el alias público de la Recepción.`,
+  );
+}
 
 const sharedCeremonyText = [
   "Juan David",
@@ -383,7 +435,7 @@ const accessNotice =
   completeHtml.match(/<aside class="editorial-notice"[\s\S]*?<\/aside>/)?.[0] ??
   "";
 const emphasizedAccessRequirement =
-  "el acceso se realizará conforme a la lista de invitados confirmados.";
+  "el acceso se realizará conforme a la lista de invitados confirmados. Favor confirmar la asistencia antes del 1 de septiembre.";
 
 assert.ok(
   accessNotice,
@@ -396,7 +448,7 @@ assert.equal(
 );
 assert.ok(
   accessNotice.includes(`<strong>${emphasizedAccessRequirement}</strong>`),
-  "El aviso de acceso no enfatiza únicamente la oración requerida.",
+  "El aviso de acceso no enfatiza exactamente el requisito confirmado.",
 );
 
 const biblicalQuoteIds = [
@@ -897,5 +949,5 @@ for (const assetPath of referencedTextAssets) {
 }
 
 log(
-  "Verificación superada: invitaciones aisladas, historias privadas, colecciones fotográficas y anclas válidas.",
+  "Verificación superada: alias público, invitaciones aisladas, historias privadas, colecciones fotográficas y anclas válidas.",
 );

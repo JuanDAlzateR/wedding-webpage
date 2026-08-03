@@ -7,7 +7,7 @@ El mismo diseño genera dos invitaciones independientes:
 - Eucaristía solamente.
 - Eucaristía y Recepción.
 
-La raíz `/` muestra la variante de Eucaristía. Las rutas y la configuración de ambas variantes se mantienen en `src/content/invitations.ts`; la ruta no obvia de la invitación completa no se copia en esta documentación.
+La raíz `/` muestra la variante de Eucaristía. Las rutas canónicas y la configuración de ambas variantes se mantienen en `src/content/invitations.ts`; Cloudflare Pages ofrece además `/recepcion` como alias público de la invitación completa mediante `public/_redirects`. El sitio no enlaza ese alias desde navegación, metadatos ni otras superficies visibles.
 
 ## Requisitos
 
@@ -52,4 +52,4 @@ La información todavía no confirmada aparece como pendiente. No reemplaces eso
 
 Los nombres, la fecha, los horarios, los lugares, las direcciones, las referencias de ubicación, los mapas, el código de vestimenta, las dos historias y la información de regalos contienen la información confirmada. También están pendientes la información adicional, la URL final y el favicon. Consulta `docs/CONTENT_EDITING.md` para la lista completa.
 
-Ambas variantes usan `noindex, nofollow` y `robots.txt` bloquea el rastreo. La ruta no obvia reduce el descubrimiento accidental, pero no autentica a los invitados ni protege el contenido frente a quien conozca o adivine la URL.
+Ambas variantes usan `noindex, nofollow` y `robots.txt` bloquea el rastreo. El alias `/recepcion` hace intencionalmente más fácil acceder a la invitación completa, pero no se publica como enlace dentro del sitio. Estas medidas no autentican a los invitados ni protegen el contenido frente a quien conozca la URL.

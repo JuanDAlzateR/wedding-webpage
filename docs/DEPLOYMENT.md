@@ -14,6 +14,8 @@ El sitio genera archivos estáticos en `dist/`. No necesita servidor, base de da
 4. Agrega `SITE_URL` con la URL real, sin barra final, para habilitar canonical y la imagen social absoluta.
 5. No configures `BASE_PATH` para un dominio normal o una dirección `pages.dev`.
 
+El alias público `/recepcion` se mantiene en `public/_redirects`. Astro copia ese archivo a `dist/_redirects` y Cloudflare Pages responde tanto a `/recepcion` como a `/recepcion/` con un `302` hacia `/invitacion/c7N4pQ2x/`. No existe una segunda página ni una segunda fuente de contenido.
+
 ## GitHub Pages
 
 Para `https://usuario.github.io/repositorio/` define durante el build:
@@ -27,6 +29,8 @@ Después ejecuta `pnpm build` y publica `dist/` mediante GitHub Actions. Las var
 
 Si el repositorio se llama `usuario.github.io` o se usa un dominio propio, omite `BASE_PATH`.
 
+GitHub Pages no procesa el archivo `_redirects`; el alias `/recepcion` es específico del despliegue principal en Cloudflare Pages. Las rutas Astro generadas continúan funcionando en ambos proveedores.
+
 ## Verificación previa
 
 ```bash
@@ -35,10 +39,10 @@ pnpm validate
 pnpm preview
 ```
 
-Comprueba la URL final compartiéndola en WhatsApp. Abre y recarga directamente ambas invitaciones, `/compromiso/` y `/como-nos-conocimos/`. La imagen social solo se publica como URL absoluta cuando `SITE_URL` está configurada.
+Comprueba la URL final compartiéndola en WhatsApp. Abre y recarga directamente ambas invitaciones, `/recepcion`, `/compromiso/` y `/como-nos-conocimos/`. En Cloudflare, confirma que `/recepcion` responde `302` con destino `/invitacion/c7N4pQ2x/`; `pnpm preview` no interpreta `_redirects`. La imagen social solo se publica como URL absoluta cuando `SITE_URL` está configurada.
 
 ## Privacidad de las invitaciones
 
-Ambas variantes declaran `noindex, nofollow`, `robots.txt` bloquea el rastreo completo y no se genera sitemap. La variante completa no está enlazada desde páginas públicas. Estas medidas reducen descubrimientos accidentales, pero una URL estática no es autenticación ni confidencialidad.
+Ambas variantes declaran `noindex, nofollow`, `robots.txt` bloquea el rastreo completo y no se genera sitemap. La variante completa no está enlazada desde páginas públicas, aunque se puede abrir intencionalmente mediante `/recepcion`. Estas medidas reducen descubrimientos accidentales, pero una URL estática no es autenticación ni confidencialidad.
 
-La raíz `/` renderiza la variante de Eucaristía. Las rutas reales se definen únicamente en `src/content/invitations.ts`; evita copiar la ruta completa en documentación o listados destinados a invitados.
+La raíz `/` renderiza la variante de Eucaristía. Las rutas canónicas se definen en `src/content/invitations.ts` y el alias de Cloudflare en `public/_redirects`; evita añadir cualquiera de ellas a listados destinados a invitados salvo petición explícita.
